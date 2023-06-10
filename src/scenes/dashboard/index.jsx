@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { Box,Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import { mockTransactions } from "../../data/mockData";
@@ -5,6 +7,13 @@ import Header from "../../components/Header";
 import LineChart from "../../components/LineChart";
 import GeographyChart from "../../components/GeographyChart";
 import BarChart from "../../components/BarChart";
+
+import Linechart2 from "../../components/Linechart2";
+
+
+import { getcandles} from '../../api/binance/dataService'
+
+
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -38,7 +47,7 @@ const Dashboard = () => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                Revenue Generated
+                IBOVESPA
               </Typography>
               <Typography
                 variant="h3"
@@ -50,7 +59,7 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box height="250px" m="-20px 0 0 0">
-            <LineChart isDashboard={true} />
+            <Linechart2 isDashboard={true} />
           </Box>
         </Box>
         <Box
