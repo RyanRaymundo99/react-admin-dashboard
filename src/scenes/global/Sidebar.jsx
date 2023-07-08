@@ -5,15 +5,16 @@ import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import PriceChangeIcon from '@mui/icons-material/PriceChange';
+import SavingsIcon from '@mui/icons-material/Savings';
+import WalletIcon from '@mui/icons-material/Wallet';
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
+import SwipeUpIcon from '@mui/icons-material/SwipeUp';
+import SsidChartIcon from '@mui/icons-material/SsidChart';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -111,23 +112,23 @@ const Sidebar = () => {
               Data
             </Typography>
             <Item
-              title="Manage Team"
-              to="/team"
-              icon={<PeopleOutlinedIcon />}
+              title="Cotações"
+              to="/quotes"
+              icon={<CurrencyExchangeIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Contacts Information"
+              title="Análise Fundamentalista"
               to="/contacts"
-              icon={<ContactsOutlinedIcon />}
+              icon={<PriceChangeIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Invoices Balances"
+              title="Benjamin Graham"
               to="/invoices"
-              icon={<ReceiptOutlinedIcon />}
+              icon={<SavingsIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -137,23 +138,23 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Pages
+              Gráficos
             </Typography>
+            
             <Item
-              title="FAQ Page"
-              to="/faq"
-              icon={<HelpOutlineOutlinedIcon />}
+              title="Ibovespa Index"
+              to="/line"
+              icon={<SsidChartIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Charts
-            </Typography>
+            <Item
+              title="Comparar Desempenho"
+              to="/pie"
+              icon={<SwipeUpIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Item
               title="Bar Chart"
               to="/bar"
@@ -161,24 +162,34 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Pie Chart"
-              to="/pie"
-              icon={<PieChartOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Line Chart"
-              to="/line"
-              icon={<TimelineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            
+            
             <Item
               title="Geography Chart"
               to="/geography"
               icon={<MapOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Extras
+            </Typography>
+            <Item
+              title="Carteira de Investidor"
+              to="/faq"
+              icon={<WalletIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Notícias"
+              to="/faq"
+              icon={<NewspaperIcon />}
               selected={selected}
               setSelected={setSelected}
             />

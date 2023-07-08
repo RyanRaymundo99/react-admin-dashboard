@@ -1,24 +1,47 @@
-import { useEffect } from "react";
-
-import { Box,Typography, useTheme } from "@mui/material";
-import { tokens } from "../../theme";
-import { mockTransactions } from "../../data/mockData";
-import Header from "../../components/Header";
-import LineChart from "../../components/LineChart";
-import GeographyChart from "../../components/GeographyChart";
-import BarChart from "../../components/BarChart";
-
-import Linechart2 from "../../components/Linechart2";
-
-
-import { getcandles} from '../../api/binance/dataService'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Box, Typography, useTheme } from '@mui/material';
+import { tokens } from '../../theme';
+import { mockTransactions } from '../../data/mockData';
+import LineChart from '../../components/LineChart';
+import GeographyChart from '../../components/GeographyChart';
+import BarChart from '../../components/BarChart';
 
 
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [closeData, setCloseData] = useState(null);
+  const [closeDifference, setCloseDifference] = useState(null);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const options = {
+        method: 'GET',
+        url: 'https://yahoo-finance127.p.rapidapi.com/price/%5EBVSP',
+        headers: {
+          'X-RapidAPI-Key': '37e7621ab5msh8ca6d117cb08066p1bb2b2jsn269b699edad8',
+          'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com'
+        }
+      };
+
+      try {
+        const response = await axios.request(options);
+        const closePrice = response.data.regularMarketPrice.raw;
+        const previousClosePrice = response.data.regularMarketPreviousClose.raw;
+
+        setCloseData(closePrice);
+
+        const difference = closePrice - previousClosePrice;
+        setCloseDifference(difference);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <Box ml="100px">
       {/* GRID & CHARTS */}
@@ -31,7 +54,7 @@ const Dashboard = () => {
         {/* ROW 2 */}
         <Box
           gridColumn="span 12"
-          gridRow="span 2"
+          gridRow="span 4"
           backgroundColor={colors.primary[400]}
         >
           <Box
@@ -44,6 +67,7 @@ const Dashboard = () => {
             <Box>
               <Typography
                 variant="h5"
+                
                 fontWeight="600"
                 color={colors.grey[100]}
               >
@@ -52,19 +76,30 @@ const Dashboard = () => {
               <Typography
                 variant="h3"
                 fontWeight="bold"
-                color={colors.greenAccent[500]}
+                paddingBottom="50px"
+                color={closeDifference !== null && closeDifference < 0 ? colors.red : colors.greenAccent}
               >
-                $59,342.32
+                {closeData !== null ? closeData.toFixed(2) : 'Loading...'}
               </Typography>
             </Box>
+            {closeDifference !== null && (
+              <Typography
+                variant="h6"
+                fontWeight="600"
+                color={closeDifference < 0 ? colors.redAccent[400] : colors.greenAccent[400]}
+              >
+                {closeDifference.toFixed(2)}
+              </Typography>
+            )}
           </Box>
           <Box height="250px" m="-20px 0 0 0">
-            <Linechart2 isDashboard={true} />
+            <LineChart isDashboard={true} />
           </Box>
+          
         </Box>
         <Box
-          gridColumn="span 8"
-          gridRow="span 2"
+          gridColumn="span 12"
+          gridRow="span 4"
           backgroundColor={colors.primary[400]}
           overflow="auto"
         >
@@ -77,7 +112,7 @@ const Dashboard = () => {
             p="15px"
           >
             <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Recent Transactions
+              Cotações
             </Typography>
           </Box>
           {mockTransactions.map((transaction, i) => (
@@ -151,3 +186,7 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+
+
+

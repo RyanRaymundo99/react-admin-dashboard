@@ -1,116 +1,103 @@
-import { ResponsiveLine } from "@nivo/line";
-import { useTheme } from "@mui/material";
-import { tokens } from "../theme";
-import { mockLineData as data } from "../data/mockData";
+import React, { useEffect, useState } from 'react';
+import { ResponsiveLine } from '@nivo/line';
 
-const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+const LineChart = () => {
+  const [chartData, setChartData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://yahoo-finance127.p.rapidapi.com/historic/%5EBVSP/1d/15d', {
+          headers: {
+            'X-RapidAPI-Key': '37e7621ab5msh8ca6d117cb08066p1bb2b2jsn269b699edad8',
+            'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com'
+          }
+        });
+
+        const data = await response.json();
+        console.log('Raw data:', data);
+
+        if (!data || !data.indicators || !data.timestamp) {
+          console.error('Invalid data format');
+          return;
+        }
+
+        const { timestamp, indicators } = data;
+
+        if (!indicators.quote || !indicators.quote[0].close) {
+          console.error('Invalid data format');
+          return;
+        }
+
+        const dates = timestamp.map(timestamp => new Date(timestamp * 1000));
+        const closeData = indicators.quote[0].close.map((value, index) => ({ x: dates[index], y: value }));
+
+        const chartData = [
+          {
+            id: 'Close',
+            data: closeData
+          }
+        ];
+
+        setChartData(chartData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <ResponsiveLine
-      data={data}
-      theme={{
-        axis: {
-          domain: {
-            line: {
-              stroke: colors.grey[100],
-            },
-          },
-          legend: {
-            text: {
-              fill: colors.grey[100],
-            },
-          },
-          ticks: {
-            line: {
-              stroke: colors.grey[100],
-              strokeWidth: 1,
-            },
-            text: {
-              fill: colors.grey[100],
-            },
-          },
-        },
-        legends: {
-          text: {
-            fill: colors.grey[100],
-          },
-        },
-        tooltip: {
-          container: {
-            color: colors.primary[500],
-          },
-        },
-      }}
-      colors={isDashboard ? { datum: "color" } : { scheme: "nivo" }} // added
-      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-      xScale={{ type: "point" }}
-      yScale={{
-        type: "linear",
-        min: "auto",
-        max: "auto",
-        stacked: true,
-        reverse: false,
-      }}
-      yFormat=" >-.2f"
-      curve="catmullRom"
-      axisTop={null}
-      axisRight={null}
-      axisBottom={{
-        orient: "bottom",
-        tickSize: 0,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: isDashboard ? undefined : "transportation", // added
-        legendOffset: 36,
-        legendPosition: "middle",
-      }}
-      axisLeft={{
-        orient: "left",
-        tickValues: 5, // added
-        tickSize: 3,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: isDashboard ? undefined : "count", // added
-        legendOffset: -40,
-        legendPosition: "middle",
-      }}
-      enableGridX={false}
-      enableGridY={false}
-      pointSize={8}
-      pointColor={{ theme: "background" }}
-      pointBorderWidth={2}
-      pointBorderColor={{ from: "serieColor" }}
-      pointLabelYOffset={-12}
-      useMesh={true}
-      legends={[
-        {
-          anchor: "bottom-right",
-          direction: "column",
-          justify: false,
-          translateX: 100,
-          translateY: 0,
-          itemsSpacing: 0,
-          itemDirection: "left-to-right",
-          itemWidth: 80,
-          itemHeight: 20,
-          itemOpacity: 0.75,
-          symbolSize: 12,
-          symbolShape: "circle",
-          symbolBorderColor: "rgba(0, 0, 0, .5)",
-          effects: [
+    <div style={{ height: '400px', width: '100%' }}>
+      {chartData && (
+        <ResponsiveLine
+          data={chartData}
+          margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
+          xScale={{ type: 'time', format: '%Y-%m-%d', precision: 'day' }}
+          xFormat="time:%b %d"
+          yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
+          axisBottom={{
+            format: '%b %d',
+            tickValues: 'every 2 days',
+            tickTextFill: '#fff'
+          }}
+          axisLeft={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: 'Price',
+            legendOffset: -40,
+            legendPosition: 'middle'
+          }}
+          enableGridX={false}
+          enableGridY={true}
+          colors={{ scheme: 'category10' }}
+          enablePoints={false}
+          enableArea={true}
+          areaOpacity={0.2}
+          useMesh={true}
+          legends={[
             {
-              on: "hover",
-              style: {
-                itemBackground: "rgba(0, 0, 0, .03)",
-                itemOpacity: 1,
-              },
-            },
-          ],
-        },
-      ]}
-    />
+              anchor: 'bottom',
+              direction: 'row',
+              justify: false,
+              translateX: 0,
+              translateY: 40,
+              itemsSpacing: 0,
+              itemDirection: 'left-to-right',
+              itemWidth: 80,
+              itemHeight: 20,
+              itemOpacity: 0.75,
+              symbolSize: 12,
+              symbolShape: 'circle',
+              symbolBorderColor: 'rgba(0, 0, 0, .5)',
+              textColor: 'white' // Customize the legend text color here
+            }
+          ]}
+        />
+      )}
+    </div>
   );
 };
 
