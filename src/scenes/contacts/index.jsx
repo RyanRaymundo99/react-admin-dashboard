@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react'
 
-
-const YourComponent = () => {
-
-
-
-
+function index() {
   return (
-    <>
- 
-    </>
-  );
-};
+    <div>index</div>
+  )
+}
 
-export default YourComponent;
+export default index

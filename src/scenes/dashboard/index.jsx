@@ -1,19 +1,87 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, Typography, useTheme, Paper, Grid } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 import { tokens } from '../../theme';
-import { mockTransactions } from '../../data/mockData';
 import LineChart from '../../components/LineChart';
-import GeographyChart from '../../components/GeographyChart';
-import BarChart from '../../components/BarChart';
+import { Link } from 'react-router-dom';
 
 
+const LoadingSpinner = () => (
+  <svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlnsXlink="http://www.w3.org/1999/xlink"
+  style={{ margin: 'auto', background: 'none', display: 'block', shapeRendering: 'auto' }}
+  width="100px"
+  height="100px"
+  viewBox="0 0 100 100"
+  preserveAspectRatio="xMidYMid"
+>
+  <circle cx="50" cy="50" r="0" fill="none" stroke="#3f51b5" strokeWidth="10">
+    <animate
+      attributeName="r"
+      repeatCount="indefinite"
+      dur="1.1627906976744184s"
+      values="0;40"
+      keyTimes="0;1"
+      keySplines="0 0.2 0.8 1"
+      calcMode="spline"
+      begin="0s"
+    ></animate>
+    <animate
+      attributeName="opacity"
+      repeatCount="indefinite"
+      dur="1.1627906976744184s"
+      values="1;0"
+      keyTimes="0;1"
+      keySplines="0.2 0 0.8 1"
+      calcMode="spline"
+      begin="0s"
+    ></animate>
+  </circle>
+  <circle cx="50" cy="50" r="0" fill="none" stroke="#3f51b5" strokeWidth="10">
+    <animate
+      attributeName="r"
+      repeatCount="indefinite"
+      dur="1.1627906976744184s"
+      values="0;40"
+      keyTimes="0;1"
+      keySplines="0 0.2 0.8 1"
+      calcMode="spline"
+      begin="-0.5813953488372092s"
+    ></animate>
+    <animate
+      attributeName="opacity"
+      repeatCount="indefinite"
+      dur="1.1627906976744184s"
+      values="1;0"
+      keyTimes="0;1"
+      keySplines="0.2 0 0.8 1"
+      calcMode="spline"
+      begin="-0.5813953488372092s"
+    ></animate>
+  </circle>
+</svg>
+);
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [closeData, setCloseData] = useState(null);
   const [closeDifference, setCloseDifference] = useState(null);
+
+  const initialItemsToShow = 2;
+  const [itemsToShow, setItemsToShow] = useState(initialItemsToShow);
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const positiveColor = 'green';
+  const negativeColor = 'red';
+
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true); // Added loading state
+
+  const handleClick = () => {
+    setItemsToShow(prevItems => prevItems + 2);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +110,71 @@ const Dashboard = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData2 = async () => {
+      try {
+        const symbols = ['ABEV3', 'RRRP3', 'ALSO3', 'ALPA4', 'ARZZ3', 'CRFB3', 'AZUL4', 'B3SA3', 'BPAC11', 'BBSE3'];
+        const fetchedData = [];
+
+        for (let i = 0; i < symbols.length; i++) {
+          const symbol = symbols[i];
+          const response = await fetch(`https://yahoo-finance127.p.rapidapi.com/price/${symbol}.SA`, {
+            headers: {
+              'X-RapidAPI-Key': '37e7621ab5msh8ca6d117cb08066p1bb2b2jsn269b699edad8',
+              'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com',
+            },
+          });
+
+          if (response.ok) {
+            const responseData = await response.json();
+
+            const modifiedData = {
+              title: responseData.shortName,
+              price: responseData.regularMarketPrice.fmt,
+              high: responseData.regularMarketDayHigh.fmt,
+              low: responseData.regularMarketDayLow.fmt,
+              volume: responseData.regularMarketVolume.fmt,
+              changePercent: responseData.regularMarketChangePercent.fmt,
+              symbol: responseData.symbol,
+            };
+
+            fetchedData.push(modifiedData);
+          } else {
+            console.error('Failed to fetch data:', response.status);
+          }
+        }
+
+        setData(fetchedData);
+        setLoading(false); // Set loading to false after data is fetched
+      } catch (error) {
+        console.error('Error occurred while fetching data:', error);
+        setLoading(false); // Set loading to false on error
+      }
+    };
+
+    fetchData2();
+  }, []);
+
+
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <LoadingSpinner />
+      </Box>
+    );
+  }
+
+  if (data.length === 0) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <Typography variant="h5" color="error">
+          Error loading data. Please try again later.
+        </Typography>
+      </Box>
+    );
+  }
+
   return (
     <Box ml="100px">
       {/* GRID & CHARTS */}
@@ -53,7 +186,7 @@ const Dashboard = () => {
       >
         {/* ROW 2 */}
         <Box
-          gridColumn="span 12"
+          gridColumn="span 8"
           gridRow="span 4"
           backgroundColor={colors.primary[400]}
         >
@@ -98,8 +231,8 @@ const Dashboard = () => {
           
         </Box>
         <Box
-          gridColumn="span 12"
-          gridRow="span 4"
+          gridColumn="span 4"
+          gridRow="span 10"
           backgroundColor={colors.primary[400]}
           overflow="auto"
         >
@@ -107,7 +240,6 @@ const Dashboard = () => {
             display="flex"
             justifyContent="space-between"
             alignItems="center"
-            borderBottom={`4px solid ${colors.primary[500]}`}
             colors={colors.grey[100]}
             p="15px"
           >
@@ -115,70 +247,39 @@ const Dashboard = () => {
               Cotações
             </Typography>
           </Box>
-          {mockTransactions.map((transaction, i) => (
-            <Box
-              key={`${transaction.txId}-${i}`}
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              borderBottom={`4px solid ${colors.primary[500]}`}
-              p="15px"
-            >
-              <Box>
-                <Typography
-                  color={colors.greenAccent[500]}
-                  variant="h5"
-                  fontWeight="600"
-                >
-                  {transaction.txId}
-                </Typography>
-                <Typography color={colors.grey[100]}>
-                  {transaction.user}
-                </Typography>
-              </Box>
-              <Box color={colors.grey[100]}>{transaction.date}</Box>
-              <Box
-                backgroundColor={colors.greenAccent[500]}
-                p="5px 10px"
-                borderRadius="4px"
-              >
-                ${transaction.cost}
-              </Box>
-            </Box>
-          ))}
-        </Box>
-        <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-        >
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            sx={{ padding: "30px 30px 0 30px" }}
-          >
-            Sales Quantity
-          </Typography>
-          <Box height="250px" mt="-20px">
-            <BarChart isDashboard={true} />
-          </Box>
-        </Box>
-        <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-          padding="30px"
-        >
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            sx={{ marginBottom: "15px" }}
-          >
-            Geography Based Traffic
-          </Typography>
-          <Box height="200px">
-            <GeographyChart isDashboard={true} />
-          </Box>
+
+          {data.map((item, index) => (
+          <Grid item xs={12} sm={8} md={6} key={index} padding={2}>
+            <Link to={`/quotepage/${item.symbol}`} style={{ textDecoration: 'none' }}>
+              <Paper variant="outlined" sx={{ p: 2, borderRadius: '30px' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                  <Typography variant={isSmallScreen ? 'h7' : 'h6'} component="h6" color="text.primary">
+                    {item.symbol}
+                  </Typography>
+                  <Typography variant={isSmallScreen ? 'h6' : 'h5'} component="h5" color="text.secondary" style={{ color: item.changePercent.startsWith('-') ? negativeColor : positiveColor }}>
+                    ({item.changePercent})
+                  </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                  <Typography variant={isSmallScreen ? 'h5' : 'h4'} component="h4" color="text.primary">
+                    {item.title}
+                  </Typography>
+                  <Typography variant={isSmallScreen ? 'h5' : 'h4'} component="h4" color="text.secondary" style={{ color: item.changePercent.startsWith('-') ? negativeColor : positiveColor }}>
+                    R${item.price}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <Typography variant={isSmallScreen ? 'h5' : 'h5'} component="h5" color="text.secondary">
+                    Max: {item.high} Min: {item.low}
+                  </Typography>
+                  <Typography variant={isSmallScreen ? 'h5' : 'h5'} component="h5" color="text.secondary">
+                    Vol: {item.volume}
+                  </Typography>
+                </Box>
+              </Paper>
+            </Link>
+          </Grid>
+        ))}
         </Box>
       </Box>
     </Box>

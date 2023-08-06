@@ -4,14 +4,15 @@ import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Quotes from "./scenes/quotes/index";
-import QuotePage from './scenes/quotes/data';
-import Invoices from "./scenes/invoices";
+import QuotePage from './scenes/quotepage';
 import Contacts from "./scenes/contacts";
 import Bar from "./scenes/bar";
 import Line from "./scenes/line";
-import Pie from "./scenes/pie";
-import FAQ from "./scenes/faq";
-import Geography from "./scenes/geography";
+import Performance from "./scenes/performance";
+import Wallet from "./scenes/wallet";
+import Quotetest from "./scenes/quotetest";
+
+
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 
@@ -31,13 +32,12 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/quotes" element={<Quotes />} />
               <Route path="/contacts" element={<Contacts />} />
-              <Route path="/invoices" element={<Invoices />} />
               <Route path="/bar" element={<Bar />} />
-              <Route path="/pie" element={<Pie />} />
+              <Route path="/performance" element={<Performance />} />
               <Route path="/line" element={<Line />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/geography" element={<Geography />} />
-              <Route path="/quotes/:symbol" element={<QuotePage />} />
+              <Route path="/wallet" element={<Wallet />} />
+              <Route path="/quotepage/:symbol" element={<QuotePage />} />
+              <Route path="/quotetest" element={<Quotetest />} />
             </Routes>
           </main>
         </div>

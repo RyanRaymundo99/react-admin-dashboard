@@ -153,7 +153,7 @@ const Quotes = () => {
         </Grid>
         {data.map((item, index) => (
           <Grid item xs={12} sm={8} md={6} key={index}>
-            <Link to={`/quotes/${item.symbol}`} style={{ textDecoration: 'none' }}>
+            <Link to={`/quotepage/${item.symbol}`} style={{ textDecoration: 'none' }}>
               <Paper variant="outlined" sx={{ p: 6, borderRadius: '50px' }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                   <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h4" color="text.primary">
