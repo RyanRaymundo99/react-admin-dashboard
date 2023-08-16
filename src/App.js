@@ -10,7 +10,6 @@ import Bar from "./scenes/bar";
 import Line from "./scenes/line";
 import Performance from "./scenes/performance";
 import Wallet from "./scenes/wallet";
-import Quotetest from "./scenes/quotetest";
 
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -37,7 +36,6 @@ function App() {
               <Route path="/line" element={<Line />} />
               <Route path="/wallet" element={<Wallet />} />
               <Route path="/quotepage/:symbol" element={<QuotePage />} />
-              <Route path="/quotetest" element={<Quotetest />} />
             </Routes>
           </main>
         </div>

@@ -141,7 +141,7 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Carteira de Investidor"
-              to="/faq"
+              to="/wallet"
               icon={<WalletIcon />}
               selected={selected}
               setSelected={setSelected}
