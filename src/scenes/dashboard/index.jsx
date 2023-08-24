@@ -4,7 +4,9 @@ import { Box, Typography, useTheme, Paper, Grid } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useMediaQuery } from '@mui/material';
 import { tokens } from '../../theme';
-import CustomLineChart from '../../components/LineChart';
+import CustomLineChart from '../../components/IBOV';
+import Selic from '../../components/Selic';
+import IPCA from '../../components/IPCA';
 
 
 const LoadingSpinner = () => (
@@ -156,103 +158,7 @@ const Dashboard = () => {
     fetchData2();
   }, []);
 
-  const InflationChart = () => {
-    const [inflationData, setInflationData] = useState([]);
   
-    useEffect(() => {
-      const fetchInflationData = async () => {
-        try {
-          const today = new Date();
-          const currentYear = today.getFullYear();
-  
-          const response = await fetch(
-            `https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados/ultimos/7?formato=json`
-          );
-          const data = await response.json();
-          console.log('Fetched inflation data:', data);
-  
-          if (data.length > 0) {
-            const formattedInflationData = data.map(entry => ({
-              name: entry.data,
-              value: parseFloat(entry.valor),
-            }));
-            setInflationData(formattedInflationData);
-          }
-        } catch (error) {
-          console.error('Error fetching inflation data:', error);
-        }
-      };
-  
-      fetchInflationData();
-    }, []);
-  
-    return (
-      <div>
-        <h1>IPCA - Ultimos 7 Meses</h1>
-        {inflationData.length > 0 ? (
-          <LineChart width={1100} height={400} data={inflationData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis label={{ value: 'Inflation Rate (%)', angle: -90, position: 'insideLeft' }} />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="value" stroke="#82ca9d" />
-          </LineChart>
-        ) : (
-          <p>carregando dados...</p>
-        )}
-      </div>
-    );
-  };
-
-  const SelicInterestRateChart = () => {
-    const [selicInterestRateData, setSelicInterestRateData] = useState([]);
-    const chartWidth = Math.min(1100, window.innerWidth * 0.9); // Calculate chart width
-  
-    useEffect(() => {
-      const fetchSelicInterestRate = async () => {
-        try {
-          const today = new Date();
-  
-          const response = await fetch(
-            `https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados/ultimos/1095?formato=json`
-          );
-          const data = await response.json();
-          
-          if (data.length > 0) {
-            const formattedData = data.map(entry => ({
-              name: entry.data,
-              value: parseFloat(entry.valor),
-            }));
-            setSelicInterestRateData(formattedData);
-          }
-        } catch (error) {
-          console.error('Error fetching SELIC interest rate:', error);
-        }
-      };
-  
-      fetchSelicInterestRate();
-    }, []);
-  
-    return (
-      <div>
-      <h1>Taxa Selic - Últimos 3 anos</h1>
-      {selicInterestRateData.length > 0 ? (
-        <LineChart width={chartWidth} height={400} data={selicInterestRateData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis label={{ value: 'Interest Rate (%)', angle: -90, position: 'insideLeft' }} />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="value" stroke="#8884d8" />
-        </LineChart>
-      ) : (
-        <p>carregando dados...</p>
-      )}
-    </div>
-    );
-  };
-
 
   if (loading) {
     return (
@@ -328,6 +234,7 @@ const Dashboard = () => {
           
         </Box>
          {/* ROW 2 */}
+         
         <Box
           gridColumn="span 4"
           gridRow="span 10"
@@ -397,13 +304,12 @@ const Dashboard = () => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                SELIC
+                SELIC - Ultimos 3 anos
               </Typography>
-              <SelicInterestRateChart />
             </Box>
           </Box>
-          <Box height="250px" m="-20px 0 0 0">
-            <LineChart isDashboard={true} />
+          <Box height="250px" m="20px 0 0 0">
+            <Selic isDashboard={true} />
           </Box>
         </Box>
         {/* ROW 4 */}
@@ -426,17 +332,17 @@ const Dashboard = () => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                IPCA
+                IPCA - Ultimos 7 meses
               </Typography>
-              <InflationChart />
             </Box>
             
           </Box>
-          <Box height="250px" m="-20px 0 0 0">
-            <LineChart isDashboard={true} />
+          <Box height="250px" m="20px 0 0 0">
+            <IPCA isDashboard={true} />
           </Box>
         </Box>
       </Box>
+      
     </Box>
   );
 };

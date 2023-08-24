@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
-import Quotes from "./scenes/quotes/index";
+import Quotes from "./scenes/quotes";
 import QuotePage from './scenes/quotepage';
 import Contacts from "./scenes/contacts";
 import Bar from "./scenes/bar";
