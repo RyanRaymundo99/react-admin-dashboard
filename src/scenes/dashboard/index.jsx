@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box, Typography, useTheme, Paper, Grid } from '@mui/material';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useMediaQuery } from '@mui/material';
 import { tokens } from '../../theme';
 import CustomLineChart from '../../components/IBOV';
