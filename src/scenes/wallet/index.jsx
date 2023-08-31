@@ -8,17 +8,27 @@ import {
   useTheme,
 } from '@mui/material';
 
+import BarChartIcon from '@mui/icons-material/BarChart';
+import LoadingSpinner from '../global/LoadingSpinner'
+
 const Wallet = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedItem, setSelectedItem] = useState(null); // State for selected item
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const iconStyles = {
+    fontSize: '48px', // Adjust the size as needed
+    color: 'white',  // Set the color to white
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const symbols = ['ABEV3', 'RRRP3', 'ALSO3', 'ALPA4', 'ARZZ3'];
+        const symbols = ['AGRO3', 'CIEL3', 'CPLE6F', 'CSNA3', 'MRFG3', 'TAEE4F', 'WIZC3', 'USIM5', 'VALE3', 'CSMG3'];
         const fetchedData = [];
 
         for (let i = 0; i < symbols.length; i++) {
@@ -34,16 +44,26 @@ const Wallet = () => {
             const responseData = await response.json();
 
             const infoArray = (() => {
-              if (symbol === 'ABEV3') {
-                return ['Rendimento da Carteira - 27%', 'Rendimento IBOV Anual - 12%', 'Rendimento CDI Anual - 33%'];
-              } else if (symbol === 'RRRP3') {
-                return ['Rendimento da Carteira - 33%', 'Rendimento IBOV Anual - 44%', 'Rendimento CDI Anual - 93%'];
-              } else if (symbol === 'ALSO3') {
-                return ['Rendimento da Carteira - 44%', 'Rendimento IBOV Anual - 12%', 'Rendimento CDI Anual - 9%'];
-              } else if (symbol === 'ALPA4') {
-                return ['Rendimento da Carteira - 24%', 'Rendimento IBOV Anual - 22%', 'Rendimento CDI Anual - 92%'];
-              } else if (symbol === 'ARZZ3') {
-                return ['Rendimento da Carteira - 233%', 'Rendimento IBOV Anual - 232%', 'Rendimento CDI Anual - 932%'];
+              if (symbol === 'AGRO3') {
+                return ['CDI Acumulada - 13.58%', 'Carteira CVL - 26%', 'IBOvespa - 3.15%'];
+              } else if (symbol === 'CIEL3') {
+                return ['CDI Acumulada - 13.58%', 'Carteira CVL - 26%', 'IBOvespa - 3.15%'];
+              } else if (symbol === 'CPLE6F') {
+                return ['CDI Acumulada - 13.58%', 'Carteira CVL - 26%', 'IBOvespa - 3.15%'];
+              } else if (symbol === 'CSNA3') {
+                return ['CDI Acumulada - 13.58%', 'Carteira CVL - 26%', 'IBOvespa - 3.15%'];
+              } else if (symbol === 'MRFG3') {
+                return ['CDI Acumulada - 13.58%', 'Carteira CVL - 26%', 'IBOvespa - 3.15%'];
+              } else if (symbol === 'TAEE4F') {
+                return ['CDI Acumulada - 13.58%', 'Carteira CVL - 26%', 'IBOvespa - 3.15%'];
+              } else if (symbol === 'WIZC3') {
+                return ['CDI Acumulada - 13.58%', 'Carteira CVL - 26%', 'IBOvespa - 3.15%'];
+              } else if (symbol === 'USIM5') {
+                return ['CDI Acumulada - 13.58%', 'Carteira CVL - 26%', 'IBOvespa - 3.15%'];
+              } else if (symbol === 'VALE3') {
+                return ['CDI Acumulada - 13.58%', 'Carteira CVL - 26%', 'IBOvespa - 3.15%'];
+              } else if (symbol === 'CSMG3') {
+                return ['CDI Acumulada - 13.58%', 'Carteira CVL - 26%', 'IBOvespa - 3.15%'];
               }
             })();
 
@@ -81,16 +101,51 @@ const Wallet = () => {
 
   const getTextInfo = (infoArray) => {
     return infoArray.map((info, index) => (
-      <Typography key={index} variant="h3" color="text.primary"  paragraph>
-        {info}
-      </Typography>
+      <Typography
+          key={index}
+          variant="h3"
+          color="white"
+          fontWeight="bold"
+          paragraph
+          sx={{
+            padding: '50px', // Adjust padding as needed
+            border: '1px solid white', // Add border
+            borderRadius: '50px', // Add border radius
+            overflow: 'hidden', // Hide overflow content for ticker effect
+            whiteSpace: 'nowrap', // Prevent text from wrapping
+            animation: 'ticker 10s linear infinite', // Add animation
+          }}
+        >
+           <span
+    style={{
+      display: 'inline-block',
+      animation: 'ticker 20s linear infinite', // Add animation
+    }}
+  ></span>
+          {info}
+        </Typography>
     ));
   };
 
   return (
-    <Box display="flex" paddingX="130px">
+    <Box display="flex" padding="130px">
     {/* Left side - Stock Quotes */}
-    <Box flexGrow={1} overflow="auto" padding="20px">
+    {loading ? (
+        <Box flexGrow={1} display="flex" alignItems="center" justifyContent="center">
+          <LoadingSpinner />
+        </Box>
+      ) : (
+      <>
+    <Box flexGrow={1} overflow="auto" padding="20px" >
+    <Typography
+      variant="h2"
+      fontWeight="600"
+      padding="30px"
+      textAlign="center"
+      color={colors.grey[100]}
+      >
+        Principais Ações da Carteira
+      </Typography>
       {data.map((item, index) => (
         <Paper
           key={index}
@@ -98,7 +153,7 @@ const Wallet = () => {
             p: 2,
             marginBottom: '10px',
             cursor: 'pointer',
-            borderRadius: '10px',
+            borderRadius: '40px',
             boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1)',
             transition: 'transform 0.2s',
             display: 'flex', // Display the typography components side by side
@@ -115,7 +170,7 @@ const Wallet = () => {
             </Typography>
           </Box>
           <Box>
-            <Typography variant="h3" component="h5" color="text.secondary">
+            <Typography variant="h3" component="h5" color="text.secondary" style={{ color: item.changePercent.startsWith('-') ? negativeColor : positiveColor }}>
               ({item.changePercent})
             </Typography>
           </Box>
@@ -124,18 +179,47 @@ const Wallet = () => {
     </Box>
 
     {/* Right side - Text Info */}
-    {selectedItem !== null && (
-        <Box flexGrow={1} backgroundColor={colors.primary[400]} marginLeft="220px" paddingTop="100px" borderRadius="10px" display="flex" flexDirection="column" alignItems="left">
-        {getTextInfo(data[selectedItem].info).map((text, index) => (
-          <Typography key={index} variant="h1" component="h3" color="text.primary" padding="20px" style={{ textAlign: 'left' }}>
-            {text}
-          </Typography>
-        ))}
-      </Box>
-      
-    )}
+{selectedItem !== null && (
+  <Box
+    flexGrow={1}
+    marginLeft="200px"
+    paddingY="100px"
+    borderRadius="50px"
+    display="flex"
+    flexDirection="column"
+    alignItems="center" 
+    justifyContent="center"
+    backgroundSize="cover"
+    backgroundPosition="center"
+    backgroundColor={colors.blueAccent[400]}
+  >
+    <BarChartIcon style={iconStyles} />
+    <Typography
+      variant="h2"
+      fontWeight="600"
+      color="white"
+      paddingBottom="20px"
+      textAlign="center"
+    >
+      BenchMarks
+    </Typography>
+    {getTextInfo(data[selectedItem].info).map((text, index) => (
+      <Typography
+        key={index}
+        variant="h1"
+        component="h3"
+        color="white"
+        padding="20px"
+        style={{ textAlign: 'center' }}
+      >
+        {text}
+      </Typography>
+    ))}
   </Box>
-);
-};
+)}
+</>
+)}
+  </Box>
+)};
 
 export default Wallet;
