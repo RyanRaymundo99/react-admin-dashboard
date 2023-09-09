@@ -148,7 +148,7 @@ const Sidebar = () => {
             />
             <Item
               title="Notícias"
-              to="/quotetest"
+              to="/news"
               icon={<NewspaperIcon />}
               selected={selected}
               setSelected={setSelected}

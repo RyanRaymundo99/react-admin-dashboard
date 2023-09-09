@@ -113,13 +113,11 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    const fetchData2 = async () => {
+    const fetchData = async () => {
       try {
         const symbols = ['ABEV3', 'RRRP3', 'ALSO3', 'ALPA4', 'ARZZ3', 'CRFB3', 'AZUL4', 'B3SA3', 'BPAC11', 'BBSE3'];
-        const fetchedData = [];
 
-        for (let i = 0; i < symbols.length; i++) {
-          const symbol = symbols[i];
+        const fetchStockData = async (symbol) => {
           const response = await fetch(`https://yahoo-finance127.p.rapidapi.com/price/${symbol}.SA`, {
             headers: {
               'X-RapidAPI-Key': '37e7621ab5msh8ca6d117cb08066p1bb2b2jsn269b699edad8',
@@ -129,32 +127,41 @@ const Dashboard = () => {
 
           if (response.ok) {
             const responseData = await response.json();
-
-            const modifiedData = {
+            return {
               title: responseData.shortName,
               price: responseData.regularMarketPrice.fmt,
-              high: responseData.regularMarketDayHigh.fmt,
-              low: responseData.regularMarketDayLow.fmt,
-              volume: responseData.regularMarketVolume.fmt,
               changePercent: responseData.regularMarketChangePercent.fmt,
               symbol: responseData.symbol,
             };
-
-            fetchedData.push(modifiedData);
           } else {
-            console.error('Failed to fetch data:', response.status);
+            console.error('Failed to fetch data for', symbol, response.status);
+            return null;
+          }
+        };
+
+        const fetchedData = [];
+
+        for (let i = 0; i < symbols.length; i++) {
+          const symbol = symbols[i];
+          const stockData = await fetchStockData(symbol);
+          if (stockData) {
+            fetchedData.push(stockData);
           }
         }
 
         setData(fetchedData);
-        setLoading(false); // Set loading to false after data is fetched
+        setLoading(false);
       } catch (error) {
         console.error('Error occurred while fetching data:', error);
-        setLoading(false); // Set loading to false on error
+        setLoading(false);
       }
     };
 
-    fetchData2();
+    const updateInterval = setInterval(fetchData, 60000); // Fetch data every minute
+
+    fetchData(); // Initial data fetch
+
+    return () => clearInterval(updateInterval); // Clear the interval on unmount
   }, []);
 
   
@@ -179,6 +186,22 @@ const Dashboard = () => {
 
   return (
     <Box ml="100px">
+       <div className="stock-ticker-container">
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ul className="stock-ticker-list">
+          {data.map((item, index) => (
+            <li key={index}>
+              <span className="stock-ticker-symbol">{item.symbol}: </span>
+              <span className={`stock-ticker-percent ${item.changePercent.startsWith('-') ? 'negative' : 'positive'}`}>
+                ({item.changePercent})
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
       {/* GRID & CHARTS */}
       <Box
         display="grid"
@@ -188,7 +211,7 @@ const Dashboard = () => {
       >
         {/* ROW 1 */}
         <Box
-          gridColumn="span 8"
+          gridColumn="span 12"
           gridRow="span 4"
           backgroundColor={colors.primary[400]}
         >
@@ -235,57 +258,7 @@ const Dashboard = () => {
          {/* ROW 2 */}
          
         <Box
-          gridColumn="span 4"
-          gridRow="span 10"
-          backgroundColor={colors.primary[400]}
-          overflow="auto"
-        >
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            colors={colors.grey[100]}
-            p="15px"
-          >
-            <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Cotações
-            </Typography>
-          </Box>
-
-          {data.map((item, index) => (
-          <Grid item xs={12} sm={8} md={6} key={index} padding={2}>
-              <Paper variant="outlined" sx={{ p: 2, borderRadius: '30px' }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                  <Typography variant={isSmallScreen ? 'h7' : 'h6'} component="h6" color="text.primary">
-                    {item.symbol}
-                  </Typography>
-                  <Typography variant={isSmallScreen ? 'h6' : 'h5'} component="h5" color="text.secondary" style={{ color: item.changePercent.startsWith('-') ? negativeColor : positiveColor }}>
-                    ({item.changePercent})
-                  </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                  <Typography variant={isSmallScreen ? 'h5' : 'h4'} component="h4" color="text.primary">
-                    {item.title}
-                  </Typography>
-                  <Typography variant={isSmallScreen ? 'h5' : 'h4'} component="h4" color="text.secondary" style={{ color: item.changePercent.startsWith('-') ? negativeColor : positiveColor }}>
-                    R${item.price}
-                  </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Typography variant={isSmallScreen ? 'h5' : 'h5'} component="h5" color="text.secondary">
-                    Max: {item.high} Min: {item.low}
-                  </Typography>
-                  <Typography variant={isSmallScreen ? 'h5' : 'h5'} component="h5" color="text.secondary">
-                    Vol: {item.volume}
-                  </Typography>
-                </Box>
-              </Paper>
-          </Grid>
-        ))}
-        </Box>
-         
-        <Box
-          gridColumn="span 8"
+          gridColumn="span 6"
           gridRow="span 4"
           backgroundColor={colors.primary[400]}
         >
@@ -313,7 +286,7 @@ const Dashboard = () => {
         </Box>
         {/* ROW 4 */}
         <Box
-          gridColumn="span 8"
+          gridColumn="span 6"
           gridRow="span 4"
           backgroundColor={colors.primary[400]}
         >

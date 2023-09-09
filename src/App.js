@@ -5,12 +5,9 @@ import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Quotes from "./scenes/quotes";
 import QuotePage from './scenes/quotepage';
-import Contacts from "./scenes/contacts";
-import Bar from "./scenes/bar";
 import Line from "./scenes/line";
-import Performance from "./scenes/performance";
 import Wallet from "./scenes/wallet";
-
+import News from "./scenes/news";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
@@ -30,12 +27,10 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/quotes" element={<Quotes />} />
-              <Route path="/contacts" element={<Contacts />} />
-              <Route path="/bar" element={<Bar />} />
-              <Route path="/performance" element={<Performance />} />
               <Route path="/line" element={<Line />} />
               <Route path="/wallet" element={<Wallet />} />
               <Route path="/quotepage/:symbol" element={<QuotePage />} />
+              <Route path="/news" element={<News />} />
             </Routes>
           </main>
         </div>

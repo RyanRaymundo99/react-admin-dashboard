@@ -55,3 +55,42 @@ body,
     transform: rotate(360deg);
   }
 }
+
+
+.stock-ticker-container {
+  background-color: #000;
+  color: #fff;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.stock-ticker-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  animation: marquee 60s linear infinite;
+}
+
+.stock-ticker-list li {
+  padding: 5px 10px;
+  display: inline;
+}
+
+.stock-ticker-symbol {
+  font-weight: bold;
+}
+
+.stock-ticker-percent.negative {
+  color: red;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
