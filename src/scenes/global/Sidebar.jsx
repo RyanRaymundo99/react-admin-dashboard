@@ -6,12 +6,12 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import PriceChangeIcon from '@mui/icons-material/PriceChange';
 import WalletIcon from '@mui/icons-material/Wallet';
 import SwipeUpIcon from '@mui/icons-material/SwipeUp';
 import SsidChartIcon from '@mui/icons-material/SsidChart';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import NewspaperIcon from '@mui/icons-material/Newspaper';
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -83,7 +83,7 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  Home
+                  Menu
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
@@ -140,16 +140,23 @@ const Sidebar = () => {
               Extras
             </Typography>
             <Item
+              title="Notícias"
+              to="/news"
+              icon={<NewspaperIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+               <Item
               title="Carteira de Investidor"
               to="/wallet"
               icon={<WalletIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Notícias"
-              to="/news"
-              icon={<NewspaperIcon />}
+               <Item
+              title="Conteúdo Educacional"
+              to="/educative"
+              icon={<ImportContactsIcon />}
               selected={selected}
               setSelected={setSelected}
             />

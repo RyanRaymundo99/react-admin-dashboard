@@ -56,7 +56,8 @@ const News = () => {
       <div>
         <Button variant={category === 'Ibov' ? 'contained' : 'outlined'} style={{ margin: '8px', fontSize: '20px', borderRadius: '20px' }} onClick={() => setCategory('Ibov')}>Ibov</Button>
         <Button variant={category === 'Crypto' ? 'contained' : 'outlined'} style={{ margin: '8px', fontSize: '20px', borderRadius: '20px' }} onClick={() => setCategory('Crypto')}>Crypto</Button>
-        <Button variant={category === 'Brazil' ? 'contained' : 'outlined'} style={{ margin: '8px', fontSize: '20px', borderRadius: '20px' }} onClick={() => setCategory('Brazil')}>Brazil</Button>
+        <Button variant={category === 'Brasil' ? 'contained' : 'outlined'} style={{ margin: '8px', fontSize: '20px', borderRadius: '20px' }} onClick={() => setCategory('Brasil')}>Brasil</Button>
+        <Button variant={category === 'World' ? 'contained' : 'outlined'} style={{ margin: '8px', fontSize: '20px', borderRadius: '20px' }} onClick={() => setCategory('World')}>World</Button>
       </div>
       <div style={{ marginTop: '16px' }}>
         {loading ? (

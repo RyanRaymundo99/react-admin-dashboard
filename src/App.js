@@ -8,6 +8,7 @@ import QuotePage from './scenes/quotepage';
 import Line from "./scenes/line";
 import Wallet from "./scenes/wallet";
 import News from "./scenes/news";
+import Educative from "./scenes/educative";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
@@ -31,6 +32,7 @@ function App() {
               <Route path="/wallet" element={<Wallet />} />
               <Route path="/quotepage/:symbol" element={<QuotePage />} />
               <Route path="/news" element={<News />} />
+              <Route path="/educative" element={<Educative />} />
             </Routes>
           </main>
         </div>
