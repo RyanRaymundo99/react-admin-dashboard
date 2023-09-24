@@ -6,64 +6,7 @@ import { tokens } from '../../theme';
 import CustomLineChart from '../../components/IBOV';
 import Selic from '../../components/Selic';
 import IPCA from '../../components/IPCA';
-
-
-const LoadingSpinner = () => (
-  <svg
-  xmlns="http://www.w3.org/2000/svg"
-  xmlnsXlink="http://www.w3.org/1999/xlink"
-  style={{ margin: 'auto', background: 'none', display: 'block', shapeRendering: 'auto' }}
-  width="100px"
-  height="100px"
-  viewBox="0 0 100 100"
-  preserveAspectRatio="xMidYMid"
->
-  <circle cx="50" cy="50" r="0" fill="none" stroke="#3f51b5" strokeWidth="10">
-    <animate
-      attributeName="r"
-      repeatCount="indefinite"
-      dur="1.1627906976744184s"
-      values="0;40"
-      keyTimes="0;1"
-      keySplines="0 0.2 0.8 1"
-      calcMode="spline"
-      begin="0s"
-    ></animate>
-    <animate
-      attributeName="opacity"
-      repeatCount="indefinite"
-      dur="1.1627906976744184s"
-      values="1;0"
-      keyTimes="0;1"
-      keySplines="0.2 0 0.8 1"
-      calcMode="spline"
-      begin="0s"
-    ></animate>
-  </circle>
-  <circle cx="50" cy="50" r="0" fill="none" stroke="#3f51b5" strokeWidth="10">
-    <animate
-      attributeName="r"
-      repeatCount="indefinite"
-      dur="1.1627906976744184s"
-      values="0;40"
-      keyTimes="0;1"
-      keySplines="0 0.2 0.8 1"
-      calcMode="spline"
-      begin="-0.5813953488372092s"
-    ></animate>
-    <animate
-      attributeName="opacity"
-      repeatCount="indefinite"
-      dur="1.1627906976744184s"
-      values="1;0"
-      keyTimes="0;1"
-      keySplines="0.2 0 0.8 1"
-      calcMode="spline"
-      begin="-0.5813953488372092s"
-    ></animate>
-  </circle>
-</svg>
-);
+import LoadingSpinner from '../global/LoadingSpinner';
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -74,8 +17,6 @@ const Dashboard = () => {
   const initialItemsToShow = 2;
   const [itemsToShow, setItemsToShow] = useState(initialItemsToShow);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const positiveColor = 'green';
-  const negativeColor = 'red';
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true); // Added loading state
@@ -128,8 +69,6 @@ const Dashboard = () => {
           if (response.ok) {
             const responseData = await response.json();
             return {
-              title: responseData.shortName,
-              price: responseData.regularMarketPrice.fmt,
               changePercent: responseData.regularMarketChangePercent.fmt,
               symbol: responseData.symbol,
             };

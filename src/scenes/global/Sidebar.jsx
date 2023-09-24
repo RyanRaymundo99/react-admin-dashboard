@@ -126,7 +126,7 @@ const Sidebar = () => {
             />
             <Item
               title="Comparar Desempenho"
-              to="/pie"
+              to="/performance"
               icon={<SwipeUpIcon />}
               selected={selected}
               setSelected={setSelected}

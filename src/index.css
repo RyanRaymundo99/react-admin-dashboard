@@ -80,6 +80,9 @@ body,
 .stock-ticker-symbol {
   font-weight: bold;
 }
+.stock-ticker-price {
+  font-weight: bold;
+}
 
 .stock-ticker-percent.negative {
   color: red;
