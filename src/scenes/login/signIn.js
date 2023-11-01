@@ -57,7 +57,11 @@ function SignIn() {
         // Check if the user's email matches the approved email addresses
         if (
           userEmail === "rian981265@gmail.com" ||
-          userEmail === "layrton.lbss@gmail.com"
+          userEmail === "layrton.lbss@gmail.com"||
+          userEmail === "Cainan.carvalho1@oultook.com"||
+          userEmail === "cainan.carvalho199601@gmail.com"||
+          userEmail === "vladsonluizsilva@gmail.com"||
+          userEmail === "Vladsonluizsilva@hotmail.com"||
         ) {
           setValue(userEmail);
           localStorage.setItem("email", userEmail);
