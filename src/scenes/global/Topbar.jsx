@@ -9,10 +9,6 @@ import { auth } from '../../api/firebase'; // Replace with the actual path
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-const LogoutSVG = () => {
-  // Your existing LogoutSVG component code...
-};
-
 const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -41,17 +37,13 @@ const Topbar = () => {
       console.error('Error during logout:', error);
     }
   }
+  const boxStyle = {
+    backgroundColor: `${colors.primary[400]}`, // Use your theme's primary[400] color
+  };
 
   return (
-    <Box display="flex" justifyContent="space-between" p={2}>
+    <Box display="flex" justifyContent="space-between" p={2} style={boxStyle}>
       <Box display="flex" ml="100px">
-        <Typography variant="h2" mr="10px" fontWeight="bold" style={{ color: colors.grey[100] }}>CVL Capital</Typography>
-        <img
-          alt="profile-user"
-          width="30px"
-          height="32px"
-          src="../../assets/logo.png"
-        />
       </Box>
 
       <Box display="flex">

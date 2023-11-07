@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import { Box, Container, Typography, Grid, Paper, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import LoadingSpinner from '../global/LoadingSpinner';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const Quotes = () => {
   const theme = useTheme();

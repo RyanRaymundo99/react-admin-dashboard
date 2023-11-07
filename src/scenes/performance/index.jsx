@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PQueue from 'p-queue';
-import { Box, Typography, Paper, Grid, Container } from '@mui/material';
+import { Box, Typography, Paper, useTheme, Grid, Container } from '@mui/material';
+import { tokens } from '../../theme';
+
+import Loading from '../../components/LoadingSpinner'
 
 const Index = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -114,13 +120,13 @@ const Index = () => {
 
   const categoryStyles = {
     Educação: {
-      backgroundColor: '#f5f5f5',
+      backgroundColor: 'gray[100}',
     },
     Finança: {
-      backgroundColor: '#f5f5f5',
+      backgroundColor: 'primary[100]',
     },
     Saúde: {
-      backgroundColor: '#f5f5f5',
+      backgroundColor: 'greenAccent[100]',
     },
   };
 
@@ -128,7 +134,7 @@ const Index = () => {
     <Container style={{ justifyItems: 'center'}}>
       <div>
         {loading ? (
-          <p>Loading...</p>
+          <Loading/>
         ) : (
           <div className="responsive-grid">
             {Object.keys(data).map((category) => (
@@ -159,9 +165,7 @@ const Index = () => {
                     <li
                       key={index}
                       style={{
-                        borderTop: '1px solid white',
-                        borderBottom: '1px solid white',
-                        borderRadius: '5px',
+                        borderBottom: '1px solid ${colors.primary[400]}',
                         padding: '5px',
                         display: 'flex',
                         justifyContent: 'space-between',

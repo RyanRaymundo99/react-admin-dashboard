@@ -13,6 +13,7 @@ import Educative from './scenes/educative';
 import Performance from './scenes/performance';
 import Login from './scenes/login/signIn';
 
+
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
 import { auth } from './api/firebase'; // Replace with the actual path
@@ -47,29 +48,24 @@ function App() {
           <main className="content">
             {user && <Topbar />} {/* Display Topbar only when the user is authenticated */}
             <Routes>
-              <Route
-                path="/"
-                element={
-                  user ? (
-                    <Dashboard />
-                  ) : (
-                    <Navigate to="/login" />
-                  )
-                }
-              />
-              <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-              {user && (
-                <React.Fragment>
-                  <Route path="/quotes" element={<Quotes />} />
-                  <Route path="/line" element={<Line />} />
-                  <Route path="/wallet" element={<Wallet />} />
-                  <Route path="/quotepage/:symbol" element={<QuotePage />} />
-                  <Route path="/news" element={<News />} />
-                  <Route path="/educative" element={<Educative />} />
-                  <Route path="/performance" element={<Performance />} />
-                </React.Fragment>
-              )}
-            </Routes>
+  <Route
+    path="/"
+    element={user ? <Dashboard /> : <Navigate to="/login" />}
+  />
+  <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
+  {user && (
+    <React.Fragment>
+      <Route path="/quotes" element={<Quotes />} />
+      <Route path="/line" element={<Line />} />
+      <Route path="/wallet" element={<Wallet />} />
+      <Route path="/quotepage/:symbol" element={<QuotePage />} />
+      <Route path="/news" element={<News />} />
+      <Route path="/educative" element={<Educative />} />
+      <Route path="/performance" element={<Performance />} />
+    </React.Fragment>
+  )}
+</Routes>
+
           </main>
         </div>
       </ThemeProvider>

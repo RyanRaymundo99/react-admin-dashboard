@@ -58,10 +58,12 @@ body,
 
 
 .stock-ticker-container {
-  background-color: #000;
-  color: #fff;
+  background-color: "${colors.primary[500]}";
+  color: "${colors.primary[100]}";
   overflow: hidden;
   white-space: nowrap;
+  padding: 15px;
+  font-size: 15px;
 }
 
 .stock-ticker-list {
@@ -69,11 +71,11 @@ body,
   padding: 0;
   margin: 0;
   display: inline-block;
-  animation: marquee 60s linear infinite;
+  animation: marquee 50s linear infinite;
 }
 
 .stock-ticker-list li {
-  padding: 5px 10px;
+  padding: 10px 20px;
   display: inline;
 }
 
@@ -86,6 +88,9 @@ body,
 
 .stock-ticker-percent.negative {
   color: red;
+}
+.stock-ticker-percent.positive {
+  color: rgb(12, 250, 12);
 }
 
 @keyframes marquee {
@@ -109,6 +114,26 @@ body,
   .responsive-grid {
     grid-template-columns: repeat(3, minmax(400px, 1fr));
   }
+}
+
+
+
+/* Style for the input label and border when not focused */
+.custom-input label.MuiInputLabel-root {
+  color: white; /* Change the label text color when not focused */
+}
+
+.custom-input .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  border-color: white; /* Change the border color when not focused */
+}
+
+/* Style for the input label and border when focused */
+.custom-input label.MuiInputLabel-root.Mui-focused {
+  color: white; /* Change the label text color when focused */
+}
+
+.custom-input .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: white; /* Change the border color when focused */
 }
 
 

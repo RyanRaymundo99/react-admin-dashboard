@@ -6,7 +6,7 @@ import { tokens } from '../../theme';
 import CustomLineChart from '../../components/IBOV';
 import Selic from '../../components/Selic';
 import IPCA from '../../components/IPCA';
-import LoadingSpinner from '../global/LoadingSpinner';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -125,22 +125,23 @@ const Dashboard = () => {
 
   return (
     <Box ml="100px">
+         {/* STOCK TICKER */}
        <div className="stock-ticker-container">
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <ul className="stock-ticker-list">
-          {data.map((item, index) => (
-            <li key={index}>
-              <span className="stock-ticker-symbol">{item.symbol}: </span>
-              <span className={`stock-ticker-percent ${item.changePercent.startsWith('-') ? 'negative' : 'positive'}`}>
-                ({item.changePercent})
-              </span>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+          {loading ? (
+            <LoadingSpinner/>
+          ) : (
+            <ul className="stock-ticker-list">
+              {data.map((item, index) => (
+                <li key={index}>
+                  <span className="stock-ticker-symbol">{item.symbol}: </span>
+                  <span className={`stock-ticker-percent ${item.changePercent.startsWith('-') ? 'negative' : 'positive'}`}>
+                    ({item.changePercent})
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       {/* GRID & CHARTS */}
       <Box
         display="grid"
@@ -152,6 +153,7 @@ const Dashboard = () => {
         <Box
           gridColumn="span 12"
           gridRow="span 4"
+          marginRight="20px"
           backgroundColor={colors.primary[400]}
         >
           <Box
@@ -163,8 +165,8 @@ const Dashboard = () => {
           >
             <Box>
               <Typography
-                variant="h5"
-                
+                variant="h2"
+                marginLeft="40px"
                 fontWeight="600"
                 color={colors.grey[100]}
               >
@@ -172,6 +174,7 @@ const Dashboard = () => {
               </Typography>
               <Typography
                 variant="h3"
+                marginLeft="40px"
                 fontWeight="bold"
                 paddingBottom="50px"
                 color={closeDifference !== null && closeDifference < 0 ? colors.red : colors.greenAccent}
@@ -188,6 +191,7 @@ const Dashboard = () => {
                 {closeDifference.toFixed(2)}
               </Typography>
             )}
+            
           </Box>
           <Box height="250px" m="-20px 0 0 0">
             <CustomLineChart isDashboard={true} />
@@ -198,7 +202,7 @@ const Dashboard = () => {
          
         <Box
           gridColumn="span 6"
-          gridRow="span 4"
+          gridRow="span 3"
           backgroundColor={colors.primary[400]}
         >
           <Box
@@ -218,6 +222,16 @@ const Dashboard = () => {
                 SELIC - Ultimos 3 anos
               </Typography>
             </Box>
+            <Box>
+              <Typography
+                variant="h5"
+                
+                fontWeight="600"
+                color={colors.grey[100]}
+              >
+                Atual
+              </Typography>
+            </Box>
           </Box>
           <Box height="250px" m="20px 0 0 0">
             <Selic isDashboard={true} />
@@ -226,7 +240,8 @@ const Dashboard = () => {
         {/* ROW 4 */}
         <Box
           gridColumn="span 6"
-          gridRow="span 4"
+          gridRow="span 3"
+          marginRight="20px"
           backgroundColor={colors.primary[400]}
         >
           <Box
@@ -244,6 +259,16 @@ const Dashboard = () => {
                 color={colors.grey[100]}
               >
                 IPCA - Ultimos 7 meses
+              </Typography>
+            </Box>
+            <Box>
+              <Typography
+                variant="h5"
+                
+                fontWeight="600"
+                color={colors.grey[100]}
+              >
+                Atual
               </Typography>
             </Box>
             
