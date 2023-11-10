@@ -58,6 +58,7 @@ const Sidebar = () => {
       position: "fixed",
       height: "100%", // Set the width to 100%
       zIndex: 100, // Add z-index of 100
+      borderRight: "1px solid #F7F7F7",
     }}
   >
       <ProSidebar collapsed={isCollapsed} 
@@ -80,7 +81,7 @@ const Sidebar = () => {
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"
-                ml="15px"
+                ml="30px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
                   Menu

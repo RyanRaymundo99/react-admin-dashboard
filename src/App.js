@@ -37,9 +37,13 @@ function App() {
         const userEmail = userData.email;
         const allowedEmails = [
           "rian981265@gmail.com",
-          "example2@example.com",
-          "random1@example.com",
-          "random2@example.com",
+          "layrton.lbss@gmail.com",
+          "Cainan.carvalho1@oultook.com",
+          "cainan.carvalho199601@gmail.com",
+          "vladsonluizsilva@gmail.com",
+          "Vladsonluizsilva@hotmail.com",
+          "Leandrodeoliveira678@gmail.com",
+          "ingridrodriguespubli@gmail.com",
         ];
 
         setIsAuthorized(allowedEmails.includes(userEmail));
@@ -98,10 +102,8 @@ function App() {
         </div>
       </ThemeProvider>
       <Dialog open={isUnauthorizedDialogOpen} onClose={handleCloseUnauthorizedDialog}>
-        <DialogTitle style={{ backgroundColor: 'red', color: 'white' }}>Unauthorized Access</DialogTitle>
-        <DialogContent>
-          <Typography>This action is not authorized.</Typography>
-        </DialogContent>
+        <DialogTitle style={{ backgroundColor: 'red', color: 'white' }}>Endereço de Email não cadastrado</DialogTitle>
+
         <DialogActions>
           <Button onClick={handleCloseUnauthorizedDialog} color="primary">
             Close
