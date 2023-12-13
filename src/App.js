@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
+import MobileSidebar from './scenes/global/MobileSidebar';
 import Dashboard from './scenes/dashboard';
 import Quotes from './scenes/quotes';
 import QuotePage from './scenes/quotepage';
@@ -72,6 +73,7 @@ function App() {
         <CssBaseline />
         <div className="app">
           {user && isAuthorized && <Sidebar />}
+          {user && isAuthorized && <MobileSidebar />}
           <main className="content">
             {user && isAuthorized && <Topbar />}
             <Routes>

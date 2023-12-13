@@ -1,17 +1,21 @@
 import { useState } from "react";
-import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
+import {
+  ProSidebar,
+  Menu,
+  MenuItem,
+} from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import WalletIcon from '@mui/icons-material/Wallet';
-import SwipeUpIcon from '@mui/icons-material/SwipeUp';
-import SsidChartIcon from '@mui/icons-material/SsidChart';
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import WalletIcon from "@mui/icons-material/Wallet";
+import SwipeUpIcon from "@mui/icons-material/SwipeUp";
+import SsidChartIcon from "@mui/icons-material/SsidChart";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import NewspaperIcon from '@mui/icons-material/Newspaper';
-import ImportContactsIcon from '@mui/icons-material/ImportContacts';
+import NewspaperIcon from "@mui/icons-material/Newspaper";
+import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -39,32 +43,44 @@ const Sidebar = () => {
 
   return (
     <Box
-    sx={{
-      "& .pro-sidebar-inner": {
-        background: `${colors.primary[400]} !important`,
-      },
-      "& .pro-icon-wrapper": {
-        backgroundColor: "transparent !important",
-      },
-      "& .pro-inner-item": {
-        padding: "5px 35px 5px 20px !important",
-      },
-      "& .pro-inner-item:hover": {
-        color: "#868dfb !important",
-      },
-      "& .pro-menu-item.active": {
-        color: "#6870fa !important",
-      },
-      position: "fixed",
-      height: "100%", // Set the width to 100%
-      zIndex: 100, // Add z-index of 100
-      borderRight: "1px solid #F7F7F7",
-    }}
-  >
-      <ProSidebar collapsed={isCollapsed} 
       sx={{
-        height: "100%", // Set the sidebar height to full viewport height
+        "& .pro-sidebar-inner": {
+          background: `${colors.primary[400]} !important`,
+        },
+        "& .pro-icon-wrapper": {
+          backgroundColor: "transparent !important",
+        },
+        "& .pro-inner-item": {
+          padding: "5px 35px 5px 20px !important",
+        },
+        "& .pro-inner-item:hover": {
+          color: "#868dfb !important",
+        },
+        "& .pro-menu-item.active": {
+          color: "#6870fa !important",
+        },
+        position: "fixed",
+        height: "100%", // Set the width to 100%
+        zIndex: 100, // Add z-index of 100
+        // Your existing styles here...
       }}
+    >
+      {/* Use media query to hide the sidebar on smaller screens */}
+      <style>
+        {`
+          @media (max-width: 960px) {
+            .pro-sidebar {
+              display: none;
+            }
+          }
+        `}
+      </style>
+
+      <ProSidebar
+        collapsed={isCollapsed}
+        sx={{
+          height: "100%", // Set the sidebar height to full viewport height
+        }}
       >
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
@@ -92,7 +108,7 @@ const Sidebar = () => {
               </Box>
             )}
           </MenuItem>
-        
+
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Home"
@@ -117,7 +133,7 @@ const Sidebar = () => {
             >
               Gráficos
             </Typography>
-            
+
             <Item
               title="Ibovespa Index"
               to="/line"
@@ -132,7 +148,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            
+
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -147,14 +163,14 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-               <Item
+            <Item
               title="Carteira de Investidor"
               to="/wallet"
               icon={<WalletIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-               <Item
+            <Item
               title="Conteúdo Educacional"
               to="/educative"
               icon={<ImportContactsIcon />}

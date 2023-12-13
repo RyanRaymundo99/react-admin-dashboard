@@ -46,7 +46,7 @@ const Index = () => {
           try {
             const response = await axios.get(`https://yahoo-finance127.p.rapidapi.com/price/${symbol}.SA`, {
               headers: {
-                'X-RapidAPI-Key': '37e7621ab5msh8ca6d117cb08066p1bb2b2jsn269b699edad8',
+                'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
                 'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com',
               },
             });

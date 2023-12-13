@@ -31,7 +31,7 @@ const Dashboard = () => {
         method: 'GET',
         url: 'https://yahoo-finance127.p.rapidapi.com/price/%5EBVSP',
         headers: {
-          'X-RapidAPI-Key': '37e7621ab5msh8ca6d117cb08066p1bb2b2jsn269b699edad8',
+          'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
           'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com'
         }
       };
@@ -57,37 +57,18 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const symbols = ['ABEV3', 'RRRP3', 'ALSO3', 'ALPA4', 'ARZZ3', 'CRFB3', 'AZUL4', 'B3SA3', 'BPAC11', 'BBSE3'];
-
-        const fetchStockData = async (symbol) => {
-          const response = await fetch(`https://yahoo-finance127.p.rapidapi.com/price/${symbol}.SA`, {
-            headers: {
-              'X-RapidAPI-Key': '37e7621ab5msh8ca6d117cb08066p1bb2b2jsn269b699edad8',
-              'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com',
-            },
-          });
-
-          if (response.ok) {
-            const responseData = await response.json();
-            return {
-              changePercent: responseData.regularMarketChangePercent.fmt,
-              symbol: responseData.symbol,
-            };
-          } else {
-            console.error('Failed to fetch data for', symbol, response.status);
-            return null;
-          }
-        };
-
         const fetchedData = [];
-
+  
         for (let i = 0; i < symbols.length; i++) {
           const symbol = symbols[i];
           const stockData = await fetchStockData(symbol);
           if (stockData) {
             fetchedData.push(stockData);
           }
+          // Introduce a delay between requests to avoid rate limiting
+          await new Promise(resolve => setTimeout(resolve, 1000)); // 1000 milliseconds (adjust as needed)
         }
-
+  
         setData(fetchedData);
         setLoading(false);
       } catch (error) {
@@ -95,13 +76,39 @@ const Dashboard = () => {
         setLoading(false);
       }
     };
-
+  
+    const fetchStockData = async (symbol) => {
+      try {
+        const response = await fetch(`https://yahoo-finance127.p.rapidapi.com/price/${symbol}.SA`, {
+          headers: {
+            'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
+            'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com',
+          },
+        });
+  
+        if (response.ok) {
+          const responseData = await response.json();
+          return {
+            changePercent: responseData.regularMarketChangePercent.fmt,
+            symbol: responseData.symbol,
+          };
+        } else {
+          console.error('Failed to fetch data for', symbol, response.status);
+          return null;
+        }
+      } catch (error) {
+        console.error('Error occurred while fetching data for', symbol, error);
+        return null;
+      }
+    };
+  
     const updateInterval = setInterval(fetchData, 60000); // Fetch data every minute
-
+  
     fetchData(); // Initial data fetch
-
+  
     return () => clearInterval(updateInterval); // Clear the interval on unmount
   }, []);
+  
 
   
 

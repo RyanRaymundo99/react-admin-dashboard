@@ -37,7 +37,7 @@ const QuotePage = () => {
       try {
         const response = await fetch(`https://yahoo-finance127.p.rapidapi.com/historic/${symbol}/1d/15d`, {
           headers: {
-            'X-RapidAPI-Key': '37e7621ab5msh8ca6d117cb08066p1bb2b2jsn269b699edad8',
+            'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
             'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com'
           }
         });
@@ -81,7 +81,7 @@ const QuotePage = () => {
       method: 'GET',
       url: `https://yahoo-finance127.p.rapidapi.com/finance-analytics/${symbol}`,
       headers: {
-        'X-RapidAPI-Key': '37e7621ab5msh8ca6d117cb08066p1bb2b2jsn269b699edad8',
+        'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
         'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com',
       },
     };
@@ -109,7 +109,7 @@ const QuotePage = () => {
       method: 'GET',
       url: `https://yahoo-finance127.p.rapidapi.com/key-statistics/${symbol}`,
       headers: {
-        'X-RapidAPI-Key': '37e7621ab5msh8ca6d117cb08066p1bb2b2jsn269b699edad8',
+        'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
         'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com',
       },
     };
