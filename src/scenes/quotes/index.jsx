@@ -21,49 +21,52 @@ const Quotes = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const symbols = ['ABEV3', 'RRRP3', 'ALSO3', 'ALPA4', 'ARZZ3', 'CRFB3', 'AZUL4', 'B3SA3', 'BPAC11', 'BBSE3'];
+  
+    const fetchStockData = async (symbolIndex) => {
+      if (symbolIndex >= symbols.length) {
+        setLoading(false); // Set loading to false after all data is fetched
+        return;
+      }
+  
+      const symbol = symbols[symbolIndex];
       try {
-        const symbols = ['ABEV3', 'RRRP3', 'ALSO3', 'ALPA4', 'ARZZ3', 'CRFB3', 'AZUL4', 'B3SA3', 'BPAC11', 'BBSE3'];
-        const fetchedData = [];
-
-        for (let i = 0; i < symbols.length; i++) {
-          const symbol = symbols[i];
-          const response = await fetch(`https://yahoo-finance127.p.rapidapi.com/price/${symbol}.SA`, {
-            headers: {
-              'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
-              'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com',
-            },
-          });
-
-          if (response.ok) {
-            const responseData = await response.json();
-
-            const modifiedData = {
-              title: responseData.shortName,
-              price: responseData.regularMarketPrice.fmt,
-              high: responseData.regularMarketDayHigh.fmt,
-              low: responseData.regularMarketDayLow.fmt,
-              volume: responseData.regularMarketVolume.fmt,
-              changePercent: responseData.regularMarketChangePercent.fmt,
-              symbol: responseData.symbol,
-            };
-
-            fetchedData.push(modifiedData);
-          } else {
-            console.error('Failed to fetch data:', response.status);
-          }
+        const response = await fetch(`https://yahoo-finance127.p.rapidapi.com/price/${symbol}.SA`, {
+          headers: {
+            'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
+            'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com',
+          },
+        });
+  
+        if (response.ok) {
+          const responseData = await response.json();
+          const modifiedData = {
+            title: responseData.shortName,
+            price: responseData.regularMarketPrice.fmt,
+            high: responseData.regularMarketDayHigh.fmt,
+            low: responseData.regularMarketDayLow.fmt,
+            volume: responseData.regularMarketVolume.fmt,
+            changePercent: responseData.regularMarketChangePercent.fmt,
+            symbol: responseData.symbol,
+          };
+          setData(prevData => [...prevData, modifiedData]);
+        } else {
+          console.error('Failed to fetch data:', response.status);
         }
-
-        setData(fetchedData);
-        setLoading(false); // Set loading to false after data is fetched
       } catch (error) {
         console.error('Error occurred while fetching data:', error);
-        setLoading(false); // Set loading to false on error
       }
+  
+      // Introduce a delay before processing the next symbol
+      setTimeout(() => {
+        fetchStockData(symbolIndex + 1);
+      }, 1000); // 1000 milliseconds (adjust as needed)
     };
-
-    fetchData();
+  
+    fetchStockData(0); // Start fetching data with the first symbol
   }, []);
+  
+  
 
   if (loading) {
     return (

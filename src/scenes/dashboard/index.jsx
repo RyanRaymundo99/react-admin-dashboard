@@ -131,7 +131,7 @@ const Dashboard = () => {
   }
 
   return (
-    <Box ml="100px">
+    <Box>
          {/* STOCK TICKER */}
        <div className="stock-ticker-container">
           {loading ? (
@@ -155,12 +155,12 @@ const Dashboard = () => {
         gridTemplateColumns="repeat(12, 1fr)"
         gridAutoRows="140px"
         gap="20px"
+        marginLeft={{ lg: '100px', xl: '100px' }}
       >
         {/* ROW 1 */}
         <Box
           gridColumn="span 12"
           gridRow="span 4"
-          marginRight="20px"
           backgroundColor={colors.primary[400]}
         >
           <Box
@@ -172,8 +172,8 @@ const Dashboard = () => {
           >
             <Box>
               <Typography
-                variant="h2"
-                marginLeft="40px"
+                variant="h3"
+                marginLeft="10px"
                 fontWeight="600"
                 color={colors.grey[100]}
               >
@@ -181,7 +181,7 @@ const Dashboard = () => {
               </Typography>
               <Typography
                 variant="h3"
-                marginLeft="40px"
+                marginLeft="10px"
                 fontWeight="bold"
                 paddingBottom="50px"
                 color={closeDifference !== null && closeDifference < 0 ? colors.red : colors.greenAccent}
@@ -191,7 +191,7 @@ const Dashboard = () => {
             </Box>
             {closeDifference !== null && (
               <Typography
-                variant="h6"
+                variant="h4"
                 fontWeight="600"
                 color={closeDifference < 0 ? colors.redAccent[400] : colors.greenAccent[400]}
               >
@@ -200,7 +200,7 @@ const Dashboard = () => {
             )}
             
           </Box>
-          <Box height="250px" m="-20px 0 0 0">
+          <Box height="250px">
             <CustomLineChart isDashboard={true} />
           </Box>
           
@@ -208,7 +208,7 @@ const Dashboard = () => {
          {/* ROW 2 */}
          
         <Box
-          gridColumn="span 6"
+          gridColumn="span 12"
           gridRow="span 3"
           backgroundColor={colors.primary[400]}
         >
@@ -240,15 +240,14 @@ const Dashboard = () => {
               </Typography>
             </Box>
           </Box>
-          <Box height="250px" m="20px 0 0 0">
+          <Box height="250px">
             <Selic isDashboard={true} />
           </Box>
         </Box>
         {/* ROW 4 */}
         <Box
-          gridColumn="span 6"
+          gridColumn="span 12"
           gridRow="span 3"
-          marginRight="20px"
           backgroundColor={colors.primary[400]}
         >
           <Box
@@ -261,7 +260,6 @@ const Dashboard = () => {
             <Box>
               <Typography
                 variant="h5"
-                
                 fontWeight="600"
                 color={colors.grey[100]}
               >
@@ -280,7 +278,7 @@ const Dashboard = () => {
             </Box>
             
           </Box>
-          <Box height="250px" m="20px 0 0 0">
+          <Box height="250px">
             <IPCA isDashboard={true} />
           </Box>
         </Box>

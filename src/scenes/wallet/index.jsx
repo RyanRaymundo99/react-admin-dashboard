@@ -1,29 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { tokens } from '../../theme';
-import {
-  Box,
-  Typography,
-  Grid,
-  Paper,
-  useTheme,
-} from '@mui/material';
-
-import BarChartIcon from '@mui/icons-material/BarChart';
-import LoadingSpinner from '../../components/LoadingSpinner'
+import { Box, Typography, Paper, useTheme } from '@mui/material';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const Wallet = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedItem, setSelectedItem] = useState(null); // State for selected item
+  const [selectedItem, setSelectedItem] = useState(null);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const iconStyles = {
-    fontSize: '48px', // Adjust the size as needed
-    color: 'white',  // Set the color to white
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -95,38 +81,39 @@ const Wallet = () => {
     fetchData();
   }, []);
 
-  const isSmallScreen = false; // Replace with your logic for detecting small screens
-  const negativeColor = 'red'; // Replace with your desired colors
-  const positiveColor = 'rgb(12, 250, 12)'; // Replace with your desired colors
-
   const getTextInfo = (infoArray) => {
     return infoArray.map((info, index) => (
       <Typography
-          key={index}
-          variant="h4"
-          color="white"
-          fontWeight="bold"
-          paragraph
-          sx={{
-            padding: '24px', // Adjust padding as needed
-            border: '1px solid white', // Add border
-            borderRadius: '20px', // Add border radius
-            animation: 'ticker 10s linear infinite', // Add animation
+        key={index}
+        variant="h4"
+        color="white"
+        fontWeight="bold"
+        paragraph
+        sx={{
+          animation: 'ticker 10s linear infinite',
+        }}
+      >
+        <span
+          style={{
+            display: 'inline-block',
+            animation: 'ticker 20s linear infinite',
           }}
-        >
-           <span
-    style={{
-      display: 'inline-block',
-      animation: 'ticker 20s linear infinite', // Add animation
-    }}
-  ></span>
-          {info}
-        </Typography>
+        ></span>
+        {info}
+      </Typography>
     ));
   };
 
+  const handleItemClick = (index) => {
+    setSelectedItem(selectedItem === index ? null : index);
+  };
+
+  const isSmallScreen = true; // Replace with your logic for detecting small screens
+  const negativeColor = 'red'; // Replace with your desired colors
+  const positiveColor = 'rgb(12, 250, 12)'; // Replace with your desired colors
+
   return (
-    <Box display="flex" paddingX="80px" paddingY="20px">
+    <Box display="flex" flexDirection={isSmallScreen ? 'column-reverse' : 'row'} paddingX={{ xs: '5px', sm: '5px', md: '100px', lg: '100px', xl: '100px' }} paddingY="30px">
       {/* Left side - Stock Quotes */}
       {loading ? (
         <Box flexGrow={1} display="flex" alignItems="center" justifyContent="center">
@@ -134,51 +121,33 @@ const Wallet = () => {
         </Box>
       ) : (
         <>
-          <Box flexGrow={1} overflow="auto" padding="20px">
-            <Typography
-              variant="h1"
-              fontWeight="600"
-              paddingLeft="10px"
-              paddingBottom="10px"
-              textAlign="start"
-              padding
-              color={colors.grey[100]}
-            >
+          <Box flexGrow={1} overflow="auto">
+            <Typography variant="h1" fontWeight="600" paddingY="50px" textAlign="center" color={colors.grey[100]}>
               CARTERIA CVL
             </Typography>
-            
+
             {selectedItem === null && (
-            <Box paddingBottom="20px">
-              {/* Text to be displayed when selectedItem is null */}
-              <Typography
-              variant="h5"
-              fontWeight="600"
-              paddingLeft="10px"
-              paddingBottom="20px"
-              textAlign="start"
-              color={colors.grey[400]}
-            >
-              Clique nas ações para abrir a Benchmark
-            </Typography>
-            </Box>
-          )}
+              <Box paddingBottom="20px">
+                <Typography variant="h5" fontWeight="600" paddingLeft="10px" paddingBottom="20px" textAlign="center" color={colors.grey[400]}>
+                  Clique nas ações para abrir a Benchmark
+                </Typography>
+              </Box>
+            )}
+
             {data.map((item, index) => (
               <Paper
                 key={index}
+                onClick={() => handleItemClick(index)}
                 sx={{
                   p: 2,
                   marginBottom: '10px',
                   cursor: 'pointer',
                   backgroundColor: `${colors.primary[400]} !important`,
                   borderRadius: '20px',
-                  transition: 'transform 0.2s',
-                  display: 'flex', // Display the typography components side by side
-                  justifyContent: 'space-between', // Spread them apart
-                  '&:hover': {
-                    transform: 'scale(1.02)',
-                  },
+                  transition: isSmallScreen ? 'none' : 'transform 0.2s', // Remove hover animation for small screens
+                  boxShadow: selectedItem === index ? '0px 0px 10px 5px rgba(255, 255, 255, 0.3)' : 'none', // Color change on click
+                  paddingLeft: '30px', // Add left padding
                 }}
-                onClick={() => setSelectedItem(index)}
               >
                 <Box>
                   <Typography variant="h3" component="h5" color="text.primary">
@@ -186,7 +155,12 @@ const Wallet = () => {
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography variant="h4" component="h5" color="text.secondary" style={{ color: item.changePercent.startsWith('-') ? negativeColor : positiveColor }}>
+                  <Typography
+                    variant="h4"
+                    component="h5"
+                    color="text.secondary"
+                    style={{ color: item.changePercent.startsWith('-') ? negativeColor : positiveColor }}
+                  >
                     ({item.changePercent})
                   </Typography>
                 </Box>
@@ -198,21 +172,16 @@ const Wallet = () => {
           {selectedItem !== null && (
             <Box
               flexGrow={1}
-              padding="50px"
+              margin={isSmallScreen ? '0' : '0 0 0 200px'} // Adjust margin for small devices
               borderRadius="20px"
               display="flex"
               flexDirection="column"
               justifyContent="center"
+              paddingY="20px"
               backgroundColor={colors.blueAccent[500]}
             >
               <Box alignItems="center" justifyItems="center" color="text.primary">
-                <Typography
-                  variant="h2"
-                  fontWeight="600"
-                  color="white"
-                  paddingBottom="20px"
-                  textAlign="center"
-                >
+                <Typography variant="h2" fontWeight="600" color="white" paddingBottom="20px" textAlign="center">
                   BenchMarks
                 </Typography>
               </Box>
@@ -223,14 +192,13 @@ const Wallet = () => {
                   variant="h4"
                   component="h6"
                   padding="2px"
-                  style={{ textAlign: 'center', color: "text.primary"}}
+                  style={{ textAlign: 'center', color: 'text.primary' }}
                 >
                   {text}
                 </Typography>
               ))}
             </Box>
           )}
-          
         </>
       )}
     </Box>

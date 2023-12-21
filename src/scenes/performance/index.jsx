@@ -131,19 +131,44 @@ const Index = () => {
   };
 
   return (
-    <Container style={{ justifyItems: 'center'}}>
+    <Container style={{ justifyItems: 'center' }}>
       <div>
         {loading ? (
-          <Loading/>
+          <Loading />
         ) : (
           <div className="responsive-grid">
-            {Object.keys(data).map((category) => (
+            {Object.keys(data).map((category, index) => (
               <Paper
                 key={category}
-                style={{ ...categoryStyles[category], padding: '10px', margin: '10px', minWidth: '400px', borderRadius: '20px', borderStyle: 'none' }}
+                style={{
+                  ...categoryStyles[category],
+                  padding: '10px',
+                  margin: '10px',
+                  borderRadius: '20px',
+                  borderStyle: 'none',
+                  width: '100%', // Set width to 100% to fill the available space
+                }}
               >
-                <Typography variant="h3" style={{ backgroundColor: '#4f1fed', padding: '10px', borderRadius: '20px', color: 'white', textAlign: 'center' }} fontWeight="bold">{category}</Typography>
-                <ul style={{ listStyleType: 'none', padding: 0, textAlign: 'center' }}>
+                <Typography
+                  variant="h3"
+                  style={{
+                    backgroundColor: '#4f1fed',
+                    padding: '10px',
+                    borderRadius: '20px',
+                    color: 'white',
+                    textAlign: 'center',
+                  }}
+                  fontWeight="bold"
+                >
+                  {category}
+                </Typography>
+                <ul
+                  style={{
+                    listStyleType: 'none',
+                    padding: 0,
+                    textAlign: 'center',
+                  }}
+                >
                   <li
                     style={{
                       display: 'flex',
@@ -160,10 +185,13 @@ const Index = () => {
                     <span style={{ fontWeight: 'bold' }}>OSC. ANO</span>
                   </li>
                 </ul>
-                <ul className="style" style={{ listStyleType: 'none', padding: 0 }}>
-                  {data[category].map((item, index) => (
+                <ul
+                  className="style"
+                  style={{ listStyleType: 'none', padding: 0 }}
+                >
+                  {data[category].map((item, itemIndex) => (
                     <li
-                      key={index}
+                      key={itemIndex}
                       style={{
                         borderBottom: '1px solid ${colors.primary[400]}',
                         padding: '5px',
@@ -187,8 +215,6 @@ const Index = () => {
       </div>
     </Container>
   );
-  
-  
 };
 
 export default Index;

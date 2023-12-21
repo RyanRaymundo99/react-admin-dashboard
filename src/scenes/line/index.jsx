@@ -4,7 +4,7 @@ import IBOV from "../../components/IBOV";
 
 const Line = () => {
   return (
-    <Box ml="100px" textColor="white">
+    <Box  textColor="white" marginLeft={{ lg: '100px', xl: '100px', sm: '20px', xs: '10px' }}>
       <Header title="Ibovespa" subtitle="ultimos 15 dias" />
       <Box height="75vh">
         <IBOV />

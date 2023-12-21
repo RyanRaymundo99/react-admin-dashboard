@@ -40,6 +40,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
+
 const BottomMenu = ({ icons, selected, setSelected, onMenuClick }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -98,29 +99,36 @@ const Menu = ({ onClose, items }) => {
     >
       <Grid container spacing={2} justifyContent="center">
         {items.map((item) => (
-          <Grid item key={item.title} xs={6} sm={4} md={3} lg={2} xl={2}>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                marginX: '25px',
-                textAlign: 'center',
-              }}
-            >
-              <Box sx={{ fontSize: '32px' }}>
-                {React.cloneElement(item.icon, { fontSize: 'inherit' })}
+          <Grid item key={item.title} xs={3} sm={3} md={3} lg={2} xl={2}>
+            <Link to={item.to} style={{ textDecoration: "none" }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  marginX: '25px',
+                  textAlign: 'center',
+                  color: colors.grey[100],
+                  padding: '10px',
+                  paddingX: '20px',
+                  cursor: 'pointer',
+                }}
+              >
+                <Box sx={{ fontSize: '32px' }}>
+                  {React.cloneElement(item.icon, { fontSize: 'inherit' })}
+                </Box>
+                <Box>
+                  <Typography variant="caption" sx={{ marginTop: '1px' }}>{item.title}</Typography>
+                </Box>
               </Box>
-              <Box>
-                <Typography variant="caption" sx={{ marginTop: '1px' }}>{item.title}</Typography>
-              </Box>
-            </Box>
+            </Link>
           </Grid>
         ))}
       </Grid>
     </Paper>
   );
 };
+
 
 const ResponsiveSidebar = () => {
   const theme = useTheme();

@@ -42,7 +42,7 @@ const SelicInterestRateChart = () => {
       <div style={{ height: '400px', width: '100%', overflow: 'hidden' }} >
         {selicInterestRateData.length > 0 ? (
           <ResponsiveContainer>
-          <LineChart width={chartWidth} height={400} data={selicInterestRateData} margin={{ top: 50, right: 50, bottom: 50, left: 50 }}>
+          <LineChart width={chartWidth} height={400} data={selicInterestRateData} margin={{ top: 50, right: 50, bottom: 50, left: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis label={{ value: 'Interest Rate (%)', angle: -90, position: 'insideLeft' }} />

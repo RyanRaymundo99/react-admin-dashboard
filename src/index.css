@@ -102,19 +102,6 @@ body,
   }
 }
 
-/* Default styles for smaller screens */
-.responsive-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(300px, 1fr));
-  gap: 19px;
-}
-
-@media (min-width: 1200px) {
-  /* Adjust styles for screens wider than 1200px */
-  .responsive-grid {
-    grid-template-columns: repeat(3, minmax(400px, 1fr));
-  }
-}
 
 
 
@@ -136,6 +123,25 @@ body,
   border-color: white; /* Change the border color when focused */
 }
 
+
+
+/* Adjust styles for screens wider than or equal to 768px (md) */
+@media (min-width: 768px) {
+  .responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+/* Adjust styles for screens wider than or equal to 992px (lg) */
+@media (min-width: 992px) {
+  .responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
 
 
 

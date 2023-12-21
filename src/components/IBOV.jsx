@@ -45,7 +45,7 @@ const FinanceLineChart = () => {
     <div style={{ height: '400px', width: '100%' }}>
       {chartData && (
         <ResponsiveContainer>
-          <LineChart data={chartData} margin={{ top: 50, right: 50, bottom: 50, left: 50 }}>
+          <LineChart data={chartData} margin={{ top: 50, right: 50, bottom: 50, left: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" tickFormatter={(tick) => new Date(tick).toLocaleDateString()} />
             <YAxis />

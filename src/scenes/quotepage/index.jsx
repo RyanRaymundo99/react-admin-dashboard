@@ -35,7 +35,7 @@ const QuotePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://yahoo-finance127.p.rapidapi.com/historic/${symbol}/1d/15d`, {
+        const response = await fetch(`https://yahoo-finance127.p.rapidapi.com/historic/${symbol}/1d/10d`, {
           headers: {
             'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
             'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com'
@@ -158,9 +158,9 @@ const QuotePage = () => {
 
   return (
     <>
-      <Grid container spacing={4} px={2} justifyContent="center" alignItems="center" textAlign="center" mb={10} sx={{ '@media (min-width: 1280px)': { px: 20 } }}>
+      <Grid container spacing={4} justifyContent="center" alignItems="center" textAlign="center" mb={isSmallScreen ? 4 : 10} px={isSmallScreen ? 1 : 2} sx={{ '@media (min-width: 1280px)': { px: 20 } }}>
         <Grid item xs={12}>
-          <Typography variant={isSmallScreen ? 'h3' : 'h1'} component="h1" mb={2} color="text.primary">
+          <Typography variant={isSmallScreen ? 'h4' : 'h1'} component="h1" mb={2} color="text.primary">
             {symbol}
           </Typography>
           <Typography variant={isSmallScreen ? 'body1' : 'h3'} mb={5} color="text.secondary">
@@ -168,11 +168,12 @@ const QuotePage = () => {
           </Typography>
         </Grid>
       </Grid>
-      <div style={{ height: '400px', width: '100%' }}>
+  
+      <div style={{ height: '400px', width: '100%' }} sx={{ '@media (min-width: 1280px)': { pl: 100 } }}>
         {chartData && (
           <ResponsiveLine
             data={chartData}
-            margin={{ top: 50, right: 100, bottom: 50, left: 150 }}
+            margin={{ top: 50, right: 15, bottom: 50, left: 32 }} sx={{ '@media (min-width: 1280px)': { px: 220 } }}
             xScale={{ type: 'time', format: '%Y-%m-%d', precision: 'day' }}
             xFormat="time:%b %d"
             yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
@@ -211,97 +212,100 @@ const QuotePage = () => {
                 symbolSize: 12,
                 symbolShape: 'circle',
                 symbolBorderColor: 'rgba(0, 0, 0, .5)',
-                textColor: 'white' // Customize the legend text color here
+                textColor: 'white'
               }
             ]}
           />
         )}
       </div>
-      <Grid container spacing={4} px={2} justifyContent="center" alignItems="center" textAlign="center" mb={10} mt={5} sx={{ '@media (min-width: 1280px)': { px: 10 } }}>
-      <Grid item xs={12}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Paper variant="outlined" sx={{ p: 6, borderRadius: '20px', flex: 1, minWidth: '300px', mr: 2 }}>
-              <Box sx={{ marginBottom: '0.2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <Typography variant={isSmallScreen ? 'h5' : 'h3'} component="h3" color="text.primary">
+  
+      <Grid container paddingBottom="100px" spacing={4} justifyContent="center" alignItems="center" textAlign="center" mb={isSmallScreen ? 4 : 10} mt={isSmallScreen ? 2 : 5} px={isSmallScreen ? 1 : 2} sx={{ '@media (min-width: 1280px)': { px: 10, pl: 10 } }}>
+        <Grid item xs={12}>
+          <Box sx={{ display: 'flex', flexDirection: isSmallScreen ? 'column' : 'row', gap: 2 }}>
+            <Paper variant="outlined" sx={{ p: 3, borderRadius: '20px', flex: 1, minWidth: '300px', mb: isSmallScreen ? 2 : 0, mr: isSmallScreen ? 0 : 2 }}>
+              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h3" color="text.primary">
                   P/VP
                 </Typography>
-                <Typography variant={isSmallScreen ? 'h5' : 'h3'} component="h3" color="text.secondary">
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h3" color="text.secondary">
                   {data.priceToBook}
                 </Typography>
               </Box>
-              <Box sx={{ marginBottom: '0.2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <Typography variant={isSmallScreen ? 'h5' : 'h4'} component="h4" color="text.secondary">
+              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h4" color="text.secondary">
                   P/L
                 </Typography>
-                <Typography variant={isSmallScreen ? 'h5' : 'h4'} component="h4" color="text.secondary">
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h4" color="text.secondary">
                   {data.forwardPe}
                 </Typography>
               </Box>
-              <Box sx={{ marginBottom: '0.2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <Typography variant={isSmallScreen ? 'h5' : 'h3'} component="h3" color="text.primary">
+              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h3" color="text.primary">
                   DY
                 </Typography>
-                <Typography variant={isSmallScreen ? 'h5' : 'h3'} component="h3" color="text.secondary">
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h3" color="text.secondary">
                   {data.trailingAnnualDividendRate}
                 </Typography>
               </Box>
-              <Box sx={{ marginBottom: '0.2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <Typography variant={isSmallScreen ? 'h5' : 'h4'} component="h4" color="text.secondary">
+              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h4" color="text.secondary">
                   ROE
                 </Typography>
-                <Typography variant={isSmallScreen ? 'h5' : 'h4'} component="h4" color="text.secondary">
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h4" color="text.secondary">
                   {returnOnEquity}
                 </Typography>
               </Box>
             </Paper>
-            <Paper variant="outlined" sx={{ p: 6, borderRadius: '20px', flex: 1, minWidth: '300px', mx: 2 }}>
-              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <Typography variant={isSmallScreen ? 'h5' : 'h3'} component="h3" color="text.primary">
+  
+            <Paper variant="outlined" sx={{ p: 3, borderRadius: '20px', flex: 1, minWidth: '300px', mx: isSmallScreen ? 0 : 2 }}>
+              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h3" color="text.primary">
                   Profit Margin
                 </Typography>
-                <Typography variant={isSmallScreen ? 'h5' : 'h3'} component="h3" color="text.secondary">
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h3" color="text.secondary">
                   {profitMargins}
                 </Typography>
               </Box>
-              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <Typography variant={isSmallScreen ? 'h5' : 'h4'} component="h4" color="text.secondary">
+              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h4" color="text.secondary">
                   Market Cap
                 </Typography>
-                <Typography variant={isSmallScreen ? 'h5' : 'h4'} component="h4" color="text.secondary">
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h4" color="text.secondary">
                   {marketCap}
                 </Typography>
               </Box>
-              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <Typography variant={isSmallScreen ? 'h5' : 'h3'} component="h3" color="text.primary">
+              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h3" color="text.primary">
                   Enterprise Value
                 </Typography>
-                <Typography variant={isSmallScreen ? 'h5' : 'h3'} component="h3" color="text.secondary">
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h3" color="text.secondary">
                   here
                 </Typography>
               </Box>
-              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <Typography variant={isSmallScreen ? 'h5' : 'h4'} component="h4" color="text.secondary">
+              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h4" color="text.secondary">
                   Total Debt
                 </Typography>
-                <Typography variant={isSmallScreen ? 'h5' : 'h4'} component="h4" color="text.secondary">
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h4" color="text.secondary">
                   {totalDebt}
                 </Typography>
               </Box>
             </Paper>
-            <Paper variant="outlined" sx={{ p: 6, borderRadius: '20px', flex: 1, minWidth: '300px', mx: 2 }}>
-              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <Typography variant={isSmallScreen ? 'h5' : 'h3'} component="h3" color="text.primary">
+  
+            <Paper variant="outlined" sx={{ p: 3, borderRadius: '20px', flex: 1, minWidth: '300px', mx: isSmallScreen ? 0 : 2 }}>
+              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h3" color="text.primary">
                   VPA
                 </Typography>
-                <Typography variant={isSmallScreen ? 'h5' : 'h3'} component="h3" color="text.secondary">
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h3" color="text.secondary">
                   {data.bookvalue}
                 </Typography>
               </Box>
-              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <Typography variant={isSmallScreen ? 'h5' : 'h4'} component="h4" color="text.secondary">
+              <Box sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h4" color="text.secondary">
                   LPA
                 </Typography>
-                <Typography variant={isSmallScreen ? 'h5' : 'h4'} component="h4" color="text.secondary">
+                <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h4" color="text.secondary">
                   {data.trailingEps}
                 </Typography>
               </Box>
@@ -311,6 +315,6 @@ const QuotePage = () => {
       </Grid>
     </>
   );
-};
+          };  
 
 export default QuotePage;
