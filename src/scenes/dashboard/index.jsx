@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Box, Typography, useTheme, Paper, Grid } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
 import { tokens } from '../../theme';
-import CustomLineChart from '../../components/IBOV';
+import Ibovlight from '../../components/IBOVLIGHT'
 import Selic from '../../components/Selic';
 import IPCA from '../../components/IPCA';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -152,7 +152,7 @@ const Dashboard = () => {
       {/* GRID & CHARTS */}
       <Box
         display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
+        gridTemplateColumns="repeat(2, 2fr)"
         gridAutoRows="140px"
         gap="20px"
         marginLeft={{ lg: '100px', xl: '100px' }}
@@ -201,7 +201,7 @@ const Dashboard = () => {
             
           </Box>
           <Box height="250px">
-            <CustomLineChart isDashboard={true} />
+            <Ibovlight isDashboard={true} />
           </Box>
           
         </Box>
