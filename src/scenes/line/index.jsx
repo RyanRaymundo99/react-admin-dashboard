@@ -5,7 +5,7 @@ import Ibovlight from "../../components/IBOVLIGHT";
 const Line = () => {
   return (
     <Box  textColor="white" marginLeft={{ lg: '100px', xl: '100px', sm: '20px', xs: '10px' }}>
-      <Header title="Ibovespa" subtitle="ultimos 15 dias" />
+      <Header title="IBOVESPA" subtitle="ultimos 365 dias" />
       <Box height="75vh">
         <Ibovlight />
       </Box>

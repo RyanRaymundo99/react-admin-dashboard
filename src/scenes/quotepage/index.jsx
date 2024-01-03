@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import { Typography, Grid, Paper, Box } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { ResponsiveLine } from '@nivo/line';
+import { createChart, LineSeries, TimeScale, CrosshairMode } from 'lightweight-charts';
 import axios from 'axios';
+import { tokens } from '../../theme';
 
 // Helper function to format market cap
 const formatMarketCap = (marketCap) => {
@@ -24,26 +25,33 @@ const QuotePage = () => {
   const theme = useTheme();
   const { symbol } = useParams();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const chartContainerRef = useRef(null);
+
   const [chartData, setChartData] = useState(null);
   const [data, setData] = useState({});
   const [marketCap, setMarketCap] = useState('');
   const [profitMargins, setProfitMargins] = useState('');
-  const [returnOnEquity, setreturnOnEquity] = useState('');
+  const [returnOnEquity, setReturnOnEquity] = useState('');
   const [totalDebt, setTotalDebt] = useState('');
 
+  const colors = tokens(theme.palette.mode);
+
+  const [chartCreated, setChartCreated] = useState(false); // Declare chartCreated state
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch(`https://yahoo-finance127.p.rapidapi.com/historic/${symbol}/1d/10d`, {
-          headers: {
-            'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
-            'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com'
-          }
-        });
+      const options = {
+        method: 'GET',
+        url: `https://yahoo-finance127.p.rapidapi.com/historic/${symbol}/1d/10d`,
+        headers: {
+          'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
+          'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com',
+        },
+      };
 
+      try {
+        const response = await fetch(options.url, { headers: options.headers });
         const data = await response.json();
-        console.log('Raw data:', data);
 
         if (!data || !data.indicators || !data.timestamp) {
           console.error('Invalid data format');
@@ -57,24 +65,24 @@ const QuotePage = () => {
           return;
         }
 
-        const dates = timestamp.map((timestamp) => new Date(timestamp * 1000));
-        const closeData = indicators.quote[0].close.map((value, index) => ({ x: dates[index], y: value }));
+        const closeData = indicators.quote[0].close.map((value, index) => ({ x: timestamp[index], y: value }));
 
-        const chartData = [
-          {
-            id: 'Close',
-            data: closeData
-          }
-        ];
-
-        setChartData(chartData);
+        setChartData(closeData);
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchData();
-  }, [symbol]);
+  }, [symbol, theme]);
+
+  useEffect(() => {
+    if (chartData) {
+      createChartWithData(chartData);
+    }
+  }, [chartData, theme]);
+  
+
 
   const fetchData3 = async (symbol) => {
     const options = {
@@ -150,11 +158,98 @@ const QuotePage = () => {
       const { profitMargins, totalDebt, returnOnEquity } = await fetchData3(symbol);
       setProfitMargins(profitMargins);
       setTotalDebt(totalDebt);
-      setreturnOnEquity(returnOnEquity);
+      setReturnOnEquity(returnOnEquity);
     };
   
     fetchDataAndSetState();
   }, [symbol]);
+
+  const createChartWithData = useCallback((data) => {
+    if (chartContainerRef.current) {
+      // Clear existing chart
+      chartContainerRef.current.innerHTML = '';
+
+      // Create new chart
+      const newChart = createChart(chartContainerRef.current, {
+        width: 400,
+        height: 300,
+        layout: {
+          background: { color: colors.primary[400] },
+          textColor: colors.grey[100],
+        },
+        grid: {
+          vertLines: { color: colors.grey[700] },
+          horzLines: { color: colors.grey[700] },
+        },
+      });
+
+      const lineSeries = newChart.addLineSeries({
+        color: colors.blueAccent[500],
+        lineStyle: 0,
+        lineWidth: 2,
+        crosshairMarkerVisible: true,
+      });
+
+      const sortedChartData = [...data].sort((a, b) => new Date(a.x) - new Date(b.x));
+
+      const chartDataFormatted = sortedChartData.map((dataPoint) => ({
+        time: new Date(dataPoint.x).getTime(),
+        value: dataPoint.y,
+      }));
+
+      lineSeries.setData(chartDataFormatted);
+
+      const timeScale = newChart.timeScale;
+
+      newChart.applyOptions({
+        timeScale: {
+          tickMarkFormatter: (time, tickMarkType, locale) => {
+            const date = new Date(time);
+            return date.toLocaleDateString(locale, {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
+            });
+          },
+        },
+      });
+
+      chartContainerRef.current._chart = newChart;
+      setChartCreated(true);
+    }
+  }, [chartContainerRef, colors]);
+
+  useEffect(() => {
+    // Cleanup function
+    return () => {
+      if (chartContainerRef.current && chartContainerRef.current._chart) {
+        chartContainerRef.current._chart.remove();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch data logic remains the same
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [symbol, theme]);
+
+  useEffect(() => {
+    if (chartData) {
+      createChartWithData(chartData);
+    }
+  }, [chartData, createChartWithData]);
+
+  
+  
+  
+  
 
   return (
     <>
@@ -169,55 +264,7 @@ const QuotePage = () => {
         </Grid>
       </Grid>
   
-      <div style={{ height: '400px', width: '100%' }} sx={{ '@media (min-width: 1280px)': { pl: 100 } }}>
-        {chartData && (
-          <ResponsiveLine
-            data={chartData}
-            margin={{ top: 50, right: 15, bottom: 50, left: 32 }} sx={{ '@media (min-width: 1280px)': { px: 220 } }}
-            xScale={{ type: 'time', format: '%Y-%m-%d', precision: 'day' }}
-            xFormat="time:%b %d"
-            yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
-            axisBottom={{
-              format: '%b %d',
-              tickValues: 'every 2 days',
-              tickTextFill: '#fff'
-            }}
-            axisLeft={{
-              tickSize: 5,
-              tickPadding: 5,
-              tickRotation: 0,
-              legend: 'Price',
-              legendOffset: -40,
-              legendPosition: 'middle'
-            }}
-            enableGridX={false}
-            enableGridY={true}
-            colors={{ scheme: 'category10' }}
-            enablePoints={false}
-            enableArea={true}
-            areaOpacity={0.2}
-            useMesh={true}
-            legends={[
-              {
-                anchor: 'bottom',
-                direction: 'row',
-                justify: false,
-                translateX: 0,
-                translateY: 40,
-                itemsSpacing: 0,
-                itemDirection: 'left-to-right',
-                itemWidth: 80,
-                itemHeight: 20,
-                itemOpacity: 0.75,
-                symbolSize: 12,
-                symbolShape: 'circle',
-                symbolBorderColor: 'rgba(0, 0, 0, .5)',
-                textColor: 'white'
-              }
-            ]}
-          />
-        )}
-      </div>
+      <div ref={chartContainerRef} style={{ height: '400px', width: '100%' }} sx={{ '@media (min-width: 1280px)': { pl: 100 } }}></div>
   
       <Grid container paddingBottom="100px" spacing={4} justifyContent="center" alignItems="center" textAlign="center" mb={isSmallScreen ? 4 : 10} mt={isSmallScreen ? 2 : 5} px={isSmallScreen ? 1 : 2} sx={{ '@media (min-width: 1280px)': { px: 10, pl: 10 } }}>
         <Grid item xs={12}>

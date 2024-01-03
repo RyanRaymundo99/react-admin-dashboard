@@ -18,7 +18,7 @@ const SelicInterestRateChart = () => {
     const fetchSelicInterestRate = async () => {
       try {
         const response = await fetch(
-          'https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados/ultimos/1095?formato=json'
+          'https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados/ultimos/120?formato=json'
         );
         const data = await response.json();
 

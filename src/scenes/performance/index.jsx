@@ -118,41 +118,30 @@ const Index = () => {
     fetchData();
   }, []);
 
-  const categoryStyles = {
-    Educação: {
-      backgroundColor: 'gray[100}',
-    },
-    Finança: {
-      backgroundColor: 'primary[100]',
-    },
-    Saúde: {
-      backgroundColor: 'greenAccent[100]',
-    },
-  };
 
   return (
-    <Container style={{ justifyItems: 'center' }}>
+    <Container style={{ justifyItems: 'center', paddingBottom: '80px' }}>
       <div>
         {loading ? (
           <Loading />
         ) : (
           <div className="responsive-grid">
-            {Object.keys(data).map((category, index) => (
+            {Object.keys(data).map((category) => (
               <Paper
                 key={category}
                 style={{
-                  ...categoryStyles[category],
                   padding: '10px',
                   margin: '10px',
                   borderRadius: '20px',
                   borderStyle: 'none',
+                  backgroundColor: colors.primary[400],
                   width: '100%', // Set width to 100% to fill the available space
                 }}
               >
                 <Typography
                   variant="h3"
                   style={{
-                    backgroundColor: '#4f1fed',
+                    backgroundColor: colors.blueAccent[500],
                     padding: '10px',
                     borderRadius: '20px',
                     color: 'white',
@@ -193,7 +182,6 @@ const Index = () => {
                     <li
                       key={itemIndex}
                       style={{
-                        borderBottom: '1px solid ${colors.primary[400]}',
                         padding: '5px',
                         display: 'flex',
                         justifyContent: 'space-between',

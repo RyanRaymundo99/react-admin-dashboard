@@ -4,41 +4,11 @@ import { signInWithPopup } from "firebase/auth";
 import Signin from "../login/signInEmail";
 import Home from "../../App";
 
-import { Box, Button, Typography, Container, TextField } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 import Google from '../../assets/Google.svg';
-import Microsoft from '../../assets/Microsoft.svg';
 import logo2 from '../../assets/logo2.svg';
 import bg from '../../assets/bg.svg';
-
-function MicrosoftSignInButton({ onClick }) {
-  const buttonStyle = {
-    display: "flex",
-    alignItems: "center",
-    border: "1px solid #007bff",
-    borderRadius: "8px",
-    color: "#007bff",
-    padding: "5px 15px",
-    cursor: "pointer",
-    fontSize: "17px",
-    backgroundColor: "transparent",
-    marginTop: "10px",
-    width: "100%",
-  };
-
-  return (
-    <div style={buttonStyle} onClick={onClick}>
-      <img
-        src={Microsoft}
-        alt="Microsoft Logo"
-        width="30px"
-        height="30px"
-        style={{ marginRight: "10px", width: "20px", height: "20px" }}
-      />
-      Sign in with Microsoft
-    </div>
-  );
-}
 
 function GoogleSignInButton({ onClick }) {
   const buttonStyle = {
@@ -85,47 +55,62 @@ function SignIn() {
   };
 
   const darkTheme = {
-    backgroundColor: "rgba(113, 52, 235, 0.9)",
-    color: "white", // Text color
-    borderColor: "#007bff", // Accent color
+    backgroundColor: "rgba(13, 39, 82, 0.9)",
+    color: "white",
+    borderColor: "#007bff",
   };
 
   const backgroundStyle = {
-    backgroundImage: `url(${bg})`, // Apply the background image
+    backgroundImage: `url(${bg})`,
     backgroundSize: "cover",
-    backdropFilter: "blur(10px)", // Apply blur effect to the background
+    backdropFilter: "blur(10px)",
+    paddingY: "100px"
   };
 
+  const containerStyle = {
+    padding: "20px",
+    boxShadow: 1,
+    ...darkTheme,
+  };
+
+  const logoStyle = {
+    width: "60%", // Adjust the width as needed
+    maxWidth: "200px", // Set a maximum width for the logo
+    height: "auto", // Maintain aspect ratio
+    marginBottom: "20px", // Add some margin at the bottom
+  };
+
+
   return (
-    <Box style={{ ...darkTheme, height: "110vh", padding: "50px", ...backgroundStyle }}> {/* Apply dark theme and background */}
+    <Box style={{ ...darkTheme, minHeight: "100vh", ...backgroundStyle }}>
+      {/* Container with added padding for tablets and larger devices */}
       <Container maxWidth="sm">
         <Box
           display="flex"
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
-          minHeight="70vh"
-          borderRadius="10px"
-          padding="20px"
-          boxShadow={1}
-          p={3}
-          style={darkTheme} // Apply dark theme styles
+          minHeight="100vh"
+          {...containerStyle}
         >
-          <img src={logo2} alt="Your Image" width="220" height="300" />
+          {/* Logo with adjusted styles */}
+          <img src={logo2} alt="Your Image" style={logoStyle} />
           {user ? (
             <Home />
           ) : (
             <Box display="flex" flexDirection="column" alignItems="center">
+              {/* Sign-in component */}
               <Signin />
+              {/* Divider */}
               <Box display="flex" alignItems="center" width="100%" mt={3} mb={3}>
                 <Box flex={1} borderBottom={1} borderColor="white" />
                 <Box px={2} color="white" fontWeight="bold">
-                  ou
+                  or
                 </Box>
                 <Box flex={1} borderBottom={1} borderColor="white" />
               </Box>
+              {/* Google Sign-in button */}
               <GoogleSignInButton onClick={handleGoogleSignIn} />
-              {/*<MicrosoftSignInButton onClick={MicrosoftSignInButton} /> */}
             </Box>
           )}
         </Box>

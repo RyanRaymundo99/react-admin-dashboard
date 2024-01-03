@@ -200,7 +200,7 @@ const Dashboard = () => {
             )}
             
           </Box>
-          <Box height="250px">
+          <Box height="450px">
             <Ibovlight isDashboard={true} />
           </Box>
           

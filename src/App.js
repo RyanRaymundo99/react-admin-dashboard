@@ -13,6 +13,8 @@ import News from './scenes/news';
 import Educative from './scenes/educative';
 import Performance from './scenes/performance';
 import Login from './scenes/login/signIn';
+import Ibovfull from './components/IBOVFULL';
+import Test from './scenes/test';
 
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
@@ -97,6 +99,8 @@ function App() {
                   <Route path="/news" element={<News />} />
                   <Route path="/educative" element={<Educative />} />
                   <Route path="/performance" element={<Performance />} />
+                  <Route path="/ibovfull" element={<Ibovfull />} />
+                  <Route path="/test" element={<Test />} />
                 </React.Fragment>
               )}
             </Routes>

@@ -90,7 +90,7 @@ const Quotes = () => {
     <>
       <Grid container spacing={4} px={2} justifyContent="center" alignItems="center" textAlign="center" mb={10} sx={{ '@media (min-width: 1280px)': { px: 20 } }}>
         <Grid item xs={12}>
-          <Typography variant={isSmallScreen ? 'h3' : 'h1'} component="h1" mb={2} color="text.primary">
+          <Typography variant={isSmallScreen ? 'h3' : 'h1'} component="h1" mb={2} mt={5} color="text.primary">
             Principais Ações de Hoje
           </Typography>
           <Typography variant={isSmallScreen ? 'body1' : 'h3'} mb={5} color="text.secondary">
@@ -100,7 +100,7 @@ const Quotes = () => {
         {data.map((item, index) => (
           <Grid item xs={12} sm={8} md={6} key={index}>
             <Link to={`/quotepage/${item.symbol}`} style={{ textDecoration: 'none' }}>
-              <Paper variant="outlined" sx={{ p: 6, borderRadius: '50px' }}>
+              <Paper variant="outlined" sx={{ p: 6, borderRadius: '50px', borderColor: 'text.secondary'  }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                   <Typography variant={isSmallScreen ? 'h6' : 'h4'} component="h4" color="text.primary">
                     {item.symbol}
