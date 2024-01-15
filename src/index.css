@@ -146,6 +146,14 @@ body,
 }
 
 
+/* TradingViewWidget.css */
+@media (min-width: 768px) {
+  .custom-padding {
+    padding-left: 80px;
+  }
+}
+
+
 
 
 

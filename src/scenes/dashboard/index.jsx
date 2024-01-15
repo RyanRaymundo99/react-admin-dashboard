@@ -1,295 +1,56 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Box, Typography, useTheme, Paper, Grid } from '@mui/material';
-import { useMediaQuery } from '@mui/material';
-import { tokens } from '../../theme';
-import Ibovlight from '../../components/IBOVLIGHT'
-import Selic from '../../components/Selic';
-import IPCA from '../../components/IPCA';
-import LoadingSpinner from '../../components/LoadingSpinner';
+import React, { useEffect, useRef, memo } from 'react';
 
-const Dashboard = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const [closeData, setCloseData] = useState(null);
-  const [closeDifference, setCloseDifference] = useState(null);
-
-  const initialItemsToShow = 2;
-  const [itemsToShow, setItemsToShow] = useState(initialItemsToShow);
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true); // Added loading state
-
-  const handleClick = () => {
-    setItemsToShow(prevItems => prevItems + 2);
-  };
+function TradingViewWidget() {
+  const container = useRef();
+  const isMounted = useRef(true); // Track the mounted state
 
   useEffect(() => {
-    const fetchData = async () => {
-      const options = {
-        method: 'GET',
-        url: 'https://yahoo-finance127.p.rapidapi.com/price/%5EBVSP',
-        headers: {
-          'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
-          'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com'
-        }
-      };
+    // Remove previous script element
+    const prevScript = container.current.querySelector('script');
+    if (prevScript) {
+      container.current.removeChild(prevScript);
+    }
 
-      try {
-        const response = await axios.request(options);
-        const closePrice = response.data.regularMarketPrice.raw;
-        const previousClosePrice = response.data.regularMarketPreviousClose.raw;
+    // Create a new script element
+    const script = document.createElement("script");
+    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+    script.type = "text/javascript";
+    script.async = true;
+    script.innerHTML = `
+      {
+        "autosize": true,
+        "symbol": "BMFBOVESPA:IBOV",
+        "interval": "D",
+        "timezone": "Etc/UTC",
+        "theme": "dark",
+        "style": "1",
+        "locale": "br",
+        "enable_publishing": false,
+        "backgroundColor": "rgba(0, 0, 0, 1)",
+        "gridColor": "rgba(101, 101, 101, 0.06)",
+        "hide_side_toolbar": false,
+        "allow_symbol_change": true,
+        "hotlist": true,
+        "studies": [
+          "STD;24h%Volume"
+        ],
+        "support_host": "https://www.tradingview.com"
+      }`;
+    container.current.appendChild(script);
 
-        setCloseData(closePrice);
-
-        const difference = closePrice - previousClosePrice;
-        setCloseDifference(difference);
-      } catch (error) {
-        console.error(error);
+    // Cleanup the script element when the component is unmounted
+    return () => {
+      isMounted.current = false; // Set mounted state to false
+      if (isMounted.current && container.current) {
+        container.current.removeChild(script);
       }
     };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const symbols = ['ABEV3', 'RRRP3', 'ALSO3', 'ALPA4', 'ARZZ3', 'CRFB3', 'AZUL4', 'B3SA3', 'BPAC11', 'BBSE3'];
-        const fetchedData = [];
-  
-        for (let i = 0; i < symbols.length; i++) {
-          const symbol = symbols[i];
-          const stockData = await fetchStockData(symbol);
-          if (stockData) {
-            fetchedData.push(stockData);
-          }
-          // Introduce a delay between requests to avoid rate limiting
-          await new Promise(resolve => setTimeout(resolve, 1000)); // 1000 milliseconds (adjust as needed)
-        }
-  
-        setData(fetchedData);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error occurred while fetching data:', error);
-        setLoading(false);
-      }
-    };
-  
-    const fetchStockData = async (symbol) => {
-      try {
-        const response = await fetch(`https://yahoo-finance127.p.rapidapi.com/price/${symbol}.SA`, {
-          headers: {
-            'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
-            'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com',
-          },
-        });
-  
-        if (response.ok) {
-          const responseData = await response.json();
-          return {
-            changePercent: responseData.regularMarketChangePercent.fmt,
-            symbol: responseData.symbol,
-          };
-        } else {
-          console.error('Failed to fetch data for', symbol, response.status);
-          return null;
-        }
-      } catch (error) {
-        console.error('Error occurred while fetching data for', symbol, error);
-        return null;
-      }
-    };
-  
-    const updateInterval = setInterval(fetchData, 60000); // Fetch data every minute
-  
-    fetchData(); // Initial data fetch
-  
-    return () => clearInterval(updateInterval); // Clear the interval on unmount
-  }, []);
-  
-
-  
-
-  if (loading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-        <LoadingSpinner />
-      </Box>
-    );
-  }
-
-  if (data.length === 0) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-        <Typography variant="h5" color="error">
-          Error loading data. Please try again later.
-        </Typography>
-      </Box>
-    );
-  }
+  }, []); // Empty dependency array to run the effect only once
 
   return (
-    <Box>
-         {/* STOCK TICKER */}
-       <div className="stock-ticker-container">
-          {loading ? (
-            <LoadingSpinner/>
-          ) : (
-            <ul className="stock-ticker-list">
-              {data.map((item, index) => (
-                <li key={index}>
-                  <span className="stock-ticker-symbol">{item.symbol}: </span>
-                  <span className={`stock-ticker-percent ${item.changePercent.startsWith('-') ? 'negative' : 'positive'}`}>
-                    ({item.changePercent})
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      {/* GRID & CHARTS */}
-      <Box
-        display="grid"
-        gridTemplateColumns="repeat(2, 2fr)"
-        gridAutoRows="140px"
-        gap="20px"
-        marginLeft={{ lg: '100px', xl: '100px' }}
-      >
-        {/* ROW 1 */}
-        <Box
-          gridColumn="span 12"
-          gridRow="span 4"
-          backgroundColor={colors.primary[400]}
-        >
-          <Box
-            mt="25px"
-            p="0 30px"
-            display="flex "
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Box>
-              <Typography
-                variant="h3"
-                marginLeft="10px"
-                fontWeight="600"
-                color={colors.grey[100]}
-              >
-                IBOVESPA
-              </Typography>
-              <Typography
-                variant="h3"
-                marginLeft="10px"
-                fontWeight="bold"
-                paddingBottom="50px"
-                color={closeDifference !== null && closeDifference < 0 ? colors.red : colors.greenAccent}
-              >
-                {closeData !== null ? closeData.toFixed(2) : 'Loading...'}
-              </Typography>
-            </Box>
-            {closeDifference !== null && (
-              <Typography
-                variant="h4"
-                fontWeight="600"
-                color={closeDifference < 0 ? colors.redAccent[400] : colors.greenAccent[400]}
-              >
-                {closeDifference.toFixed(2)}
-              </Typography>
-            )}
-            
-          </Box>
-          <Box height="450px">
-            <Ibovlight isDashboard={true} />
-          </Box>
-          
-        </Box>
-         {/* ROW 2 */}
-         
-        <Box
-          gridColumn="span 12"
-          gridRow="span 3"
-          backgroundColor={colors.primary[400]}
-        >
-          <Box
-            mt="25px"
-            p="0 30px"
-            display="flex "
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Box>
-              <Typography
-                variant="h5"
-                
-                fontWeight="600"
-                color={colors.grey[100]}
-              >
-                SELIC - Ultimos 3 anos
-              </Typography>
-            </Box>
-            <Box>
-              <Typography
-                variant="h5"
-                
-                fontWeight="600"
-                color={colors.grey[100]}
-              >
-                Atual
-              </Typography>
-            </Box>
-          </Box>
-          <Box height="250px">
-            <Selic isDashboard={true} />
-          </Box>
-        </Box>
-        {/* ROW 4 */}
-        <Box
-          gridColumn="span 12"
-          gridRow="span 3"
-          backgroundColor={colors.primary[400]}
-        >
-          <Box
-            mt="25px"
-            p="0 30px"
-            display="flex "
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Box>
-              <Typography
-                variant="h5"
-                fontWeight="600"
-                color={colors.grey[100]}
-              >
-                IPCA - Ultimos 7 meses
-              </Typography>
-            </Box>
-            <Box>
-              <Typography
-                variant="h5"
-                
-                fontWeight="600"
-                color={colors.grey[100]}
-              >
-                Atual
-              </Typography>
-            </Box>
-            
-          </Box>
-          <Box height="250px">
-            <IPCA isDashboard={true} />
-          </Box>
-        </Box>
-      </Box>
-      
-    </Box>
+    <div className="tradingview-widget-container custom-padding" ref={container} style={{ height: "100%", width: "100%" }}>
+    </div>
   );
-};
+}
 
-export default Dashboard;
-
-
-
-
+export default memo(TradingViewWidget);

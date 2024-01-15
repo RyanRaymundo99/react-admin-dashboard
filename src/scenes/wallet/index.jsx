@@ -10,12 +10,14 @@ const Wallet = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const symbols = ['AGRO3', 'CIEL3', 'CPLE6F', 'CSNA3', 'MRFG3', 'TAEE4F', 'WIZC3', 'USIM5', 'VALE3', 'CSMG3'];
+        const symbols = ['AGRO3'];
+
         const fetchedData = [];
+
+        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
         for (let i = 0; i < symbols.length; i++) {
           const symbol = symbols[i];
@@ -29,29 +31,11 @@ const Wallet = () => {
           if (response.ok) {
             const responseData = await response.json();
 
-            const infoArray = (() => {
-              if (symbol === 'AGRO3') {
-                return ['CDI Acumulada  13.58%', 'Carteira CVL  26%', 'IBOvespa  3.15%'];
-              } else if (symbol === 'CIEL3') {
-                return ['CDI Acumulada  13.58%', 'Carteira CVL  26%', 'IBOvespa  3.15%'];
-              } else if (symbol === 'CPLE6F') {
-                return ['CDI Acumulada  13.58%', 'Carteira CVL  26%', 'IBOvespa  3.15%'];
-              } else if (symbol === 'CSNA3') {
-                return ['CDI Acumulada  13.58%', 'Carteira CVL  26%', 'IBOvespa  3.15%'];
-              } else if (symbol === 'MRFG3') {
-                return ['CDI Acumulada  13.58%', 'Carteira CVL  26%', 'IBOvespa  3.15%'];
-              } else if (symbol === 'TAEE4F') {
-                return ['CDI Acumulada  13.58%', 'Carteira CVL  26%', 'IBOvespa  3.15%'];
-              } else if (symbol === 'WIZC3') {
-                return ['CDI Acumulada  13.58%', 'Carteira CVL  26%', 'IBOvespa  3.15%'];
-              } else if (symbol === 'USIM5') {
-                return ['CDI Acumulada  13.58%', 'Carteira CVL  26%', 'IBOvespa  3.15%'];
-              } else if (symbol === 'VALE3') {
-                return ['CDI Acumulada  13.58%', 'Carteira CVL  26%', 'IBOvespa  3.15%'];
-              } else if (symbol === 'CSMG3') {
-                return ['CDI Acumulada  13.58%', 'Carteira CVL  26%', 'IBOvespa  3.15%'];
-              }
-            })();
+            const infoArray = [
+              'CDI Acumulada  13.58%',
+              'Carteira CVL  26%',
+              'IBOvespa  3.15%',
+            ];
 
             const modifiedData = {
               title: responseData.shortName,
@@ -68,6 +52,9 @@ const Wallet = () => {
           } else {
             console.error('Failed to fetch data:', response.status);
           }
+
+          // Introduce a delay between requests (adjust the delay time as needed)
+          await delay(100); // 100 milliseconds delay
         }
 
         setData(fetchedData);
