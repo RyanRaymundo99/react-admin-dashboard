@@ -1,83 +1,65 @@
-// apiTicker.js
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import LoadingSpinner from './LoadingSpinner';
+import React, { useEffect, useRef } from 'react';
 
-export async function fetchStockData(symbol) {
-  const options = {
-    method: 'GET',
-    url: `https://yahoo-finance127.p.rapidapi.com/price/${symbol}.SA`,
-    headers: {
-      'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
-      'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com',
-    },
-  };
-
-  try {
-    const response = await axios.request(options);
-    if (response.ok) {
-      const responseData = response.data;
-      return {
-        changePercent: responseData.regularMarketChangePercent.fmt,
-        symbol: responseData.symbol,
-      };
-    } else {
-      console.error('Failed to fetch data for', symbol, response.status);
-      return null;
-    }
-  } catch (error) {
-    console.error('Error occurred while fetching data:', error);
-    return null;
-  }
-}
-
-export function useStockData(symbols) {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+function TradingViewTickerTape() {
+  const container = useRef();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const fetchedData = [];
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
+    script.async = true;
+    script.innerHTML = `
+      {
+        "symbols": [
+          {
+            "proName": "FOREXCOM:SPXUSD",
+            "title": "S&P 500"
+          },
+          {
+            "proName": "FOREXCOM:NSXUSD",
+            "title": "US 100"
+          },
+          {
+            "proName": "FX_IDC:EURUSD",
+            "title": "EUR to USD"
+          },
+          {
+            "proName": "BITSTAMP:BTCUSD",
+            "title": "Bitcoin"
+          },
+          {
+            "proName": "BITSTAMP:ETHUSD",
+            "title": "Ethereum"
+          }
+        ],
+        "showSymbolLogo": true,
+        "isTransparent": false,
+        "displayMode": "adaptive",
+        "colorTheme": "dark",
+        "locale": "en"
+      }`;
 
-      for (let i = 0; i < symbols.length; i++) {
-        const symbol = symbols[i];
-        const stockData = await fetchStockData(symbol);
-        if (stockData) {
-          fetchedData.push(stockData);
-        }
+    container.current.appendChild(script);
+
+    // Cleanup the script element when the component is unmounted
+    return () => {
+      if (container.current) {
+        container.current.removeChild(script);
       }
-
-      setData(fetchedData);
-      setLoading(false);
     };
+  }, []); // Empty dependency array to run the effect only once
 
-    const updateInterval = setInterval(fetchData, 60000); // Fetch data every minute
-
-    fetchData(); // Initial data fetch
-
-    return () => clearInterval(updateInterval); // Clear the interval on unmount
-  }, [symbols]);
-
-  return { data, loading };
-}
-
-export function StockTicker({ data, loading }) {
   return (
-    <div className="stock-ticker-container">
-      {loading ? (
-        <LoadingSpinner />
-      ) : (
-        <ul className="stock-ticker-list">
-          {data.map((item, index) => (
-            <li key={index}>
-              <span className="stock-ticker-symbol">{item.symbol}: </span>
-              <span className={`stock-ticker-percent ${item.changePercent.startsWith('-') ? 'negative' : 'positive'}`}>
-                ({item.changePercent})
-              </span>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="tradingview-widget-container" style={{ width: "94%", maxWidth: "100%" }}>
+      <div className="tradingview-widget-container__widget" ref={container}></div>
     </div>
   );
 }
+
+export default TradingViewTickerTape;
+
+
+
+
+
+

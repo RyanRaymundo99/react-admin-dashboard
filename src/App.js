@@ -14,7 +14,6 @@ import Educative from './scenes/educative';
 import Performance from './scenes/performance';
 import Login from './scenes/login/signIn';
 import Ibovfull from './components/IBOVFULL';
-import Test from './scenes/test';
 
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
@@ -22,6 +21,9 @@ import { auth } from './api/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material';
+import Calender from './scenes/calender';
+import Crypto from './scenes/hotZoneCrypto';
+import Br from './scenes/hotZoneBr';
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -98,9 +100,12 @@ function App() {
                   <Route path="/quotepage/:symbol" element={<QuotePage />} />
                   <Route path="/news" element={<News />} />
                   <Route path="/educative" element={<Educative />} />
+                  <Route path="/calender" element={<Calender />} />
+                  <Route path="/crypto" element={<Crypto />} />
+                  <Route path="/br" element={<Br />} />
                   <Route path="/performance" element={<Performance />} />
                   <Route path="/ibovfull" element={<Ibovfull />} />
-                  <Route path="/test" element={<Test />} />
+              
                 </React.Fragment>
               )}
             </Routes>

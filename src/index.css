@@ -155,5 +155,20 @@ body,
 
 
 
+.tradingview-widge-container__widge {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+@media only screen and (min-width: 768px) {
+  .responsive-padding {
+    padding-left: 140px;
+    margin-bottom: 140px;
+  }
+}
+
+
+
+
 
 

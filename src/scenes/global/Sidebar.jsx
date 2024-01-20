@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ProSidebar,
   Menu,
@@ -16,6 +16,12 @@ import SsidChartIcon from "@mui/icons-material/SsidChart";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+
+import { auth } from "../../api/firebase";
+import { signOut } from "firebase/auth";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -40,6 +46,19 @@ const Sidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((userData) => {
+      if (userData) {
+        setUser(userData);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <Box
@@ -90,6 +109,7 @@ const Sidebar = () => {
             style={{
               margin: "10px 0 20px 0",
               color: colors.grey[100],
+              textAlign: "center"
             }}
           >
             {!isCollapsed && (
@@ -99,15 +119,41 @@ const Sidebar = () => {
                 alignItems="center"
                 ml="30px"
               >
-                <Typography variant="h3" color={colors.grey[100]}>
-                  Menu
-                </Typography>
+               
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
                 </IconButton>
               </Box>
             )}
           </MenuItem>
+          {!isCollapsed && (
+            <Box mb="25px">
+              <Box display="flex" justifyContent="center" alignItems="center">
+              {user && user.photoURL && (
+                  <img
+                    alt="Google Avatar"
+                    width="54px"
+                    height="40px"
+                    src={user.photoURL}
+                    style={{ borderRadius: "100%" }}
+                  />
+                )}
+              </Box>
+              <Box textAlign="center">
+                <Typography
+                  variant="h2"
+                  color={colors.grey[100]}
+                  fontWeight="bold"
+                  sx={{ m: "10px 0 0 0" }}
+                >
+                   {user && user.displayName ? user.displayName : "User"}
+                </Typography>
+                <Typography variant="h5" color={colors.greenAccent[500]}>
+                  VIP ACESS
+                </Typography>
+              </Box>
+            </Box>
+          )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
@@ -125,6 +171,27 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            <Item
+              title="Calendário Econômico"
+              to="/calender"
+              icon={<EventAvailableIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Mapa de Calor Ações BR"
+              to="/br"
+              icon={<TravelExploreIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Mapa de Calor Crypto"
+              to="/crypto"
+              icon={<CurrencyBitcoinIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
 
             <Typography
               variant="h6"
@@ -135,7 +202,7 @@ const Sidebar = () => {
             </Typography>
 
             <Item
-              title="Ibovespa Index"
+              title="Indicadores Económicos"
               to="/line"
               icon={<SsidChartIcon />}
               selected={selected}
