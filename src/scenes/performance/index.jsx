@@ -1,211 +1,276 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import PQueue from 'p-queue';
-import { Box, Typography, Paper, useTheme, Grid, Container } from '@mui/material';
-import { tokens } from '../../theme';
+import React, { useEffect, useRef } from 'react';
+import { Grid, Box, Typography } from '@mui/material';
 
-import Loading from '../../components/LoadingSpinner'
+import Brazil from '../../assets/Brazil.svg';
+import USA from '../../assets/USA.svg';
 
-const Index = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
+const Performance = () => {
+  const container1 = useRef();
+  const container2 = useRef();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const symbols = {
-          Educação: ['ANIM3', 'COGN3', 'SEER3', 'YDUQ3'],
-          Finança: ['B3SA3', 'BBAS3', 'BBDC4', 'BPAC11', 'BRAP4', 'BRSR6', 'CIEL3', 'ITUB4', 'ITSA4', 'SANB11', 'BIDI4'],
-          Saúde: ['HAPV3', 'ODPV3', 'QUAL3', 'SULA11', 'FLRY3', 'PGMN3', 'AALR3', 'PARD3', 'HYPE3', 'RADL3'],
-          Alimentos: ['ABEV3', 'BEEF3', 'BKBR3', 'BRFS3', 'CRFB3', 'JBSS3', 'MEAL3', 'MDIA3', 'MRFG3', 'PCAR3'], 
-          Telecom: ['OIBR3', 'TIMS3', 'VIVT3'], 
-          Varejo: ['AMER3', 'NGLU3', 'VIIA3', 'PETZ3', 'CEAB3'],   
-          Turismo: ['CVCB3'],  
-          Celulose: ['KLBN4', 'PETR4', 'SUZB3'],  
-          Vestuario: ['ARZZ3', 'GUAR3', 'LREN3', 'ALPA4', 'VIVA3', 'VULC3', 'GRND3'], 
-          Energia: ['CMIG4', 'CPLE6', 'ELET6', 'ENGI11', 'EQTL3', 'LIGT3'], 
-          Combustivel: ['CSAN3', 'UGPA3'], 
-          Shoppings: ['ALSO3', 'BRML3', 'IGTI11', 'JHSF3', 'MULT3'], 
-          Imobiliarios: ['BRPR3', 'CYRE3', 'EVEN3', 'GFSA3', 'MRVE3', 'TCSA3', 'JHSF3', 'EZTC3', 'TEND3', 'HBOR3'],
-          Seguros: ['BBSE3', 'IRBR3', 'PSSA3'], 
-          Saneamento: ['CSMG3', 'SAPR11', 'SBSP3'], 
-          Transporte: ['CCRO3', 'ECOR3', 'EMBR3', 'POMO4', 'RAIL3', 'RAPT4'], 
-          Aviação: ['AZUL4', 'GOLL4', 'MOVI3', 'RENT3'],
-        };
-
-        const cache = {}; // Create a cache for storing fetched data
-
-        const fetchStockData = async (symbol) => {
-          if (cache[symbol]) {
-            return cache[symbol];
-          }
-
-          try {
-            const response = await axios.get(`https://yahoo-finance127.p.rapidapi.com/price/${symbol}.SA`, {
-              headers: {
-                'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
-                'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com',
-              },
-            });
-
-            if (response.status === 200) {
-              const responseData = response.data;
-              const stockData = {
-                changePercent: responseData.regularMarketChangePercent.fmt,
-                price: responseData.regularMarketPrice.fmt,
-                symbol: responseData.symbol,
-                daily: responseData.regularMarketDayRange.raw,
-                yearly: responseData.fiftyTwoWeekRange.raw,
-              };
-
-              // Store data in cache
-              cache[symbol] = stockData;
-
-              return stockData;
-            } else {
-              console.error('Failed to fetch data for', symbol, response.status);
-              return null;
-            }
-          } catch (error) {
-            console.error('Error fetching data for', symbol, error);
-            return null;
-          }
-        };
-
-        const queue = new PQueue({ concurrency: 1 }); // Adjust concurrency as needed
-
-        const categoryPromises = [];
-
-        for (const category in symbols) {
-          const categorySymbols = symbols[category];
-          const categoryDataPromises = categorySymbols.map((symbol) => {
-            const fetchPromise = async () => {
-              const stockData = await fetchStockData(symbol);
-              if (stockData) {
-                return stockData;
-              }
-            };
-
-            return queue.add(fetchPromise);
-          });
-
-          categoryPromises.push(
-            Promise.all(categoryDataPromises).then((categoryData) => ({
-              category,
-              data: categoryData.filter(Boolean), // Filter out null data
-            }))
-          );
+    // First TradingView Widget
+    const script1 = document.createElement('script');
+    script1.type = 'text/javascript';
+    script1.async = true;
+    script1.src = 'https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js';
+    script1.innerHTML = JSON.stringify({
+      "width": "100%",
+      "height": "100%",
+      "symbolsGroups": [
+        {
+          "name": "Educação",
+          "originalName": "Indices",
+          "symbols": [
+            { "name": "BMFBOVESPA:ANIM3" },
+            { "name": "BMFBOVESPA:COGN3" },
+            { "name": "BMFBOVESPA:SEER3" },
+            { "name": "BMFBOVESPA:YDUQ3" }
+          ]
+        },
+        {
+          "name": "Finança",
+          "originalName": "Futures",
+          "symbols": [
+            { "name": "BMFBOVESPA:B3SA3" },
+            { "name": "BMFBOVESPA:BBAS3" },
+            { "name": "BMFBOVESPA:BBDCP1!" },
+            { "name": "BMFBOVESPA:BRAP4" },
+            { "name": "BMFBOVESPA:BRSR3" },
+            { "name": "BMFBOVESPA:CIEL3" },
+            { "name": "BMFBOVESPA:ITUB4" },
+            { "name": "BMFBOVESPA:ITSA4" },
+            { "name": "BMFBOVESPA:SANB11" },
+            { "name": "BMFBOVESPA:BPAC11" }
+          ]
+        },
+        {
+          "name": "Saúde",
+          "originalName": "Bonds",
+          "symbols": [
+            { "name": "BMFBOVESPA:HAPV3" },
+            { "name": "BMFBOVESPA:ODPV3" },
+            { "name": "BMFBOVESPA:QUAL3" },
+            { "name": "BMFBOVESPA:FLRY3" },
+            { "name": "BMFBOVESPA:PGMN3" },
+            { "name": "BMFBOVESPA:AALR3" },
+            { "name": "BMFBOVESPA:HYPE3" },
+            { "name": "BMFBOVESPA:RADL3" }
+          ]
+        },
+        {
+          "name": "Alimentos",
+          "originalName": "Forex",
+          "symbols": [
+            { "name": "BMFBOVESPA:ABEV3" },
+            { "name": "BMFBOVESPA:BEEF3" },
+            { "name": "BMFBOVESPA:BRFS3" },
+            { "name": "BMFBOVESPA:CRFB3" },
+            { "name": "BMFBOVESPA:JBSS3" },
+            { "name": "BMFBOVESPA:MEAL3" },
+            { "name": "BMFBOVESPA:MDIA3" },
+            { "name": "BMFBOVESPA:MRFG3" },
+            { "name": "BMFBOVESPA:PCAR3" }
+          ]
+        },
+        {
+          "name": "telecom",
+          "symbols": [
+            { "name": "BMFBOVESPA:OIBR3" },
+            { "name": "BMFBOVESPA:TIMS3" },
+            { "name": "BMFBOVESPA:VIVT3" }
+          ]
+        },
+        {
+          "name": "varejo",
+          "symbols": [
+            { "name": "BMFBOVESPA:AMER3" },
+            { "name": "BMFBOVESPA:PETZ3" },
+            { "name": "BMFBOVESPA:CEAB3" }
+          ]
+        },
+        {
+          "name": "turismo",
+          "symbols": [
+            { "name": "BMFBOVESPA:CVCB3" }
+          ]
+        },
+        {
+          "name": "celulose",
+          "symbols": [
+            { "name": "BMFBOVESPA:KLBN4" },
+            { "name": "BMFBOVESPA:PETR4" },
+            { "name": "BMFBOVESPA:SUZB3" }
+          ]
+        },
+        {
+          "name": "vestuário",
+          "symbols": [
+            { "name": "BMFBOVESPA:ARZZ3" },
+            { "name": "BMFBOVESPA:GUAR3" },
+            { "name": "BMFBOVESPA:LREN3" },
+            { "name": "BMFBOVESPA:ALPA4" },
+            { "name": "BMFBOVESPA:VIVA3" },
+            { "name": "BMFBOVESPA:VULC3" },
+            { "name": "BMFBOVESPA:GRND3" }
+          ]
+        },
+        {
+          "name": "energia",
+          "symbols": [
+            { "name": "BMFBOVESPA:CMIG4" },
+            { "name": "BMFBOVESPA:CPLE3" },
+            { "name": "BMFBOVESPA:ELET6" },
+            { "name": "BMFBOVESPA:ENGI11" },
+            { "name": "BMFBOVESPA:EQTL3" },
+            { "name": "BMFBOVESPA:LIGT3" }
+          ]
+        },
+        {
+          "name": "combustível",
+          "symbols": [
+            { "name": "BMFBOVESPA:CSAN3" },
+            { "name": "BMFBOVESPA:UGPA3" }
+          ]
+        },
+        {
+          "name": "Shopping",
+          "symbols": [
+            { "name": "BMFBOVESPA:IGTI11" },
+            { "name": "BMFBOVESPA:JHSF3" },
+            { "name": "BMFBOVESPA:MULT3" }
+          ]
+        },
+        {
+          "name": "imobiliaria",
+          "symbols": [
+            { "name": "ECONOMICS:BRPROD" },
+            { "name": "BMFBOVESPA:CYRE3" },
+            { "name": "BMFBOVESPA:EVEN3" },
+            { "name": "BMFBOVESPA:GFSA3" },
+            { "name": "BMFBOVESPA:MRVE3" },
+            { "name": "BMFBOVESPA:TCSA3" },
+            { "name": "BMFBOVESPA:JHSF3" },
+            { "name": "BMFBOVESPA:EZTC3" },
+            { "name": "BMFBOVESPA:TEND3" },
+            { "name": "BMFBOVESPA:HBOR3" }
+          ]
+        },
+        {
+          "name": "seguros",
+          "symbols": [
+            { "name": "BMFBOVESPA:BBSE3" },
+            { "name": "BMFBOVESPA:IRBR3" },
+            { "name": "BMFBOVESPA:PSSA3" }
+          ]
+        },
+        {
+          "name": "saneamento",
+          "symbols": [
+            { "name": "BMFBOVESPA:CSMG3" },
+            { "name": "BMFBOVESPA:SAPR11" },
+            { "name": "BMFBOVESPA:SBSP3" }
+          ]
+        },
+        {
+          "name": "transporte",
+          "symbols": [
+            { "name": "BMFBOVESPA:CCRO3" },
+            { "name": "BMFBOVESPA:ECOR3" },
+            { "name": "BMFBOVESPA:EMBR3" },
+            { "name": "BMFBOVESPA:POMO4" },
+            { "name": "BMFBOVESPA:RAIL3" },
+            { "name": "BMFBOVESPA:RAPT4" }
+          ]
+        },
+        {
+          "name": "aviação",
+          "symbols": [
+            { "name": "BMFBOVESPA:AZUL4" },
+            { "name": "BMFBOVESPA:GOLL4" },
+            { "name": "BMFBOVESPA:MOVI3" },
+            { "name": "BMFBOVESPA:RENT3" }
+          ]
         }
+      ],
+      "showSymbolLogo": true,
+      "colorTheme": "dark",
+      "locale": "br"
+    });
 
-        const categoryResults = await Promise.all(categoryPromises);
+    // Cleanup the script element when the component is unmounted
+    const prevScript1 = container1.current.querySelector('script');
+    if (prevScript1) {
+      container1.current.removeChild(prevScript1);
+    }
 
-        const fetchedData = {};
-        categoryResults.forEach(({ category, data }) => {
-          fetchedData[category] = data;
-        });
+    container1.current.appendChild(script1);
 
-        setData(fetchedData);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error occurred while fetching data:', error);
-        setLoading(false);
+    // Second TradingView Widget
+    const script2 = document.createElement('script');
+    script2.type = 'text/javascript';
+    script2.async = true;
+    script2.src = 'https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js';
+    script2.innerHTML = JSON.stringify({
+      "colorTheme": "dark",
+      "dateRange": "12M",
+      "exchange": "US",
+      "showChart": true,
+      "locale": "br",
+      "width": "100%",
+      "height": "100%",
+      "largeChartUrl": "",
+      "isTransparent": false,
+      "showSymbolLogo": true,
+      "showFloatingTooltip": false,
+      "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
+      "plotLineColorFalling": "rgba(41, 98, 255, 1)",
+      "gridLineColor": "rgba(240, 243, 250, 0)",
+      "scaleFontColor": "rgba(106, 109, 120, 1)",
+      "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+      "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
+      "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+      "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
+      "symbolActiveColor": "rgba(41, 98, 255, 0.12)"
+    });
+
+    // Cleanup the script element when the component is unmounted
+    const prevScript2 = container2.current.querySelector('script');
+    if (prevScript2) {
+      container2.current.removeChild(prevScript2);
+    }
+
+    container2.current.appendChild(script2);
+
+    // Cleanup the script element when the component is unmounted
+    return () => {
+      if (container1.current) {
+        container1.current.removeChild(script1);
+      }
+      if (container2.current) {
+        container2.current.removeChild(script2);
       }
     };
-
-    fetchData();
-  }, []);
-
+  }, []); // Empty dependency array to run the effect only once
 
   return (
-    <Container style={{ justifyItems: 'center', paddingBottom: '80px' }}>
-      <div>
-        {loading ? (
-          <Loading />
-        ) : (
-          <div className="responsive-grid">
-            {Object.keys(data).map((category) => (
-              <Paper
-                key={category}
-                style={{
-                  padding: '10px',
-                  margin: '10px',
-                  borderRadius: '20px',
-                  borderStyle: 'none',
-                  backgroundColor: colors.primary[400],
-                  width: '100%', // Set width to 100% to fill the available space
-                }}
-              >
-                <Typography
-                  variant="h3"
-                  style={{
-                    backgroundColor: colors.blueAccent[500],
-                    padding: '10px',
-                    borderRadius: '20px',
-                    color: 'white',
-                    textAlign: 'center',
-                  }}
-                  fontWeight="bold"
-                >
-                  {category}
-                </Typography>
-                <ul
-                  style={{
-                    listStyleType: 'none',
-                    padding: 0,
-                    textAlign: 'center',
-                  }}
-                >
-                  <li
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      marginBottom: '10px',
-                      marginTop: '20px',
-                      marginLeft: '5px',
-                      marginRight: '5px',
-                    }}
-                  >
-                    <span style={{ fontWeight: 'bold' }}>ATIVO</span>
-                    <span style={{ fontWeight: 'bold' }}>PREÇO</span>
-                    <span style={{ fontWeight: 'bold' }}>OSC. DIA</span>
-                    <span style={{ fontWeight: 'bold' }}>OSC. ANO</span>
-                  </li>
-                </ul>
-                <ul
-                  className="style"
-                  style={{ listStyleType: 'none', padding: 0 }}
-                >
-                  {data[category].map((item, itemIndex) => (
-                    <li
-                      key={itemIndex}
-                      style={{
-                        padding: '5px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        marginBottom: '10px',
-                        marginTop: '10px',
-                      }}
-                    >
-                      <span className="stock-ticker-symbol">{item.symbol}: </span>
-                      <span className="stock-ticker-price">R${item.price} </span>
-                      <span className="stock-ticker-price">{item.daily} </span>
-                      <span className="stock-ticker-price">{item.yearly} </span>
-                    </li>
-                  ))}
-                </ul>
-              </Paper>
-            ))}
-          </div>
-        )}
-      </div>
-    </Container>
+    <Grid container spacing={2}>
+      <Grid item xs={12} md={6}>
+        <Box display="flex" alignItems="center" justifyContent="center" borderRadius={16} bgcolor="primary.main" p={2}>
+          <img src={Brazil} alt="Your Image" style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
+          <Typography variant="h3" color="textPrimary" style={{ marginLeft: '16px' }}>Mercado Brasileiro</Typography>
+        </Box>
+        <div className="trad-wid-conta responsive-padding-performance" style={{ height: '100%' }} ref={container1}></div>
+      </Grid>
+      <Grid item xs={12} md={6}>
+      <Box display="flex" alignItems="center" justifyContent="center"  bgcolor="primary.main" p={2}>
+          <img src={USA} alt="Your Image" style={{ width: '50px', height: '50px'}} />
+          <Typography variant="h3" color="textPrimary" style={{ marginLeft: '16px' }}>Mercado Americano</Typography>
+        </Box>
+        <div className="trad-wid-conta responsive-padding-performance-2" style={{ height: '60%' }} ref={container2}></div>
+      </Grid>
+    </Grid>
   );
-};
+}
 
-export default Index;
-
-
-
+export default Performance;

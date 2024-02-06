@@ -44,7 +44,7 @@ function TradingViewWidget() {
   }, []); // Empty dependency array to run the effect only once
 
   return (
-    <div className="tradingview-widget-container custom-padding" ref={container} style={{ height: "100%", width: "100%" }}>
+    <div className="tradingview-widget-container custom-padding" ref={container} style={{ height: "100%", width: "100%", backgroundColor: "#131722" }}>
     </div>
   );
 }

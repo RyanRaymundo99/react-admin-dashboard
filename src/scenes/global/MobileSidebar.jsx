@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,  useEffect } from "react";
 import { Box, Typography, useTheme, Paper, Grid, IconButton } from "@mui/material";
 import { tokens } from "../../theme";
 import { Link } from "react-router-dom";
@@ -11,6 +11,10 @@ import SsidChartIcon from '@mui/icons-material/SsidChart';
 import SwipeUpIcon from '@mui/icons-material/SwipeUp';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import { auth } from "../../api/firebase";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -77,58 +81,100 @@ const BottomMenu = ({ icons, selected, setSelected, onMenuClick }) => {
   );
 };
 
-const Menu = ({ onClose, items }) => {
+const Menu = ({ onClose, items}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((userData) => {
+      if (userData) {
+        setUser(userData);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleItemClick = () => {
+    onClose(); // Close the menu
+  };
 
   return (
     <Paper
       sx={{
         position: 'fixed',
-        top: '50%',
+        top: '50%', // Center the menu vertically
         left: '50%',
         transform: 'translate(-50%, -50%)',
         padding: '10px',
-        backgroundColor: colors.primary[400],
-        zIndex: 9999,
+        backgroundColor: colors.primary[700],
+        zIndex: 999,
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
-        width: '320px',
+        width: '400px',
       }}
     >
-      <Grid container spacing={2} justifyContent="center">
+      {/* User info */}
+      <Box mb="25px" textAlign="center">
+        <Box display="flex" justifyContent="center" alignItems="center">
+          {user && user.photoURL && (
+            <img
+              alt="Google Avatar"
+              width="54px"
+              height="40px"
+              src={user.photoURL}
+              style={{ borderRadius: "100%" }}
+            />
+          )}
+        </Box>
+        <Box textAlign="center">
+          <Typography
+            variant="h2"
+            color={colors.grey[100]}
+            fontWeight="bold"
+            sx={{ m: "10px 0 0 0" }}
+          >
+            {user && user.displayName ? user.displayName : "User"}
+          </Typography>
+          <Typography variant="h5" color={colors.greenAccent[500]}>
+            VIP ACCESS
+          </Typography>
+        </Box>
+      </Box>
+
+      {/* Menu items */}
+      <Box textAlign="left" width="100%">
         {items.map((item) => (
-          <Grid item key={item.title} xs={3} sm={3} md={3} lg={2} xl={2}>
-            <Link to={item.to} style={{ textDecoration: "none" }}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  marginX: '25px',
-                  textAlign: 'center',
-                  color: colors.grey[100],
-                  padding: '10px',
-                  paddingX: '20px',
-                  cursor: 'pointer',
-                }}
-              >
-                <Box sx={{ fontSize: '32px' }}>
-                  {React.cloneElement(item.icon, { fontSize: 'inherit' })}
-                </Box>
-                <Box>
-                  <Typography variant="caption" sx={{ marginTop: '1px' }}>{item.title}</Typography>
-                </Box>
+          <Link to={item.to} style={{ textDecoration: "none" }} key={item.title}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginY: '5px',
+                color: colors.grey[100],
+                padding: '10px',
+                width: '100%',
+                cursor: 'pointer',
+                fontSize: 'bold',
+              }}
+              onClick={handleItemClick}
+            >
+              <Box sx={{ fontSize: '34px' }}>
+                {React.cloneElement(item.icon, { fontSize: 'inherit' })}
               </Box>
-            </Link>
-          </Grid>
+              <Typography variant="h5" color={colors.primary[200]} sx={{ marginLeft: '5px', marginTop: '10px' }}>{item.title}</Typography>
+            </Box>
+          </Link>
         ))}
-      </Grid>
+      </Box>
     </Paper>
   );
 };
-
 
 const ResponsiveSidebar = () => {
   const theme = useTheme();
@@ -144,9 +190,12 @@ const ResponsiveSidebar = () => {
   ];
 
   const additionalItems = [
+    { title: "Mapa de Calor Ações BR", to: "/br", icon: <TravelExploreIcon /> },
     { title: "Comparar Desempenho", to: "/performance", icon: <SwipeUpIcon /> },
-    { title: "Notícias", to: "/news", icon: <NewspaperIcon /> },
+    { title: "Mapa de Calor Crypto", to: "/crypto", icon: <CurrencyBitcoinIcon /> },
+    { title: "Calendário Econômico", to: "/calender", icon: <EventAvailableIcon /> },
     { title: "Conteúdo Educacional", to: "/educative", icon: <ImportContactsIcon /> },
+    { title: "Notícias", to: "/news", icon: <NewspaperIcon /> },
   ];
 
   const handleMenuClick = () => {

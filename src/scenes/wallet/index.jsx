@@ -1,204 +1,113 @@
-import React, { useState, useEffect } from 'react';
-import { tokens } from '../../theme';
-import { Box, Typography, Paper, useTheme } from '@mui/material';
-import LoadingSpinner from '../../components/LoadingSpinner';
+import React from 'react';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import TradingViewWidget from './trandingView/market1';
+import TradingViewWidget2 from './trandingView/market2';
+import TradingViewWidget3 from './trandingView/market3';
 
-const Wallet = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+import HomeWorkIcon from '@mui/icons-material/HomeWork';
+import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const symbols = ['AGRO3'];
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
+import EjectIcon from '@mui/icons-material/Eject';
 
-        const fetchedData = [];
-
-        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-        for (let i = 0; i < symbols.length; i++) {
-          const symbol = symbols[i];
-          const response = await fetch(`https://yahoo-finance127.p.rapidapi.com/price/${symbol}.SA`, {
-            headers: {
-              'X-RapidAPI-Key': 'a17be7ff33msh9f3bdb294b64ac2p158415jsn53dd57a8e159',
-              'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com',
-            },
-          });
-
-          if (response.ok) {
-            const responseData = await response.json();
-
-            const infoArray = [
-              'CDI Acumulada  13.58%',
-              'Carteira CVL  26%',
-              'IBOvespa  3.15%',
-            ];
-
-            const modifiedData = {
-              title: responseData.shortName,
-              price: responseData.regularMarketPrice.fmt,
-              high: responseData.regularMarketDayHigh.fmt,
-              low: responseData.regularMarketDayLow.fmt,
-              volume: responseData.regularMarketVolume.fmt,
-              changePercent: responseData.regularMarketChangePercent.fmt,
-              symbol: responseData.symbol,
-              info: infoArray,
-            };
-
-            fetchedData.push(modifiedData);
-          } else {
-            console.error('Failed to fetch data:', response.status);
-          }
-
-          // Introduce a delay between requests (adjust the delay time as needed)
-          await delay(100); // 100 milliseconds delay
-        }
-
-        setData(fetchedData);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error occurred while fetching data:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const getTextInfo = (infoArray) => {
-    return infoArray.map((info, index) => (
-      <Typography
-        key={index}
-        variant="h4"
-        color="white"
-        fontWeight="bold"
-        paragraph
-        sx={{
-          animation: 'ticker 10s linear infinite',
-        }}
-      >
-        <span
-          style={{
-            display: 'inline-block',
-            animation: 'ticker 20s linear infinite',
-          }}
-        ></span>
-        {info}
-      </Typography>
-    ));
-  };
-
-  const handleItemClick = (index) => {
-    setSelectedItem(selectedItem === index ? null : index);
-  };
-
-  const isSmallScreen = true; // Replace with your logic for detecting small screens
-  const negativeColor = 'red'; // Replace with your desired colors
-  const positiveColor = 'rgb(12, 250, 12)'; // Replace with your desired colors
+const TradingViewGrid = () => {
+  const symbolsGrid1 = ["WIZC3", "BEES3", "TAEE11", "AGRO3", "BRAP4"];
+  const symbolsGrid2 = ["BTCI11", "MXRF11"];
+  const symbolsGrid3 = ["CRYPTO:BTCUSD", "CRYPTO:ADAUSD", "CRYPTO:HEROUSD", "CRYPTO:CROUSD", "CRYPTO:XRPUSD", "CRYPTO:TRXUSD", "CRYPTO:ONEUSD"];
 
   return (
-    <Box display="flex" flexDirection={isSmallScreen ? 'column-reverse' : 'row'} paddingX={{ xs: '5px', sm: '5px', md: '100px', lg: '100px', xl: '100px' }} paddingY="30px">
-      {/* Left side - Stock Quotes */}
-      {loading ? (
-        <Box flexGrow={1} display="flex" alignItems="center" justifyContent="center">
-          <LoadingSpinner />
-        </Box>
-      ) : (
-        <>
-          <Box flexGrow={1} overflow="auto">
-            <Typography variant="h1" fontWeight="600" paddingY="50px" textAlign="center" color={colors.grey[100]}>
-              CARTERIA CVL
-            </Typography>
+    <Container maxWidth="xl" style={{ padding: 0 }}>
+      <Grid container justifyContent="center" style={{ marginTop: "20px" }}>
+        <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ width: '100%' }}>
+            <Paper style={{ borderRadius: '10px', border: '1px solid #434651', backgroundColor: '#13151c', padding: '20px' }}>
+            <Typography variant="h3" align="center" style={{ fontSize: "30px", fontWeight: 'bold', textAlign: "center", alignItems: 'center' }}>
+                <LeaderboardIcon style={{ fontSize: "40px", padding: "5px" }} /> BENCHMARK
+              </Typography>
+            <Typography variant="h5" align="center" style={{ fontSize: "15px", marginBottom: '10px', fontWeight: 'bold', textAlign: "center", alignItems: 'center', color: "green", }}> Últimos 12 meses
+              </Typography>
+              <Grid container spacing={2} justifyContent="center" sx={{ paddingBottom: 2 }}>
+                <Grid item xs={12} sm={12} md={12}>
+                  <div style={{ padding: "10px", border: '1px solid #363a45', borderRadius: "20px", fontWeight: "bold", fontSize: "20px", textAlign: "center"}}>
+                    Carteira CVL
+                    
+                    <div style={{ color: "green", fontSize: "30px" }}>
+                    <EjectIcon style={{ marginBottom: "2px"}}/>
+                      59.74%</div>
+                  </div>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3} style={{ display: 'flex', justifyContent: 'center' }}>
+                  <div style={{ padding: "10px", border: '1px solid #363a45', borderRadius: "20px", fontWeight: "bold", fontSize: "20px", width: '100%' }}>
+                    IBOV
+                    <EjectIcon style={{ marginBottom: "2px"}}/>
+                    <div style={{ color: "green" }}>12.32%</div>
+                  </div>
+                </Grid>
+   
+                <Grid item xs={12} sm={6} md={3} style={{ display: 'flex', justifyContent: 'center' }}>
+                  <div style={{ padding: "10px", border: '1px solid #363a45', borderRadius: "20px", fontWeight: "bold", fontSize: "20px", width: '100%' }}>
+                    CDI
+                    <EjectIcon style={{ marginBottom: "2px"}}/>
+                    <div style={{ color: "green" }}>12.82%</div>
+                  </div>
+                </Grid>
+              </Grid>
+            </Paper>
+          </div>
+        </Grid>
+    <Grid item xs={12} sm={4} style={{ display: 'flex', justifyContent: 'center', marginTop: "20px" }}>
+      <div className="grid" style={{ borderRadius: '10px', border: '1px solid #434651', backgroundColor: '#1e222d', padding: '20px' }}>
+        <Typography variant="h3" align="center" style={{ fontSize: "30px", fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
+          <MyLocationIcon style={{ fontSize: "40px", marginRight: "10px", marginTop: "20px", backgroundColor: "#363a45", borderRadius: "20px", padding: "5px" }} /> AÇÕES
+        </Typography>
+        <Typography variant="body1" align="left" style={{ marginLeft: '5px' ,fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-10px", color: "#089981" }}>Atualizado a 23h</Typography>
+        <Grid container spacing={2}>
+          {symbolsGrid1.map((symbol, index) => (
+            <Grid item xs={12} key={index}>
+              <TradingViewWidget symbol={symbol} />
+            </Grid>
+          ))}
+        </Grid>
+      </div>
+    </Grid>
+    <Grid item xs={12} sm={4} style={{ display: 'flex', justifyContent: 'center' , marginTop: "20px"  }}>
+      <div className="grid" style={{ borderRadius: '10px', border: '1px solid #434651', backgroundColor: '#1e222d', padding: '20px' }}>
+        <Typography variant="h3" align="center" style={{ fontSize: "30px", fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
+          <HomeWorkIcon  style={{ fontSize: "40px", marginRight: "10px", marginTop: "20px", backgroundColor: "#363a45", borderRadius: "20px", padding: "5px" }} /> FUNDOS IMOBILIÁRIOS
+        </Typography>
+        <Typography variant="body1" align="left" style={{ marginLeft: '5px', fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-10px", color: "#089981" }}>Atualizado a 23h</Typography>
+        <Grid container spacing={2}>
+          {symbolsGrid2.map((symbol, index) => (
+            <Grid item xs={12} key={index}>
+              <TradingViewWidget2 symbol={symbol} />
+            </Grid>
+          ))}
+        </Grid>
+      </div>
+    </Grid>
+    <Grid item xs={12} sm={4} style={{ display: 'flex', justifyContent: 'center' , marginTop: "20px",  }}>
+      <div className="grid" style={{ borderRadius: '10px', border: '1px solid #434651', backgroundColor: '#1e222d', padding: '20px' }}>
+        <Typography variant="h3" align="center" style={{ fontSize: "30px", fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
+          <CurrencyBitcoinIcon style={{ fontSize: "40px", marginRight: "10px", marginTop: "20px", backgroundColor: "#363a45", borderRadius: "20px" }} /> CRYPTOMOEDAS
+        </Typography>
+        <Typography variant="body1" align="left" style={{ marginLeft: '5px', fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-10px", color: "#089981" }}>Atualizado a 12m</Typography>
+        <Grid container spacing={2}>
+          {symbolsGrid3.map((symbol, index) => (
+            <Grid item xs={12} key={index}>
+              <TradingViewWidget3 symbol={symbol} />
+            </Grid>
+          ))}
+        </Grid>
+      </div>
+    </Grid>
+  </Grid>
+</Container>
 
-            {selectedItem === null && (
-              <Box paddingBottom="20px">
-                <Typography variant="h5" fontWeight="600" paddingLeft="10px" paddingBottom="20px" textAlign="center" color={colors.grey[400]}>
-                  Clique nas ações para abrir a Benchmark
-                </Typography>
-              </Box>
-            )}
-
-            {data.map((item, index) => (
-              <Paper
-                key={index}
-                onClick={() => handleItemClick(index)}
-                sx={{
-                  p: 2,
-                  marginBottom: '10px',
-                  cursor: 'pointer',
-                  backgroundColor: `${colors.primary[400]} !important`,
-                  borderRadius: '20px',
-                  transition: isSmallScreen ? 'none' : 'transform 0.2s', // Remove hover animation for small screens
-                  boxShadow: selectedItem === index ? '0px 0px 10px 5px rgba(255, 255, 255, 0.3)' : 'none', // Color change on click
-                  paddingLeft: '30px', // Add left padding
-                }}
-              >
-                <Box>
-                  <Typography variant="h3" component="h5" color="text.primary">
-                    {item.symbol}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography
-                    variant="h4"
-                    component="h5"
-                    color="text.secondary"
-                    style={{ color: item.changePercent.startsWith('-') ? negativeColor : positiveColor }}
-                  >
-                    ({item.changePercent})
-                  </Typography>
-                </Box>
-              </Paper>
-            ))}
-          </Box>
-
-          {/* Right side - Text Info */}
-          {selectedItem !== null && (
-            <Box
-              flexGrow={1}
-              margin={isSmallScreen ? '0' : '0 0 0 200px'} // Adjust margin for small devices
-              borderRadius="20px"
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              paddingY="20px"
-              backgroundColor={colors.blueAccent[500]}
-            >
-              <Box alignItems="center" justifyItems="center" color="text.primary">
-                <Typography variant="h2" fontWeight="600" color="white" paddingBottom="20px" textAlign="center">
-                  BenchMarks
-                </Typography>
-              </Box>
-
-              {getTextInfo(data[selectedItem].info).map((text, index) => (
-                <Typography
-                  key={index}
-                  variant="h4"
-                  component="h6"
-                  padding="2px"
-                  style={{ textAlign: 'center', color: 'text.primary' }}
-                >
-                  {text}
-                </Typography>
-              ))}
-            </Box>
-          )}
-        </>
-      )}
-    </Box>
   );
 };
 
-export default Wallet;
-
-
-
-
-
-
-
-
-
+export default TradingViewGrid;

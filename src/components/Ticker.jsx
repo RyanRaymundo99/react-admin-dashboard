@@ -50,7 +50,7 @@ function TradingViewTickerTape() {
   }, []); // Empty dependency array to run the effect only once
 
   return (
-    <div className="tradingview-widget-container" style={{ width: "94%", maxWidth: "100%" }}>
+    <div className="tradingview-widget-container" style={{ width: "100%", maxWidth: "100%" }}>
       <div className="tradingview-widget-container__widget" ref={container}></div>
     </div>
   );

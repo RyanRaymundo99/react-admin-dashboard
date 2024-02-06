@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-
+import { Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
 import MobileSidebar from './scenes/global/MobileSidebar';
@@ -14,6 +13,10 @@ import Educative from './scenes/educative';
 import Performance from './scenes/performance';
 import Login from './scenes/login/signIn';
 import Ibovfull from './components/IBOVFULL';
+import Calender from './scenes/calender';
+import Crypto from './scenes/hotZoneCrypto';
+import Br from './scenes/hotZoneBr';
+import LandingPage from './landingPage/home';
 
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
@@ -21,15 +24,13 @@ import { auth } from './api/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material';
-import Calender from './scenes/calender';
-import Crypto from './scenes/hotZoneCrypto';
-import Br from './scenes/hotZoneBr';
 
 function App() {
   const [theme, colorMode] = useMode();
   const [user, setUser] = useState(null);
   const [isAuthorized, setIsAuthorized] = useState(true);
   const [isUnauthorizedDialogOpen, setIsUnauthorizedDialogOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     // Add a listener to detect user authentication state changes
@@ -45,10 +46,13 @@ function App() {
           "layrton.lbss@gmail.com",
           "Cainan.carvalho1@oultook.com",
           "cainan.carvalho199601@gmail.com",
+          "cainansilva199603@gmail.com",
           "vladsonluizsilva@gmail.com",
           "Vladsonluizsilva@hotmail.com",
           "Leandrodeoliveira678@gmail.com",
-          "ingridrodriguespubli@gmail.com",
+          "Ingridrodriguespubli@gmail.com",
+          "renilsoaraujo.pro@gmail.com",
+          "arlamaraujo3@gmail.com",
         ];
 
         setIsAuthorized(allowedEmails.includes(userEmail));
@@ -71,18 +75,26 @@ function App() {
     setIsUnauthorizedDialogOpen(false);
   };
 
+  const navigateToLogin = () => {
+    // Redirect to login page
+    // You can use Navigate component from react-router-dom
+    return <Navigate to="/login" />;
+  };
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          {user && isAuthorized && <Sidebar />}
-          {user && isAuthorized && <MobileSidebar />}
           <main className="content">
+            {/* Display LandingPage component if no user is logged in and not on the login page */}
+            {!user && location.pathname !== '/login' && <LandingPage />}
             {user && isAuthorized && <Topbar />}
+            {user && isAuthorized && <Sidebar />}
+            {user && isAuthorized && <MobileSidebar />}
             <Routes>
               <Route
-                path="/"
+                path="/dashboard"
                 element={
                   user && isAuthorized ? (
                     <Dashboard />
@@ -91,7 +103,7 @@ function App() {
                   )
                 }
               />
-              <Route path="/login" element={user && isAuthorized ? <Navigate to="/" /> : <Login />} />
+              <Route path="/login" element={user && isAuthorized ? <Navigate to="/dashboard" /> : <Login />} />
               {user && isAuthorized && (
                 <React.Fragment>
                   <Route path="/quotes" element={<Quotes />} />
@@ -105,7 +117,6 @@ function App() {
                   <Route path="/br" element={<Br />} />
                   <Route path="/performance" element={<Performance />} />
                   <Route path="/ibovfull" element={<Ibovfull />} />
-              
                 </React.Fragment>
               )}
             </Routes>

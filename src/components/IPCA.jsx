@@ -1,33 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend
-} from 'recharts';
+import React, { useState, useEffect, useRef } from 'react';
+import { createChart } from 'lightweight-charts';
+import { format } from 'date-fns';
 
 const InflationChart = () => {
   const [inflationData, setInflationData] = useState([]);
-  const [chartWidth, setChartWidth] = useState(Math.min(955, window.innerWidth * 0.9));
+  const chartContainerRef = useRef(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      setChartWidth(Math.min(955, window.innerWidth * 0.9));
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    const fetchInflationData = async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch(
           'https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados/ultimos/7?formato=json'
@@ -35,38 +15,46 @@ const InflationChart = () => {
         const data = await response.json();
 
         if (data.length > 0) {
-          const formattedInflationData = data.map(entry => ({
-            name: entry.data,
+          const formattedData = data.map(entry => ({
+            time: new Date(entry.data).getTime(),
             value: parseFloat(entry.valor),
-          }));
-          setInflationData(formattedInflationData);
+            formattedDate: format(new Date(entry.data), 'MM/dd/yyyy'), // Format date using date-fns
+          })).sort((a, b) => a.time - b.time);
+
+          setInflationData(formattedData);
         }
       } catch (error) {
-        console.error('Error fetching inflation data:', error);
+        console.error('Error fetching data:', error);
       }
     };
 
-    fetchInflationData();
+    // Fetch initial data
+    fetchData();
+
+    // Set up interval to fetch data periodically (every 5 seconds in this example)
+    const intervalId = setInterval(fetchData, 5000);
+
+    // Clear interval on component unmount
+    return () => clearInterval(intervalId);
   }, []);
+
+  useEffect(() => {
+    if (inflationData.length > 0 && chartContainerRef.current) {
+      const chart = createChart(chartContainerRef.current, {
+        width: chartContainerRef.current.clientWidth,
+        height: 400,
+      });
+
+      const lineSeries = chart.addLineSeries();
+      lineSeries.setData(inflationData);
+
+      return () => chart.remove();
+    }
+  }, [inflationData]);
 
   return (
     <div>
-      <div style={{ height: '400px', width: '100%'}}>
-        {inflationData.length > 0 ? (
-          <ResponsiveContainer>
-          <LineChart width={chartWidth} height={400} data={inflationData} margin={{ top: 50, right: 50, bottom: 50, left: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis label={{ value: 'Inflation Rate (%)', angle: -90, position: 'insideLeft' }} />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="value" stroke="#82ca9d" />
-          </LineChart>
-          </ResponsiveContainer>
-        ) : (
-          <p>Carregando dados...</p>
-        )}
-      </div>
+      <div style={{ height: '400px', width: '100%' }} ref={chartContainerRef} />
     </div>
   );
 };

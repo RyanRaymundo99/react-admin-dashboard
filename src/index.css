@@ -153,8 +153,6 @@ body,
   }
 }
 
-
-
 .tradingview-widge-container__widge {
   height: 100%;
   box-sizing: border-box;
@@ -162,8 +160,44 @@ body,
 
 @media only screen and (min-width: 768px) {
   .responsive-padding {
-    padding-left: 140px;
-    margin-bottom: 140px;
+    padding-left: 80px;
+    margin-bottom: 180px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .responsive-padding {
+    padding-left: 10px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .responsive-padding-performance {
+    padding-left: 80px;
+    margin-bottom: 980px;
+    width: 100%;
+    height: 900px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .responsive-padding-performance {
+    padding-left: 1px;
+    height: 100%;
+    margin-bottom: 900px;
+    padding-bottom: 30px;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .responsive-padding-performance-2 {
+    padding-left: 80px;
+    margin-bottom: 800px;
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .responsive-padding-performance-2 {
+    padding-left: 1px;
+    height: 100%;
+    margin-bottom: 700px;
   }
 }
 

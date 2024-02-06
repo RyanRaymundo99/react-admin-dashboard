@@ -28,8 +28,8 @@ function Crypto() {
   }, []);
 
   return (
-    <div className="tradingview-widget-container" ref={container}>
-      <div className="tradingview-widget-container__widget responsive-padding"></div>
+    <div className="tradingview-widget-container  responsive-padding" ref={container}>
+      <div className="tradingview-widget-container__widget"></div>
     </div>
   );
 }
