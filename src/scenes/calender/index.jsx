@@ -1,44 +1,61 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-const Calendar = () => {
+function Calendar() {
+  const widgetContainerRef = useRef(null);
+  const scriptRef = useRef(null);
+
   useEffect(() => {
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-events.js';
-    script.async = true;
+    // Initialize TradingView script
+    if (!scriptRef.current) {
+      scriptRef.current = document.createElement('script');
+      scriptRef.current.src = 'https://s3.tradingview.com/external-embedding/embed-widget-events.js';
+      scriptRef.current.async = true;
+      scriptRef.current.innerHTML = JSON.stringify({
+        "width": "100%",
+        "height": "100%",
+        "colorTheme": "dark",
+        "isTransparent": true,
+        "locale": "en",
+        "importanceFilter": "-1,0,1",
+        "countryFilter": "br"
+      });
 
-    script.text = JSON.stringify({
-      "width": "100%",
-      "height": "100%",
-      "colorTheme": "dark",
-      "isTransparent": true,
-      "locale": "br",
-      "importanceFilter": "-1,0,1",
-      "countryFilter": "br"
-    });
-
-    const container = document.querySelector('.tradingview-widge-container__widge');
-    if (container) {
-      container.appendChild(script);
+      widgetContainerRef.current.appendChild(scriptRef.current);
     }
 
-    return () => {
-      try {
-        const container = document.querySelector('.tradingview-widge-container__widge');
-        if (container && container.contains(script)) {
-          container.removeChild(script);
+    // Create a MutationObserver instance
+    const observer = new MutationObserver((mutationsList) => {
+      for (let mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          // Check if the widget container has been removed
+          if (!widgetContainerRef.current.contains(scriptRef.current)) {
+            // If container is removed, remove the script
+            scriptRef.current.remove();
+            scriptRef.current = null;
+            observer.disconnect(); // Stop observing once cleanup is done
+          }
         }
-      } catch (error) {
-        console.error('Error removing script:', error);
+      }
+    });
+
+    // Start observing the widget container
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Cleanup function
+    return () => {
+      if (scriptRef.current) {
+        scriptRef.current.remove();
+        scriptRef.current = null;
+        observer.disconnect();
       }
     };
   }, []);
 
   return (
-    <div className="tradingview-widge-container" style={{ height: "100%", maxWidth: "100%" }}>
-      <div className="tradingview-widge-container__widge responsive-padding"></div>
+    <div className="tradingview-widget-cont responsive-padding-performance-2" style={{ height: '100vh', width: '100%' }}>
+      <div className="tradingview-widget-cont__widget" ref={widgetContainerRef} style={{ height: '100vh', width: '100%' }}></div>
     </div>
   );
-};
+}
 
 export default Calendar;

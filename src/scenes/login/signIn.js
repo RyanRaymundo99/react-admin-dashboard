@@ -7,7 +7,7 @@ import Home from "../../App";
 import { Box, Container } from "@mui/material";
 
 import Google from '../../assets/Google.svg';
-import logo2 from '../../assets/logo2.svg';
+import Logo from '../../assets/Logo.svg';
 import bg from '../../assets/bg.svg';
 
 function GoogleSignInButton({ onClick }) {
@@ -45,17 +45,20 @@ function SignIn() {
   const handleGoogleSignIn = () => {
     setLoading(true);
     signInWithPopup(auth, provider)
-      .then((data) => {
-        // Handle Google sign-in
+      .then((result) => {
+        const user = result.user;
+        setUser(user); // Set the user state upon successful sign-in
+        setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
         console.error("Error during Google sign-in:", error);
       });
   };
+  
 
   const darkTheme = {
-    backgroundColor: "rgba(13, 39, 82, 0.9)",
+    backgroundColor: "#000000",
     color: "white",
     borderColor: "#007bff",
   };
@@ -94,7 +97,7 @@ function SignIn() {
           {...containerStyle}
         >
           {/* Logo with adjusted styles */}
-          <img src={logo2} alt="Your Image" style={logoStyle} />
+          <img src={Logo} alt="Your Image" style={logoStyle} />
           {user ? (
             <Home />
           ) : (

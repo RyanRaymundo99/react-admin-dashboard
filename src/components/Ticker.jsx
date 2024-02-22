@@ -33,7 +33,7 @@ function TradingViewTickerTape() {
           }
         ],
         "showSymbolLogo": true,
-        "isTransparent": false,
+        "isTransparent": true,
         "displayMode": "adaptive",
         "colorTheme": "dark",
         "locale": "en"

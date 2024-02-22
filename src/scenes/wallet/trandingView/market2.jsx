@@ -17,7 +17,7 @@ const Market2 = ({ symbol }) => {
         "colorTheme": "dark",
         "locale": "en"
       });
-      document.getElementsByClassName('tradingvie2')[0].appendChild(script);
+      document.getElementsByClassName('tradigvie2')[0].appendChild(script);
       
       // Update the ref to indicate that the script has been appended
       scriptRef.current = script;
@@ -37,8 +37,8 @@ const Market2 = ({ symbol }) => {
   }, [symbol]);
 
   return (
-    <div className="tradingvieg2">
-      <div className="tradingvie2"></div>
+    <div className="tradigvieg2">
+      <div className="tradigvie2"></div>
     </div>
   );
 };

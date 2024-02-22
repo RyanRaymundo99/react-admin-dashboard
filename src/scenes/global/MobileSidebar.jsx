@@ -52,16 +52,21 @@ const BottomMenu = ({ icons, selected, setSelected, onMenuClick }) => {
   return (
     <Box
       sx={{
-        padding: "px",
         position: "fixed",
         bottom: 0,
         width: "100%",
         backgroundColor: colors.primary[400],
-        display: { xs: 'flex', md: 'none' },
+        display: { xs: "flex", md: "none" },
         justifyContent: "space-between",
         alignItems: "center",
+        zIndex: 9999, // Ensure it's above other elements
+        // Add styles to ensure fixed positioning
+        left: 0,
+        right: 0,
+        paddingX: "20px",
+        boxShadow: "0 -2px 4px rgba(0, 0, 0, 0.1)", // Add shadow for visual effect
       }}
-    >
+  >
       {icons.map((item) => (
         <Item
           key={item.title}

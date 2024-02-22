@@ -80,6 +80,7 @@ const Sidebar = () => {
         position: "fixed",
         height: "100vh", // Set the width to 100%
         zIndex: 100, // Add z-index of 100
+        border: "1px solid #20232f",
       }}
     >
       {/* Use media query to hide the sidebar on smaller screens */}
@@ -176,13 +177,21 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Mapa de Calor Ações BR"
-              to="/br"
-              icon={<TravelExploreIcon />}
+            
+             <Item
+              title="Comparar Desempenho"
+              to="/performance"
+              icon={<SwipeUpIcon />}
               selected={selected}
               setSelected={setSelected}
             />
+             <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Radar
+            </Typography>
             <Item
               title="Mapa de Calor Crypto"
               to="/crypto"
@@ -200,10 +209,10 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             */}
-            <Item
-              title="Comparar Desempenho"
-              to="/performance"
-              icon={<SwipeUpIcon />}
+           <Item
+              title="Mapa de Calor Ações BR"
+              to="/br"
+              icon={<TravelExploreIcon />}
               selected={selected}
               setSelected={setSelected}
             />

@@ -202,7 +202,48 @@ body,
 }
 
 
+.grid-item {
+  margin: 20px;
+  height: 300px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: black;
+  border-color: #e0e0e0;
+}
 
-
+.background-image {
+  width: 100%;
+  height: 100%;
+  background-image: url('./assets/Charts.png'); /* Change the path to your image */
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+.background-image-2 {
+  width: 100%;
+  height: 100%;
+  background-image: url('./assets/Charts2.png'); /* Change the path to your image */
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+.background-image-3 {
+  width: 100%;
+  height: 100%;
+  background-image: url('./assets/Charts3.png'); /* Change the path to your image */
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
 
 

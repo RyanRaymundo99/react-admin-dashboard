@@ -1,11 +1,11 @@
-// TradingViewWidget.jsx
-import React, { useEffect, useRef, memo } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 function Br() {
   const container = useRef();
+  const scriptAdded = useRef(false);
 
-  useEffect(
-    () => {
+  useEffect(() => {
+    if (!scriptAdded.current) {
       const script = document.createElement("script");
       script.src = "https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js";
       script.type = "text/javascript";
@@ -28,13 +28,13 @@ function Br() {
           "height": "100%"
         }`;
       container.current.appendChild(script);
-    },
-    []
-  );
+      scriptAdded.current = true;
+    }
+  }, []);
 
   return (
     <div className="tradingview-widget-container responsive-padding" ref={container}>
-      <div className="tradingview-widget-container__widget "></div>
+      <div className="tradingview-widget-container__widget"></div>
     </div>
   );
 }

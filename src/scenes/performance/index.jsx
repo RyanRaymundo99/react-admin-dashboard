@@ -218,7 +218,7 @@ const Performance = () => {
       "showChart": true,
       "locale": "br",
       "width": "100%",
-      "height": "100%",
+      "height": "80%",
       "largeChartUrl": "",
       "isTransparent": false,
       "showSymbolLogo": true,
@@ -254,22 +254,24 @@ const Performance = () => {
   }, []); // Empty dependency array to run the effect only once
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} md={6}>
-        <Box display="flex" alignItems="center" justifyContent="center" borderRadius={16} bgcolor="primary.main" p={2}>
+    <div style={{height: "50%"}}>
+    <Grid container spacing={2} >
+      <Grid item xs={6} md={6}>
+        <Box display="flex" alignItems="center" justifyContent="center" p={2}>
           <img src={Brazil} alt="Your Image" style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
           <Typography variant="h3" color="textPrimary" style={{ marginLeft: '16px' }}>Mercado Brasileiro</Typography>
         </Box>
-        <div className="trad-wid-conta responsive-padding-performance" style={{ height: '100%' }} ref={container1}></div>
+        <div className="trad-wid-conta responsive-padding-performance" style={{ height: '66%' }} ref={container1}></div>
       </Grid>
       <Grid item xs={12} md={6}>
-      <Box display="flex" alignItems="center" justifyContent="center"  bgcolor="primary.main" p={2}>
+      <Box display="flex" alignItems="center" justifyContent="center" p={2}>
           <img src={USA} alt="Your Image" style={{ width: '50px', height: '50px'}} />
           <Typography variant="h3" color="textPrimary" style={{ marginLeft: '16px' }}>Mercado Americano</Typography>
-        </Box>
+      </Box>
         <div className="trad-wid-conta responsive-padding-performance-2" style={{ height: '60%' }} ref={container2}></div>
       </Grid>
     </Grid>
+    </div>
   );
 }
 
