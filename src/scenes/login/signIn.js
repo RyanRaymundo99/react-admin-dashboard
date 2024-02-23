@@ -8,7 +8,6 @@ import { Box, Container } from "@mui/material";
 
 import Google from '../../assets/Google.svg';
 import Logo from '../../assets/Logo.svg';
-import bg from '../../assets/bg.svg';
 
 function GoogleSignInButton({ onClick }) {
   const buttonStyle = {
@@ -57,36 +56,8 @@ function SignIn() {
   };
   
 
-  const darkTheme = {
-    backgroundColor: "#000000",
-    color: "white",
-    borderColor: "#007bff",
-  };
-
-  const backgroundStyle = {
-    backgroundImage: `url(${bg})`,
-    backgroundSize: "cover",
-    backdropFilter: "blur(10px)",
-    paddingY: "100px"
-  };
-
-  const containerStyle = {
-    padding: "20px",
-    boxShadow: 1,
-    ...darkTheme,
-  };
-
-  const logoStyle = {
-    width: "60%", // Adjust the width as needed
-    maxWidth: "200px", // Set a maximum width for the logo
-    height: "auto", // Maintain aspect ratio
-    marginBottom: "20px", // Add some margin at the bottom
-  };
-
-
   return (
-    <Box style={{ ...darkTheme, minHeight: "100vh", ...backgroundStyle }}>
-      {/* Container with added padding for tablets and larger devices */}
+    <Box style={{  minHeight: "100vh"}}>
       <Container maxWidth="sm">
         <Box
           display="flex"
@@ -94,17 +65,13 @@ function SignIn() {
           alignItems="center"
           justifyContent="center"
           minHeight="100vh"
-          {...containerStyle}
         >
-          {/* Logo with adjusted styles */}
-          <img src={Logo} alt="Your Image" style={logoStyle} />
+          <img src={Logo} alt="Your Image"  />
           {user ? (
             <Home />
           ) : (
             <Box display="flex" flexDirection="column" alignItems="center">
-              {/* Sign-in component */}
               <Signin />
-              {/* Divider */}
               <Box display="flex" alignItems="center" width="100%" mt={3} mb={3}>
                 <Box flex={1} borderBottom={1} borderColor="white" />
                 <Box px={2} color="white" fontWeight="bold">
@@ -112,7 +79,6 @@ function SignIn() {
                 </Box>
                 <Box flex={1} borderBottom={1} borderColor="white" />
               </Box>
-              {/* Google Sign-in button */}
               <GoogleSignInButton onClick={handleGoogleSignIn} />
             </Box>
           )}
