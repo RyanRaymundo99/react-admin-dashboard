@@ -254,16 +254,16 @@ const Performance = () => {
   }, []); // Empty dependency array to run the effect only once
 
   return (
-    <div style={{height: "50%"}}>
+    <div style={{height: "60%"}}>
     <Grid container spacing={2} >
-      <Grid item xs={6} md={6}>
-        <Box display="flex" alignItems="center" justifyContent="center" p={2}>
+      <Grid item xs={12} md={6}>
+        <Box display="flex" alignItems="center" justifyContent="center" paddingBottom="20px">
           <img src={Brazil} alt="Your Image" style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
           <Typography variant="h3" color="textPrimary" style={{ marginLeft: '16px' }}>Mercado Brasileiro</Typography>
         </Box>
-        <div className="trad-wid-conta responsive-padding-performance" style={{ height: '66%' }} ref={container1}></div>
+        <div className="trad-wid-conta responsive-padding-performance" style={{ height: '89%' }} ref={container1}></div>
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={6} paddingRight={2}>
       <Box display="flex" alignItems="center" justifyContent="center" p={2}>
           <img src={USA} alt="Your Image" style={{ width: '50px', height: '50px'}} />
           <Typography variant="h3" color="textPrimary" style={{ marginLeft: '16px' }}>Mercado Americano</Typography>

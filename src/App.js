@@ -21,6 +21,7 @@ import { ColorModeContext, useMode } from './theme';
 import { auth } from './api/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Dialog, DialogTitle, DialogActions, Button } from '@mui/material';
+import Screener from './scenes/screener';
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -92,6 +93,7 @@ function App() {
               <Route path="/calender" element={<Calender />} />
               <Route path="/crypto" element={<Crypto />} />
               <Route path="/br" element={<Br />} />
+              <Route path="/screener" element={<Screener />} />
               <Route path="/performance" element={<Performance />} />
               <Route path="/ibovfull" element={<Ibovfull />} />
               <Route path="/login" element={user && isAuthorized ? <Navigate to="/dashboard" /> : <Login />} />

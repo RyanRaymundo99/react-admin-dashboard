@@ -4,16 +4,16 @@ import { tokens } from "../../theme";
 import { Link } from "react-router-dom";
 import AppsIcon from '@mui/icons-material/Apps';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import MenuIcon from '@mui/icons-material/Menu';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import WalletIcon from '@mui/icons-material/Wallet';
-import SsidChartIcon from '@mui/icons-material/SsidChart';
 import SwipeUpIcon from '@mui/icons-material/SwipeUp';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import FitScreenIcon from '@mui/icons-material/FitScreen';
 import { auth } from "../../api/firebase";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -80,13 +80,13 @@ const BottomMenu = ({ icons, selected, setSelected, onMenuClick }) => {
 
       {/* Far Right Menu */}
       <IconButton onClick={onMenuClick}>
-        {onMenuClick ? <BookmarkAddIcon style={{ fontSize: '30px', marginBottom: '10px' }} /> : <ArrowForwardIcon />}
+        {onMenuClick ? <MenuIcon style={{ fontSize: '30px', marginBottom: '10px' }} /> : <ArrowForwardIcon />}
       </IconButton>
     </Box>
   );
 };
 
-const Menu = ({ onClose, items}) => {
+const Menu = ({ onClose, items }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [user, setUser] = useState(null);
@@ -123,6 +123,20 @@ const Menu = ({ onClose, items}) => {
         width: '400px',
       }}
     >
+      {/* News Icon - Positioned Top Left */}
+      <Box mb="25px" textAlign="center" sx={{ position: 'absolute', top: '0px', left: '0px' }} className="bg-gray-950/20 rounded-br-lg ">
+        <IconButton component={Link} to="/news" onClick={handleItemClick}>
+          <NewspaperIcon style={{ fontSize: '30px', color: colors.grey[100] }} />
+        </IconButton>
+      </Box>
+
+      {/* Calendar Icon - Positioned Top Right */}
+      <Box mb="25px" textAlign="center" sx={{ position: 'absolute', top: '0px', right: '0px' }} className="bg-gray-950/20 rounded-bl-lg ">
+        <IconButton component={Link} to="/calender" onClick={handleItemClick}>
+          <EventAvailableIcon style={{ fontSize: '30px', color: colors.grey[100] }} />
+        </IconButton>
+      </Box>
+
       {/* User info */}
       <Box mb="25px" textAlign="center">
         <Box display="flex" justifyContent="center" alignItems="center">
@@ -160,7 +174,6 @@ const Menu = ({ onClose, items}) => {
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginY: '5px',
                 color: colors.grey[100],
                 padding: '10px',
                 width: '100%',
@@ -181,6 +194,7 @@ const Menu = ({ onClose, items}) => {
   );
 };
 
+
 const ResponsiveSidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -188,7 +202,7 @@ const ResponsiveSidebar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const bottomMenuIcons = [
-    { title: "Ibovespa", to: "/line", icon: <SsidChartIcon /> },
+    { title: "Desempenho", to: "/performance", icon: <SwipeUpIcon /> },
     { title: "Carteira", to: "/wallet", icon: <WalletIcon /> },
     { title: "Home", to: "/", icon: <AppsIcon /> },
     { title: "Cotações", to: "/quotes", icon: <CurrencyExchangeIcon /> },
@@ -196,11 +210,9 @@ const ResponsiveSidebar = () => {
 
   const additionalItems = [
     { title: "Mapa de Calor Ações BR", to: "/br", icon: <TravelExploreIcon /> },
-    { title: "Comparar Desempenho", to: "/performance", icon: <SwipeUpIcon /> },
     { title: "Mapa de Calor Crypto", to: "/crypto", icon: <CurrencyBitcoinIcon /> },
-    { title: "Calendário Econômico", to: "/calender", icon: <EventAvailableIcon /> },
     { title: "Conteúdo Educacional", to: "/educative", icon: <ImportContactsIcon /> },
-    { title: "Notícias", to: "/news", icon: <NewspaperIcon /> },
+    { title: "Filtro Crypto", to: "/screener", icon: <FitScreenIcon /> },
   ];
 
   const handleMenuClick = () => {

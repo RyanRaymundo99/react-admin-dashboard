@@ -19,6 +19,7 @@ import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import FitScreenIcon from '@mui/icons-material/FitScreen';
 
 import { auth } from "../../api/firebase";
 
@@ -185,6 +186,13 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+             <Item
+              title="Filtro Crypto"
+              to="/screener"
+              icon={<FitScreenIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
              <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -232,19 +240,23 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Carteira de Investidor"
-              to="/wallet"
-              icon={<WalletIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
               title="Conteúdo Educacional"
               to="/educative"
               icon={<ImportContactsIcon />}
               selected={selected}
               setSelected={setSelected}
             />
+
+            <div className="mt-20 mr-5 bg-slate-500/20 rounded-lg">
+            <Item
+              title="Carteira de Investidor"
+              to="/wallet"
+              icon={<WalletIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            </div>
+            
           </Box>
         </Menu>
       </ProSidebar>

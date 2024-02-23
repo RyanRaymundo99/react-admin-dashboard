@@ -183,13 +183,12 @@ body,
     padding-left: 1px;
     height: 100%;
     margin-bottom: 900px;
-    padding-bottom: 30px;
+
   }
 }
 @media only screen and (min-width: 768px) {
   .responsive-padding-performance-2 {
     padding-left: 80px;
-    margin-bottom: 800px;
     width: 100%;
   }
 }
@@ -197,7 +196,7 @@ body,
   .responsive-padding-performance-2 {
     padding-left: 1px;
     height: 100%;
-    margin-bottom: 700px;
+    margin-bottom: 900px;
   }
 }
 
