@@ -47,6 +47,8 @@ function App() {
           "Ingridrodriguespubli@gmail.com",
           "renilsonaraujo.pro@gmail.com",
           "arlamaraujo3@gmail.com",
+          "lliefellopeandrade1@gmail.com",
+          "wendellyalexandre@gmail.com",
         ];
 
         setIsAuthorized(allowedEmails.includes(userEmail));

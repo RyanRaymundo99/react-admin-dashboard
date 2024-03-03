@@ -1,111 +1,74 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Favorite } from '@mui/icons-material'; // Importing the Favorite icon from Material-UI
-import styles from './ProfileStats.module.css'; // Import the CSS module
-import Surf3 from '../../../assets/Surf3.jpg';
-import Surf2 from '../../../assets/Surf2.jpg';
-import Surf1 from '../../../assets/Surf1.jpg';
-import SpeedIcon from '@mui/icons-material/Speed';
-import TerrainIcon from '@mui/icons-material/Terrain';
+import React from 'react';
+import Surf from '../../../assets/Surf3.jpg';
 import HikingIcon from '@mui/icons-material/Hiking';
+import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
+import LandscapeOutlinedIcon from '@mui/icons-material/LandscapeOutlined';
 
 function ProfileStats() {
-  const placeholderRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const placeholder = placeholderRef.current;
-      const scrollPosition = window.scrollY;
-      const elementTop = placeholder.offsetTop;
-      const elementHeight = placeholder.offsetHeight;
-      const windowHeight = window.innerHeight;
-
-      if (
-        scrollPosition >= elementTop - windowHeight + windowHeight * 0.2 &&
-        scrollPosition < elementTop - windowHeight + windowHeight * 0.8
-      ) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <section className="py-10 bg-white sm:py-16 lg:py-24">
-      <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+    <section className="relative py-16">
+      {/* Background image */}
+      <div className="absolute inset-0 bg-cover bg-center z-0" style={{backgroundImage: `url(${Surf})`}}></div>
+      {/* Black overlay with linear gradient */}
+      <div className="absolute inset-0 bg-black/70 z-10"></div>
+      {/* Content */}
+      <div className="relative z-20 px-4 mx-auto sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl lg:leading-tight">
-            People who made it successful
+          <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-6xl lg:leading-tight">
+            O QUE ESTÁ ESPERANDO?
           </h2>
-          <p className="max-w-2xl mx-auto mt-4 text-xl text-gray-600">
+          <p className="max-w-2xl mx-auto mt-4 text-xl text-gray-300">
             Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis.
           </p>
         </div>
 
-        <div
-          ref={placeholderRef}
-          className={`${styles.placeholder} ${isVisible ? styles.show : ''}`}
-        >
-          <div className="max-w-7xl mx-auto lg:mx-auto flex justify-center">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 items-center">
-              <div className="relative text-center">
-                <div className="card">
-                  <img
-                    className="w-full h-112 object-cover"
-                    src={Surf1}
-                    alt=""
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 text-white p-2 flex items-center justify-center">
-                    <TerrainIcon sx={{ fontSize: '2rem', marginBottom: '10px' }} className="mr-2" />
-                    <span className="text-2xl">Iniciando</span>
-                  </div>
-                </div>
-              </div>
-              <div className="relative text-center">
-                <div className="card">
-                  <img
-                    className="w-full h-112 object-cover"
-                    src={Surf2}
-                    alt=""
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 text-white p-2 flex items-center justify-center">
-                    <HikingIcon sx={{ fontSize: '2rem', marginBottom: '10px' }} className="mr-2 h-10 w-10" />
-                    <span className='text-2xl'>Intermediário</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="relative text-center">
-                <div className="card">
-                  <img
-                    className="w-full h-112 object-cover"
-                    src={Surf3}
-                    alt=""
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 text-white p-2 flex items-center justify-center">
-                    <SpeedIcon sx={{ fontSize: '2rem', marginBottom: '10px' }} className="mr-2" />
-                    <span className="text-2xl">Avançado</span>
-                  </div>
-                </div>
+        <div className="container px-5 py-16 mx-auto">
+          <div className="flex flex-wrap -m-4 justify-center">
+            <div className="xl:w-1/4 md:w-1/2 p-4 relative">
+              
+              <div className="p-6 rounded-lg text-center">
+                <HikingIcon style={{ fontSize: 130 }} className="text-white/80 mx-auto mb-6 border rounded-full p-1" alt="content"/>
+                <h2 className="text-lg text-gray-100 font-bold mb-4 uppercase bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">Iniciando</h2>
+                <p className="leading-relaxed text-base text-gray-300">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
               </div>
             </div>
+            <div className="dots-container hidden lg:flex mt-24 h-full items-center justify-center ">
+                <div className="dot"></div>
+                <div className="dot"></div>
+                <div className="dot"></div>
+              </div>
+            <div className="xl:w-1/4 md:w-1/2 p-4">
+              <div className="p-6 rounded-lg text-center">
+                <SpeedOutlinedIcon style={{ fontSize: 130 }} className="text-white/80 mx-auto mb-6 border rounded-full p-1" alt="content"/>
+                <h2 className="text-lg text-gray-100 font-bold mb-4 uppercase bg-gradient-to-r from-pink-500 to-purple-500 text-transparent bg-clip-text">Aprendendo</h2>
+                <p className="leading-relaxed text-base text-gray-300">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+              </div>
+            </div>
+            <div className="dots-container hidden lg:flex mt-24 h-full items-center justify-center">
+                <div className="dot ml-20"></div>
+                <div className="dot ml-20"></div>
+                <div className="dot ml-20"></div>
+              </div>
+            <div className="xl:w-1/4 md:w-1/2 p-4">
+              <div className="p-6 rounded-lg text-center">
+                <LandscapeOutlinedIcon style={{ fontSize: 130 }} className="text-white/80 mx-auto mb-6 border rounded-full p-1" alt="content"/>
+                <h2 className="text-lg text-gray-100 font-bold mb-4 uppercase bg-gradient-to-r from-yellow-500 to-red-500 text-transparent bg-clip-text">Avançado</h2>
+                <p className="leading-relaxed text-base text-gray-300">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+              </div>
+            </div>
+            {/* Add more similar divs for other items */}
           </div>
-        </div>
-
+          
         <div className="mt-8 text-center md:mt-16">
           <a
             href="#"
             title=""
-            className="inline-flex items-center justify-center py-4 font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md px-14 hover:bg-blue-700 focus:bg-blue-700"
+            className="inline-flex items-center justify-center py-4 font-semibold text-white transition-all duration-200 bg-white10 backdrop-blur-sm border border-gray-300/50 rounded-md px-14 hover:bg-red-700/20 focus:bg-red-700"
             role="button"
           >
-            {' '}
-            Join our team{' '}
+            Criar uma conta
           </a>
+        </div>
         </div>
       </div>
     </section>

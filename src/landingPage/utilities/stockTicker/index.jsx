@@ -6,7 +6,6 @@ const FinanceComponent = () => {
     <div className='bg-gradient-to-r from-black via-slate-950 to-black'>
   <div className="flex flex-col lg:flex-row justify-between items-center px-5 lg:px-10 py-5 lg:py-10">
     <div className='pb-2 lg:pb-0 text-center lg:text-left'>
-      <h1 className="text-lg lg:text-xl font-bold border border-green-400  lg:max-w-24 text-green-400 p-2 rounded-2xl">Financial</h1>
       <h1 className="text-3xl lg:text-5xl font-bold pt-2">Financial Insights</h1>
     </div>
 

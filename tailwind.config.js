@@ -9,6 +9,7 @@ module.exports = {
           '112': '28rem', // You can adjust the value as needed
           // Add more custom heights if required
         },
+        
       },
     },
     variants: {},

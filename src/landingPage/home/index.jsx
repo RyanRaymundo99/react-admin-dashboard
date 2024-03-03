@@ -4,6 +4,7 @@ import TopBar from '../utilities/topbar'
 import Companies from '../utilities/stockTicker'
 import Charts from '../utilities/charts'
 import ProfileStats from '../utilities/profileStats'
+import Footer from '../utilities/footer'
 
 function index() {
   return (
@@ -13,7 +14,7 @@ function index() {
       <Companies/>
       <Charts/>
       <ProfileStats/>
-
+      <Footer/>
     </div>
   )
 }

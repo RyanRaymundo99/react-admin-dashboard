@@ -6,7 +6,7 @@ import Charts3 from '../../../assets/Charts3.png'; // Import Charts image
 
 const Grids = () => {
   return (
-    <div className="bg-gradient-to-r from-black via-slate-950 to-black">
+    <div className="bg-gradient-to-r from-black via-slate-950 to-black pb-32">
       <Grid container spacing={2}>
         <Grid item xs={12} md={12}>
           <Paper
