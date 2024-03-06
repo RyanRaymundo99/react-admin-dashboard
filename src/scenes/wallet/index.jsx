@@ -23,7 +23,7 @@ const TradingViewGrid = () => {
       <Grid container justifyContent="center" style={{ marginTop: "20px" }} spacing={4}>
         <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
           <div style={{ width: '100%' }}>
-            <Paper style={{ borderRadius: '10px', border: '1px solid #434651', backgroundColor: '#13151c', padding: '20px' }}>
+            <Paper style={{ borderRadius: '10px', border: '1px solid #434651', backgroundColor: '#090d18', padding: '20px' }}>
               <Typography variant="h3" align="center" style={{ fontSize: "30px", fontWeight: 'bold', textAlign: "center", alignItems: 'center' }}>
                 <LeaderboardIcon style={{ fontSize: "40px", padding: "5px" }} /> BENCHMARK
               </Typography>
@@ -60,10 +60,10 @@ const TradingViewGrid = () => {
         <Grid item xs={12} lg={4} style={{ display: 'flex', justifyContent: 'center', marginTop: "20px" }}>
           <div className="grid" style={{ display: 'flex', flexDirection: 'column', borderRadius: '10px', border: '1px solid #434651', backgroundColor: '#1e222d', padding: '20px', width: '100%' }}>
             <div>
-              <Typography variant="h3" align="center" style={{ fontSize: "30px", fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
+              <Typography variant="h4" align="center" style={{ fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
                 <CurrencyExchangeIcon style={{ fontSize: "40px", marginRight: "10px", marginTop: "20px", backgroundColor: "#363a45", borderRadius: "20px" }} /> AÇÕES
               </Typography>
-              <Typography variant="body1" align="left" style={{ marginLeft: '5px', fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-10px", color: "#089981" }}>Atualizado a 12m</Typography>
+              <Typography variant="body1" align="left" style={{ marginLeft: '5px', fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-15px", color: "#089981" }}>Atualizado a 12m</Typography>
             </div>
             <Grid container spacing={2} style={{ flexGrow: 1 }}>
               {symbolsGrid1.map((symbol, index) => (
@@ -77,10 +77,10 @@ const TradingViewGrid = () => {
         <Grid item xs={12} lg={4} style={{ display: 'flex', justifyContent: 'center', marginTop: "20px" }}>
           <div className="grid" style={{ display: 'flex', flexDirection: 'column', borderRadius: '10px', border: '1px solid #434651', backgroundColor: '#1e222d', padding: '20px', width: '100%' }}>
             <div>
-              <Typography variant="h3" align="center" style={{ fontSize: "30px", fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
+              <Typography variant="h4" align="left" style={{ fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
                 <ApartmentIcon style={{ fontSize: "40px", marginRight: "10px", marginTop: "20px", backgroundColor: "#363a45", borderRadius: "20px" }} /> FUNDOS IMOBILIÁRIOS
               </Typography>
-              <Typography variant="body1" align="left" style={{ marginLeft: '5px', fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-10px", color: "#089981" }}>Atualizado a 12m</Typography>
+              <Typography variant="body1" align="left" style={{ marginLeft: '5px', fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-15px", color: "#089981" }}>Atualizado a 12m</Typography>
             </div>
             <Grid container spacing={2} style={{ flexGrow: 1 }}>
               {symbolsGrid2.map((symbol, index) => (
@@ -93,10 +93,10 @@ const TradingViewGrid = () => {
         </Grid>
         <Grid item xs={12} lg={4} style={{ display: 'flex', justifyContent: 'center', marginTop: "20px" }}>
           <div className="grid" style={{ display: 'flex', flexDirection: 'column', borderRadius: '10px', border: '1px solid #434651', backgroundColor: '#1e222d', padding: '20px', width: '100%' }}>
-            <Typography variant="h3" align="center" style={{ fontSize: "30px", fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
-              <CurrencyBitcoinIcon style={{ fontSize: "40px", marginRight: "10px", marginTop: "20px", backgroundColor: "#363a45", borderRadius: "20px" }} /> CRYPTOMOEDAS
+            <Typography variant="h4" align="center" style={{  fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
+              <CurrencyBitcoinIcon style={{ fontSize: "40px", marginRight: "10px", marginTop: "10px", backgroundColor: "#363a45", borderRadius: "20px" }} /> CRYPTOMOEDAS
             </Typography>
-            <Typography variant="body1" align="left" style={{ marginLeft: '5px', fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-10px", color: "#089981" }}>Atualizado a 12m</Typography>
+            <Typography variant="body1" align="left" style={{ marginLeft: '5px', fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-15px", color: "#089981" }}>Atualizado a 12m</Typography>
             <Grid container spacing={2} style={{ flexGrow: 1 }}>
               {symbolsGrid3.map((symbol, index) => (
                 <Grid item xs={12} key={index}>

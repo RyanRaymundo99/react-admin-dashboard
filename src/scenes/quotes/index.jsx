@@ -208,58 +208,55 @@ function App() {
   
 
   return (
-    <Grid container spacing={1} className='responsive-padding'>
+    <Grid container spacing={1} className='responsive-padding-quotes'>
       {/* First TradingViewWidget */}
       <Grid item xs={12} md={12}>
           <TradingViewOverviewWidget/>
       </Grid>
       {/* Symbol selector buttons */}
-      <Grid item xs={12} md={12}>
-      <div className="symbol-selector">
-        {stocks.slice(0, 13).map((stock, index) => (
-          <Button
-            key={index}
-            variant="outlined"
-            style={{ background: "#1e222d", color: "#fff", border: "1px solid gray", marginRight: "10px" }}
-            onClick={() => handleSymbolChange(stock.symbol)}
-          >
-            {stock.name}
-          </Button>
-        ))}
-        <Button
-          variant="outlined"
-          style={{ background: "#1e222d", color: "#fff", border: "1px solid gray", marginRight: "10px" }}
-          onClick={handleShowMoreToggle}
-        >
-          {showMore ? 'Show Less' : 'Show More'}
-        </Button>
-        <Menu
-          anchorEl={showMore ? document.getElementById('moreButton') : null}
-          open={showMore}
-          onClose={handleShowMoreToggle}
-        >
-          {stocks.slice(13).map((stock, index) => (
-            <MenuItem key={index} onClick={() => handleSymbolChange(stock.symbol)}>
+      <Grid item xs={12} md={12} mr={10}>
+        <div>
+          {stocks.slice(0, 13).map((stock, index) => (
+            <Button
+              key={index}
+              variant="outlined"
+              style={{ background: "#1e222d", color: "#fff", border: "1px solid gray" }}
+              onClick={() => handleSymbolChange(stock.symbol)}
+            >
               {stock.name}
-            </MenuItem>
+            </Button>
           ))}
-        </Menu>
-      </div>
-    </Grid>
-
-
+          <Button
+            variant="outlined"
+            style={{ background: "#1e222d", color: "#fff", border: "1px solid gray"}}
+            onClick={handleShowMoreToggle}
+          >
+            {showMore ? 'Show Less' : 'Show More'}
+          </Button>
+          <Menu
+            anchorEl={showMore ? document.getElementById('moreButton') : null}
+            open={showMore}
+            onClose={handleShowMoreToggle}
+          >
+            {stocks.slice(13).map((stock, index) => (
+              <MenuItem key={index} onClick={() => handleSymbolChange(stock.symbol)}>
+                {stock.name}
+              </MenuItem>
+            ))}
+          </Menu>
+        </div>
+      </Grid>
+  
       {/* Second TradingViewWidget */}
       <Grid item xs={12} md={6}>
         <TradingViewWidget
           symbol={selectedSymbol}
           locale="br"
           scriptSrc="https://s3.tradingview.com/external-embedding/embed-widget-financials.js"
-          style={{ height: "900px", width: "100%" }}
+          style={{ height: "900px", width: "99%" }} // Adjusted width to 100%
         />
       </Grid>
      
-      
-
       {/* Third TradingViewWidget */}
       <Grid item xs={12} md={6}>
         <TradingViewWidget
@@ -267,12 +264,11 @@ function App() {
           chartType="candlestick"
           locale="br"
           scriptSrc="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js"
-          style={{ height: "500px", width: "100%" }}
+          style={{ height: "500px", width: "100%" }} // Adjusted width to 100%
         />
       </Grid>
-
     </Grid>
   );
-}
+}  
 
 export default App;

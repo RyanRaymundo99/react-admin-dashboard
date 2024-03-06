@@ -38,15 +38,6 @@ body,
   background: #555;
 }
 
-
-.spinner-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  animation: spin 2s linear infinite; /* Add a spin animation */
-}
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -167,6 +158,18 @@ body,
 @media only screen and (max-width: 768px) {
   .responsive-padding {
     padding-left: 10px;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .responsive-padding-quotes {
+    padding-left: 80px;
+    margin-bottom: 180px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .responsive-padding-quotes {
+    padding-left: 10px;
+
   }
 }
 

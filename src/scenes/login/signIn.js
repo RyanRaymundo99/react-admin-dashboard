@@ -3,6 +3,7 @@ import { auth, provider } from "../../api/firebase";
 import { signInWithPopup } from "firebase/auth";
 import GoogleSignInButton from "./account/googleButton"; // Assuming GoogleSignInButton is in the same directory
 import LoginBg from "../../assets/loginBg.png"
+import Logo from "../../assets/Logo.svg"
 
 function SignIn() {
   const [user, setUser] = useState(null);
@@ -70,16 +71,8 @@ function SignIn() {
           </div>
         </div>
         <div className="flex items-center justify-center px-4 py-10 sm:py-16 lg:py-24 sm:px-6 lg:px-8 relative" style={{backgroundImage: `url(${LoginBg})`}}>
-          <img src={LoginBg} alt="Login Background" className="absolute inset-0 object-cover w-full h-full opacity-70" />
-          <div className="absolute inset-0 flex items-end justify-end">
-            <div className="w-full max-w-md mx-auto xl:max-w-xl p-6">
-              <h3 className="text-2xl font-bold text-white">Design your own card</h3>
-              <p className="leading-relaxed text-white mt-2.5">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis.</p>
-              <div className="flex items-center justify-center mt-10 space-x-3">
-              </div>
-            </div>
-          </div>
-          <div className="absolute bottom-0 right-0 p-4 text-white text-sm">Your Text Here</div>
+          <img src={LoginBg} alt="Login Background" className="absolute inset-0 object-cover w-full h-full" />
+          <img src={Logo} className="absolute bottom-0 right-0 p-4 text-sm"/>
         </div>
       </div>
     </section>
