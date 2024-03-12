@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Grid, Box, Typography } from '@mui/material';
+import Quotes from './quotes'
 
 import Brazil from '../../assets/Brazil.svg';
 import USA from '../../assets/USA.svg';
@@ -264,11 +265,14 @@ const Performance = () => {
         <div className="trad-wid-conta responsive-padding-performance" style={{ height: '89%' }} ref={container1}></div>
       </Grid>
       <Grid item xs={12} md={6} paddingRight={2}>
+        <Quotes/>
+      </Grid>
+      <Grid item xs={12} md={6} paddingRight={2}>
       <Box display="flex" alignItems="center" justifyContent="center" p={2}>
           <img src={USA} alt="Your Image" style={{ width: '50px', height: '50px'}} />
           <Typography variant="h3" color="textPrimary" style={{ marginLeft: '16px' }}>Mercado Americano</Typography>
       </Box>
-        <div className="trad-wid-conta responsive-padding-performance-2" style={{ height: '60%' }} ref={container2}></div>
+        <div className="trad-wid-conta responsive-padding-performance-2" style={{ height: '800px' }} ref={container2}></div>
       </Grid>
     </Grid>
     </div>

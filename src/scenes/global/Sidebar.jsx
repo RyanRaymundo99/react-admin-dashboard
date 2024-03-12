@@ -40,7 +40,6 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
     </MenuItem>
   );
 };
-
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -65,6 +64,9 @@ const Sidebar = () => {
       sx={{
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
+          height: "100vh", // Set the sidebar height to full viewport height
+          overflowY: "hidden", // Remove scrollbar
+          marginTop: "-62px"
         },
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
@@ -79,7 +81,6 @@ const Sidebar = () => {
           color: "#6870fa !important",
         },
         position: "fixed",
-        height: "100vh", // Set the width to 100%
         zIndex: 100, // Add z-index of 100
         border: "1px solid #20232f",
       }}
@@ -94,12 +95,8 @@ const Sidebar = () => {
           }
         `}
       </style>
-
       <ProSidebar
         collapsed={isCollapsed}
-        sx={{
-          height: "100%", // Set the sidebar height to full viewport height
-        }}
       >
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
@@ -154,7 +151,6 @@ const Sidebar = () => {
               </Box>
             </Box>
           )}
-
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Home"
@@ -163,9 +159,8 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
             <Item
-              title="Análise fundamentalista"
+              title="Mercado Mundial"
               to="/quotes"
               icon={<CurrencyExchangeIcon />}
               selected={selected}
@@ -178,9 +173,8 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            
              <Item
-              title="Comparar Desempenho"
+              title="Análise fundamentalista"
               to="/performance"
               icon={<SwipeUpIcon />}
               selected={selected}
@@ -224,7 +218,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -246,17 +239,14 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
-            <div className="mt-20 mr-5 bg-slate-500/20 rounded-lg">
             <Item
+              classname
               title="Carteira de Investidor"
               to="/wallet"
               icon={<WalletIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            </div>
-            
           </Box>
         </Menu>
       </ProSidebar>

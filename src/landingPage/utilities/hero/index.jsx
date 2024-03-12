@@ -31,7 +31,7 @@ function Hero() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTextIndex((prevIndex) => (prevIndex + 1) % texts.length);
+      setTextIndex((prevIndex) => (prevIndex ) % texts.length);
     }, 5000); // Change text every 5 seconds (5000 milliseconds)
 
     return () => clearInterval(interval);

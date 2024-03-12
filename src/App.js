@@ -4,7 +4,7 @@ import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
 import MobileSidebar from './scenes/global/MobileSidebar';
 import Dashboard from './scenes/dashboard';
-import Quotes from './scenes/quotes';
+import Market from './scenes/market';
 import Line from './scenes/line';
 import Wallet from './scenes/wallet';
 import News from './scenes/news';
@@ -89,7 +89,7 @@ function App() {
             {user && isAuthorized && <MobileSidebar />}
             <Routes>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/quotes" element={<Quotes />} />
+              <Route path="/market" element={<Market />} />
               <Route path="/line" element={<Line />} />
               <Route path="/wallet" element={<Wallet />} />
               <Route path="/news" element={<News />} />

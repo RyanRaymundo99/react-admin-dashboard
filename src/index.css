@@ -162,13 +162,13 @@ body,
 }
 @media only screen and (min-width: 768px) {
   .responsive-padding-quotes {
-    padding-left: 80px;
+    padding-left: 100px;
     margin-bottom: 180px;
   }
 }
 @media only screen and (max-width: 768px) {
   .responsive-padding-quotes {
-    padding-left: 10px;
+    padding-left: 40px;
 
   }
 }
@@ -259,7 +259,6 @@ body,
 
 
 
-
 .dot {
   width: 10px;
   height: 10px;
@@ -287,3 +286,21 @@ body,
     transform: scale(1.5);
   }
 }
+
+
+/* Additional styles can be added below */
+
+
+/* Grids.css */
+@media (min-width: 640px) {
+  .max-w-calc-100-minus-5rem {
+    max-width: calc(100% - 5rem);
+    margin-right: 0; /* Adjust margin-right */
+    margin-left: 0; /* Adjust margin-left */
+  }
+}
+
+
+
+
+
