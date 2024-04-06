@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
 import MobileSidebar from './scenes/global/MobileSidebar';
-import Dashboard from './scenes/dashboard';
+import Chart from './scenes/chart';
 import Market from './scenes/market';
 import Line from './scenes/line';
 import Wallet from './scenes/wallet';
@@ -16,19 +16,19 @@ import Calender from './scenes/calender';
 import Crypto from './scenes/hotZoneCrypto';
 import Br from './scenes/hotZoneBr';
 import LandingPage from './landingPage/home';
+import Profile from './landingPage/profile';
+import Pricing from './landingPage/pricing';  
+import About from './landingPage/about';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
 import { auth } from './api/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { Dialog, DialogTitle, DialogActions, Button } from '@mui/material';
 import Screener from './scenes/screener';
 
 function App() {
   const [theme, colorMode] = useMode();
   const [user, setUser] = useState(null);
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [isUnauthorizedDialogOpen, setIsUnauthorizedDialogOpen] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (userData) => {
@@ -50,7 +50,6 @@ function App() {
           "arlamaraujo3@gmail.com",
           "lliefellopeandrade1@gmail.com",
           "wendellyalexandre@gmail.com",
-          
         ];
 
         setIsAuthorized(allowedEmails.includes(userEmail));
@@ -63,21 +62,6 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    if (user && !isAuthorized) {
-      setIsUnauthorizedDialogOpen(true);
-    } else {
-      setIsUnauthorizedDialogOpen(false);
-    }
-  }, [user, isAuthorized]);
-
-  const handleCloseUnauthorizedDialog = () => {
-    setIsUnauthorizedDialogOpen(false);
-  };
-
-  const isLoginPage = location.pathname === '/login';
-  const isLandingPage = location.pathname === '/';
-
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -85,35 +69,40 @@ function App() {
         <div className="app">
           <main className="content">
             {user && isAuthorized && <Topbar />}
-            {user && isAuthorized && !isLoginPage && !isLandingPage && <Sidebar />}
+            {user && isAuthorized && <Sidebar />}
             {user && isAuthorized && <MobileSidebar />}
             <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/market" element={<Market />} />
-              <Route path="/line" element={<Line />} />
-              <Route path="/wallet" element={<Wallet />} />
-              <Route path="/news" element={<News />} />
-              <Route path="/educative" element={<Educative />} />
-              <Route path="/calender" element={<Calender />} />
-              <Route path="/crypto" element={<Crypto />} />
-              <Route path="/br" element={<Br />} />
-              <Route path="/screener" element={<Screener />} />
-              <Route path="/performance" element={<Performance />} />
-              <Route path="/ibovfull" element={<Ibovfull />} />
-              <Route path="/login" element={user && isAuthorized ? <Navigate to="/dashboard" /> : <Login />} />
-              <Route path="/" element={user && isAuthorized ? <Navigate to="/dashboard" /> : <LandingPage />} />
+              {user && isAuthorized ? (
+                <>
+                  <Route path="/chart" element={<Chart />} />
+                  <Route path="/market" element={<Market />} />
+                  <Route path="/line" element={<Line />} />
+                  <Route path="/wallet" element={<Wallet />} />
+                  <Route path="/news" element={<News />} />
+                  <Route path="/educative" element={<Educative />} />
+                  <Route path="/calender" element={<Calender />} />
+                  <Route path="/crypto" element={<Crypto />} />
+                  <Route path="/br" element={<Br />} />
+                  <Route path="/screener" element={<Screener />} />
+                  <Route path="/performance" element={<Performance />} />
+                  <Route path="/ibovfull" element={<Ibovfull />} />
+                  {/* Redirect users to Market if logged in */}
+                  <Route path="/" element={<Navigate to="/market" />} />
+                </>
+              ) : (
+                <>
+                  {/* Render Login page if not logged in */}
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/form" element={<Profile />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/pricing" element={<Pricing />} />
+                </>
+              )}
             </Routes>
           </main>
         </div>
       </ThemeProvider>
-      <Dialog open={isUnauthorizedDialogOpen} onClose={handleCloseUnauthorizedDialog}>
-        <DialogTitle style={{ backgroundColor: 'red', color: 'white' }}>Endereço de Email não cadastrado</DialogTitle>
-        <DialogActions>
-          <Button onClick={handleCloseUnauthorizedDialog} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
     </ColorModeContext.Provider>
   );
 }

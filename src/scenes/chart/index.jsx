@@ -10,23 +10,28 @@ function TradingViewWidget() {
       script.type = "text/javascript";
       script.async = true;
       script.innerHTML = `
-        {
-          "autosize": true,
-          "symbol": "BMFBOVESPA:BOVA11",
-          "interval": "D",
-          "timezone": "Etc/UTC",
-          "theme": "dark",
-          "style": "1",
-          "locale": "en",
-          "enable_publishing": false,
-          "hide_side_toolbar": false,
-          "allow_symbol_change": true,
-          "studies": [
-            "STD;EMA",
-            "STD;RSI"
-          ],
-          "support_host": "https://www.tradingview.com"
-        }`;
+      {
+        "autosize": true,
+        "symbol": "BMFBOVESPA:IBOV",
+        "interval": "D",
+        "timezone": "Etc/UTC",
+        "theme": "dark",
+        "style": "1",
+        "locale": "br",
+        "enable_publishing": false,
+        "hide_side_toolbar": false,
+        "withdateranges": true,
+        "allow_symbol_change": true,
+        "details": true,
+        "calendar": false,
+        "studies": [
+          "STD;RSI"
+        ],
+        "show_popup_button": true,
+        "popup_width": "1000",
+        "popup_height": "650",
+        "support_host": "https://www.tradingview.com"
+      }`;
        // Remove previous script element
     const prevScript = container.current.querySelector('script');
     if (prevScript) {

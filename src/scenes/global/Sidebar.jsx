@@ -153,15 +153,15 @@ const Sidebar = () => {
           )}
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
-              title="Home"
-              to="/"
+              title="Mercado Mundial"
+              to="/market"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Mercado Mundial"
-              to="/quotes"
+              title="Gráfico Avançado"
+              to="/chart"
               icon={<CurrencyExchangeIcon />}
               selected={selected}
               setSelected={setSelected}

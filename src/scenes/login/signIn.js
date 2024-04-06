@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { auth, provider } from "../../api/firebase";
 import { signInWithPopup } from "firebase/auth";
 import GoogleSignInButton from "./account/googleButton"; // Assuming GoogleSignInButton is in the same directory
-import LoginBg from "../../assets/loginBg.png"
-import Logo from "../../assets/Logo.svg"
+import LoginBg from "../../assets/loginBg.png";
+import Logo from "../../assets/Logo.svg";
+
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function SignIn() {
   const [user, setUser] = useState(null);
@@ -24,12 +26,15 @@ function SignIn() {
   };
 
   return (
-    <section className="h-screen w-screen bg-slate-950 flex justify-center items-center">
+    <section className="h-screen w-screen bg-slate-950 flex justify-center items-center relative">
+      <a href="/" className="absolute top-4 left-4 p-2 rounded-lg bg-gray-400/20 hover:bg-blue-900/20 text-black">
+        <ArrowBackIcon className="text-white"/>
+      </a>
       <div className="grid grid-cols-1 lg:grid-cols-2 h-full w-full">
         <div className="flex items-center justify-center px-4 py-10 bg-slate-950 sm:px-6 lg:px-8 sm:py-16 lg:py-24">
           <div className="xl:w-full xl:max-w-sm 2xl:max-w-md xl:mx-auto">
             <h2 className="text-3xl font-bold leading-tight text-gray-100 sm:text-4xl">Login do usuário</h2>
-            <p className="mt-2 text-base text-gray-300">Ainda não criou sua Conta? <a href="#" title="" className="font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 hover:underline focus:text-blue-700">Preencher Perfil</a></p>
+            <p className="mt-2 text-base text-gray-300">Ainda não criou sua Conta? <a href="https://view.forms.app/vladsonluiz/identificacaoperfildoinvestidor" title="" className="font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 hover:underline focus:text-blue-700">Preencher Perfil</a></p>
             <form action="#" method="POST" className="mt-8">
               <div className="space-y-5">
                 <div>
@@ -76,7 +81,7 @@ function SignIn() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 export default SignIn;

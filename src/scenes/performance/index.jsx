@@ -35,7 +35,7 @@ const Performance = () => {
           "symbols": [
             { "name": "BMFBOVESPA:B3SA3" },
             { "name": "BMFBOVESPA:BBAS3" },
-            { "name": "BMFBOVESPA:BBDCP1!" },
+            { "name": "BMFBOVESPA:BBDC4" },
             { "name": "BMFBOVESPA:BRAP4" },
             { "name": "BMFBOVESPA:BRSR3" },
             { "name": "BMFBOVESPA:CIEL3" },
@@ -207,49 +207,10 @@ const Performance = () => {
 
     container1.current.appendChild(script1);
 
-    // Second TradingView Widget
-    const script2 = document.createElement('script');
-    script2.type = 'text/javascript';
-    script2.async = true;
-    script2.src = 'https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js';
-    script2.innerHTML = JSON.stringify({
-      "colorTheme": "dark",
-      "dateRange": "12M",
-      "exchange": "US",
-      "showChart": true,
-      "locale": "br",
-      "width": "100%",
-      "height": "80%",
-      "largeChartUrl": "",
-      "isTransparent": false,
-      "showSymbolLogo": true,
-      "showFloatingTooltip": false,
-      "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
-      "plotLineColorFalling": "rgba(41, 98, 255, 1)",
-      "gridLineColor": "rgba(240, 243, 250, 0)",
-      "scaleFontColor": "rgba(106, 109, 120, 1)",
-      "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
-      "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
-      "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
-      "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
-      "symbolActiveColor": "rgba(41, 98, 255, 0.12)"
-    });
-
-    // Cleanup the script element when the component is unmounted
-    const prevScript2 = container2.current.querySelector('script');
-    if (prevScript2) {
-      container2.current.removeChild(prevScript2);
-    }
-
-    container2.current.appendChild(script2);
-
     // Cleanup the script element when the component is unmounted
     return () => {
       if (container1.current) {
         container1.current.removeChild(script1);
-      }
-      if (container2.current) {
-        container2.current.removeChild(script2);
       }
     };
   }, []); // Empty dependency array to run the effect only once
@@ -266,13 +227,6 @@ const Performance = () => {
       </Grid>
       <Grid item xs={12} md={6} paddingRight={2}>
         <Quotes/>
-      </Grid>
-      <Grid item xs={12} md={6} paddingRight={2}>
-      <Box display="flex" alignItems="center" justifyContent="center" p={2}>
-          <img src={USA} alt="Your Image" style={{ width: '50px', height: '50px'}} />
-          <Typography variant="h3" color="textPrimary" style={{ marginLeft: '16px' }}>Mercado Americano</Typography>
-      </Box>
-        <div className="trad-wid-conta responsive-padding-performance-2" style={{ height: '800px' }} ref={container2}></div>
       </Grid>
     </Grid>
     </div>

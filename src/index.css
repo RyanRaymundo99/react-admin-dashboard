@@ -304,3 +304,12 @@ body,
 
 
 
+.bg-noise {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAEElEQVR42mP4z8AARIYHgJqGBgaAADz9A2wi9pIAAAAABJRU5ErkJggg==");
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.8; /* Adjust the opacity as per your preference */
+}

@@ -13,16 +13,16 @@ const TopBar = () => {
 
   return (
     <div className="bg-opacity-50 backdrop-filter backdrop-blur-lg py-4 px-6 flex items-center justify-between fixed w-full top-0 z-50">
-      {/* Logo */}
       <div className="flex items-center">
         <img src={Logo} alt="Logo" style={{ width: "80px"}} />
       </div>
 
       {/* Center items */}
       <div className="hidden md:flex items-center justify-center">
-        <a href="#" className="text-white text-lg px-4 py-2 hover:bg-blue-700 rounded">Plataforma</a>
-        <a href="#" className="text-white text-lg px-4 py-2 hover:bg-pink-700 rounded">Seu Perfil</a>
-        <a href="#" className="text-white text-lg px-4 py-2 hover:bg-red-700 rounded">Sobre Nós</a>
+        <a href="/" className="text-white text-lg px-4 py-2 hover:bg-blue-700 rounded">Plataforma</a>
+        <a href="/form" className="text-white text-lg px-4 py-2 hover:bg-pink-700 rounded">Seu Perfil</a>
+        <a href="/about" className="text-white text-lg px-4 py-2 hover:bg-red-700 rounded">Sobre Nós</a>
+        <a href="/pricing" className="text-white text-lg px-4 py-2 hover:bg-green-700 rounded">Planos</a>
       </div>
 
       {/* Right items */}
@@ -35,7 +35,9 @@ const TopBar = () => {
         <button className="hidden md:block text-white text-lg px-4 py-2 mr-4 bg-gradient-to-r from-blue-600 to-pink-600 rounded-xl">Login</button>
         </Link>
         <div className="relative">
-          <AccountCircleIcon className="hidden md:block rounded-full cursor-pointer" style={{ fontSize: "33px" }} />
+        <Link to="/login">
+        <button className="hidden md:block text-white text-lg px-4 py-2 mr-4 border border-white/40 bg-transparent rounded-xl">Sign Up</button>
+        </Link>
           {/* Profile icon in menu for mobile */}
           {showMenu && (
             <div className="absolute right-0 mt-10 bg-gray-800 py-2 px-4 rounded shadow-lg w-48">

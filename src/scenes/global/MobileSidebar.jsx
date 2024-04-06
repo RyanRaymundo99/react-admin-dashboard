@@ -204,8 +204,8 @@ const ResponsiveSidebar = () => {
   const bottomMenuIcons = [
     { title: "Desempenho", to: "/performance", icon: <SwipeUpIcon /> },
     { title: "Carteira", to: "/wallet", icon: <WalletIcon /> },
-    { title: "Home", to: "/", icon: <AppsIcon /> },
-    { title: "Cotações", to: "/quotes", icon: <CurrencyExchangeIcon /> },
+    { title: "Home", to: "/market", icon: <AppsIcon /> },
+    { title: "Gráfico", to: "/chart", icon: <CurrencyExchangeIcon /> },
   ];
 
   const additionalItems = [

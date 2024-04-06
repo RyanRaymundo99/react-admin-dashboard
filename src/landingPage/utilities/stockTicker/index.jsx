@@ -6,11 +6,11 @@ const FinanceComponent = () => {
     <div className='bg-slate-950'>
   <div className="flex flex-col lg:flex-row justify-between items-center px-5 lg:px-10 py-5 lg:py-10">
     <div className='pb-2 lg:pb-0 text-center lg:text-left'>
-      <h1 className="text-3xl lg:text-5xl font-bold pt-2">Financial Insights</h1>
+      <h1 className="text-6xl lg:text-5xl font-bold pt-2">Financial Insights</h1>
     </div>
 
     <div className="mt-5 lg:mt-0 lg:ml-auto text-center lg:text-left">
-      <div className="text-base lg:text-2xl max-w-xs lg:max-w-2xl text-gray-300">Nossa equipe é especializada em produtos de Renda Fixa e Variável, trazendo melhor rentabilidade e segurança para seus investimentos.</div>
+      <div className="text-lg lg:text-2xl max-w-xs lg:max-w-2xl text-gray-300">Nossa equipe é especializada em produtos de Renda Fixa e Variável, trazendo melhor rentabilidade e segurança para seus investimentos.</div>
     </div>
   </div>
 
