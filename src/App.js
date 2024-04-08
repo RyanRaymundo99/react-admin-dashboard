@@ -11,7 +11,6 @@ import News from './scenes/news';
 import Educative from './scenes/educative';
 import Performance from './scenes/performance';
 import Login from './scenes/login/signIn';
-import Ibovfull from './components/IBOVFULL';
 import Calender from './scenes/calender';
 import Crypto from './scenes/hotZoneCrypto';
 import Br from './scenes/hotZoneBr';
@@ -85,7 +84,6 @@ function App() {
                   <Route path="/br" element={<Br />} />
                   <Route path="/screener" element={<Screener />} />
                   <Route path="/performance" element={<Performance />} />
-                  <Route path="/ibovfull" element={<Ibovfull />} />
                   {/* Redirect users to Market if logged in */}
                   <Route path="/" element={<Navigate to="/market" />} />
                 </>
