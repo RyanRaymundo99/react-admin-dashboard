@@ -39,7 +39,7 @@ const TradingViewGrid = () => {
         <Typography variant="h3" align="center" style={{ fontSize: "30px", fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
           <MyLocationIcon style={{ fontSize: "40px", marginRight: "10px", marginTop: "20px", backgroundColor: "#363a45", borderRadius: "20px", padding: "5px" }} /> LAYOUT
         </Typography>
-        <Typography variant="body1" align="left" style={{ marginLeft: '5px' ,fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-10px", color: "#089981" }}>Atualizado a 23h</Typography>
+        <Typography variant="body1" align="left" style={{fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-10px", color: "#089981" }}>Atualizado a 23h</Typography>
         <Grid container spacing={2}>
           {symbolsGrid1.map((symbol, index) => (
             <Grid item xs={12} key={index}>
@@ -54,7 +54,7 @@ const TradingViewGrid = () => {
         <Typography variant="h3" align="center" style={{ fontSize: "30px", fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
           <HomeWorkIcon  style={{ fontSize: "40px", marginRight: "10px", marginTop: "20px", backgroundColor: "#363a45", borderRadius: "20px", padding: "5px" }} /> LAYOUT
         </Typography>
-        <Typography variant="body1" align="left" style={{ marginLeft: '5px', fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-10px", color: "#089981" }}>Atualizado a 23h</Typography>
+        <Typography variant="body1" align="left" style={{ fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-10px", color: "#089981" }}>Atualizado a 23h</Typography>
         <Grid container spacing={2}>
           {symbolsGrid2.map((symbol, index) => (
             <Grid item xs={12} key={index}>
@@ -69,7 +69,7 @@ const TradingViewGrid = () => {
         <Typography variant="h3" align="center" style={{ fontSize: "30px", fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
           <CurrencyBitcoinIcon style={{ fontSize: "40px", marginRight: "10px", marginTop: "20px", backgroundColor: "#363a45", borderRadius: "20px" }} /> LAYOUT
         </Typography>
-        <Typography variant="body1" align="left" style={{ marginLeft: '5px', fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-10px", color: "#089981" }}>Atualizado a 12m</Typography>
+        <Typography variant="body1" align="left" style={{ fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-10px", color: "#089981" }}>Atualizado a 12m</Typography>
         <Grid container spacing={2}>
           {symbolsGrid3.map((symbol, index) => (
             <Grid item xs={12} key={index}>
@@ -84,7 +84,7 @@ const TradingViewGrid = () => {
         <Typography variant="h3" align="center" style={{ fontSize: "30px", fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
           <CurrencyBitcoinIcon style={{ fontSize: "40px", marginRight: "10px", marginTop: "20px", backgroundColor: "#363a45", borderRadius: "20px" }} /> LAYOUT
         </Typography>
-        <Typography variant="body1" align="left" style={{ marginLeft: '5px', fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-10px", color: "#089981" }}>Atualizado a 12m</Typography>
+        <Typography variant="body1" align="left" style={{ fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-10px", color: "#089981" }}>Atualizado a 12m</Typography>
         <Grid container spacing={2}>
           {symbolsGrid4.map((symbol, index) => (
             <Grid item xs={12} key={index}>

@@ -1,9 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import {
-  ProSidebar,
-  Menu,
-  MenuItem,
-} from "react-pro-sidebar";
+import { useEffect, useState } from "react";
+import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
@@ -12,7 +8,6 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import WalletIcon from "@mui/icons-material/Wallet";
 import SwipeUpIcon from "@mui/icons-material/SwipeUp";
-import SsidChartIcon from "@mui/icons-material/SsidChart";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";

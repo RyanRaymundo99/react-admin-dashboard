@@ -3,11 +3,9 @@ import { Grid, Box, Typography } from '@mui/material';
 import Quotes from './quotes'
 
 import Brazil from '../../assets/Brazil.svg';
-import USA from '../../assets/USA.svg';
 
 const Performance = () => {
   const container1 = useRef();
-  const container2 = useRef();
 
   useEffect(() => {
     // First TradingView Widget

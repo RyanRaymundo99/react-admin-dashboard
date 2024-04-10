@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Grid, Button, Menu, MenuItem, Box, Typography, TextField, Paper } from '@mui/material';
+import { Grid, Button, Menu, MenuItem } from '@mui/material';
 import stocks from '../../../components/stocks';
 
 // Custom hook for managing selected symbol state

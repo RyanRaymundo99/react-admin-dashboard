@@ -58,7 +58,7 @@ const Grids = () => {
                     </ul>
 
                     <div className="flex flex-col items-start mt-8 sm:space-x-4 sm:flex-row sm:items-center lg:mt-12">
-                        <a href="#" title="" className="inline-flex items-center justify-center px-4 py-4 mt-5 text-base font-semibold text-white transition-all duration-200 bg-transparent border border-white/20 rounded-lg sm:mt-0 hover:bg-white hover:text-black" role="button"> Criar Conta </a>
+                        <a href="form" title="" className="inline-flex items-center justify-center px-4 py-4 mt-5 text-base font-semibold text-white transition-all duration-200 bg-transparent border border-white/20 rounded-lg sm:mt-0 hover:bg-white hover:text-black" role="button"> Criar Conta </a>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@ const Grids = () => {
                     </ul>
 
                     <div className="flex flex-col items-start mt-8 sm:space-x-4 sm:flex-row sm:items-center lg:mt-12">
-                        <a href="#" title="" className="inline-flex items-center justify-center px-4 py-4 mt-5 text-base font-semibold text-white transition-all duration-200 bg-transparent border border-white/20 rounded-lg sm:mt-0 hover:bg-white hover:text-black" role="button"> Saber mais </a>
+                        <a href="form" title="" className="inline-flex items-center justify-center px-4 py-4 mt-5 text-base font-semibold text-white transition-all duration-200 bg-transparent border border-white/20 rounded-lg sm:mt-0 hover:bg-white hover:text-black" role="button"> Saber mais </a>
                     </div>
                 </div>
             </div>
@@ -165,7 +165,7 @@ const Grids = () => {
                     </ul>
 
                     <div className="flex flex-col items-start mt-8 sm:space-x-4 sm:flex-row sm:items-center lg:mt-12">
-                        <a href="#" title="" className="inline-flex items-center justify-center px-4 py-4 mt-5 text-base font-semibold text-white transition-all duration-200 bg-transparent border border-white/20 rounded-lg sm:mt-0 hover:bg-white hover:text-black" role="button"> Conhecer </a>
+                        <a href="form" title="" className="inline-flex items-center justify-center px-4 py-4 mt-5 text-base font-semibold text-white transition-all duration-200 bg-transparent border border-white/20 rounded-lg sm:mt-0 hover:bg-white hover:text-black" role="button"> Conhecer </a>
                     </div>
                 </div>
             </div>

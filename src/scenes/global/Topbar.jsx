@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Box, IconButton, useTheme } from "@mui/material";
 import { ColorModeContext, tokens } from "../../theme";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+// import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined"; //
+// import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined"; //
 import LogoutIcon from "@mui/icons-material/Logout";
 import { auth } from "../../api/firebase";
 import { signOut } from "firebase/auth";
@@ -12,9 +12,8 @@ import TradingViewTickerTape from "../../components/Ticker"; // Import your Trad
 const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const colorMode = useContext(ColorModeContext);
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [setUser] = useState(null);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((userData) => {

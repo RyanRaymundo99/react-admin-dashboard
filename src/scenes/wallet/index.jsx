@@ -63,7 +63,7 @@ const TradingViewGrid = () => {
               <Typography variant="h4" align="center" style={{ fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
                 <CurrencyExchangeIcon style={{ fontSize: "40px", marginRight: "10px", marginTop: "20px", borderRadius: "20px" }} /> AÇÕES
               </Typography>
-              <Typography variant="body1" align="left" style={{ marginLeft: '5px', fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-15px", color: "#089981" }}>Atualizado a 12m</Typography>
+              <Typography variant="body1" align="left" style={{ fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-15px", color: "#089981" }}>Atualizado a 12m</Typography>
             </div>
             <Grid container spacing={2} style={{ flexGrow: 1 }}>
               {symbolsGrid1.map((symbol, index) => (
@@ -80,7 +80,7 @@ const TradingViewGrid = () => {
               <Typography variant="h4" align="left" style={{ fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
                 <ApartmentIcon style={{ fontSize: "40px", marginRight: "10px", marginTop: "20px", borderRadius: "20px", border: "1px solid rgba(248, 248, 248, 0.8)" }} /> FUNDOS IMOBILIÁRIOS
               </Typography>
-              <Typography variant="body1" align="left" style={{ marginLeft: '5px', fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-15px", color: "#089981" }}>Atualizado a 12m</Typography>
+              <Typography variant="body1" align="left" style={{ fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-15px", color: "#089981" }}>Atualizado a 12m</Typography>
             </div>
             <Grid container spacing={2} style={{ flexGrow: 1 }}>
               {symbolsGrid2.map((symbol, index) => (
@@ -96,7 +96,7 @@ const TradingViewGrid = () => {
             <Typography variant="h4" align="center" style={{  fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
               <CurrencyBitcoinIcon style={{ fontSize: "40px", marginRight: "10px", marginTop: "10px", borderRadius: "20px", border: "1px solid rgba(248, 248, 248, 0.8)" }} /> CRYPTOMOEDAS
             </Typography>
-            <Typography variant="body1" align="left" style={{ marginLeft: '5px', fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-15px", color: "#089981" }}>Atualizado a 12m</Typography>
+            <Typography variant="body1" align="left" style={{ fontWeight: 'bold', marginBottom: "30px", marginLeft: "50px", marginTop: "-15px", color: "#089981" }}>Atualizado a 12m</Typography>
             <Grid container spacing={2} style={{ flexGrow: 1 }}>
               {symbolsGrid3.map((symbol, index) => (
                 <Grid item xs={12} key={index}>

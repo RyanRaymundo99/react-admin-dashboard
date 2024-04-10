@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
 import Logo from '../../../assets/Logo.svg'
 
@@ -12,7 +11,7 @@ const TopBar = () => {
   };
 
   return (
-    <div className="bg-opacity-50 backdrop-filter backdrop-blur-lg py-4 px-6 flex items-center justify-between fixed w-full top-0 z-50">
+    <div className="bg-opacity-50 backdrop-filter backdrop-blur-lg py-4 px-6 flex items-center justify-between fixed w-full top-0 z-50 border-b border-gray-300/10">
       <div className="flex items-center">
         <img src={Logo} alt="Logo" style={{ width: "80px"}} />
       </div>
@@ -40,10 +39,10 @@ const TopBar = () => {
         </Link>
           {/* Profile icon in menu for mobile */}
           {showMenu && (
-            <div className="absolute right-0 mt-10 bg-gray-800 py-2 px-4 rounded shadow-lg w-48">
-              <a href="#" className="block text-white py-1 px-2 hover:bg-gray-700 rounded">Plataforma</a>
-              <a href="#" className="block text-white py-1 px-2 hover:bg-gray-700 rounded">Seu Perfil</a>
-              <a href="#" className="block text-white py-1 px-2 hover:bg-gray-700 rounded">Sobre Nós</a>
+            <div className="absolute right-0 mt-10 bg-slate-900 py-2 px-4 rounded shadow-lg w-48">
+              <a href="/" className="block text-white py-1 px-2 hover:bg-gray-700 rounded">Plataforma</a>
+              <a href="form" className="block text-white py-1 px-2 hover:bg-gray-700 rounded">Seu Perfil</a>
+              <a href="about" className="block text-white py-1 px-2 hover:bg-gray-700 rounded">Sobre Nós</a>
               <hr className="my-2 border-gray-700" />
               <Link to="/login">
               <button className="block text-white py-1 px-2 hover:bg-gray-700 rounded w-full">Login</button>

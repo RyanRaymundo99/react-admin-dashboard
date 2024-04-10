@@ -1,5 +1,5 @@
 import React, { useState,  useEffect } from "react";
-import { Box, Typography, useTheme, Paper, Grid, IconButton } from "@mui/material";
+import { Box, Typography, useTheme, Paper, IconButton } from "@mui/material";
 import { tokens } from "../../theme";
 import { Link } from "react-router-dom";
 import AppsIcon from '@mui/icons-material/Apps';
@@ -196,8 +196,6 @@ const Menu = ({ onClose, items }) => {
 
 
 const ResponsiveSidebar = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   const [selected, setSelected] = useState("Home");
   const [menuOpen, setMenuOpen] = useState(false);
 

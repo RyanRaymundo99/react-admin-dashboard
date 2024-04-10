@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Grid, Box, Typography } from '@mui/material';
+import { Grid} from '@mui/material';
 
 const Index = () => {
   const container1 = useRef();

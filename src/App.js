@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom'; // Import useNavigate
 import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
 import MobileSidebar from './scenes/global/MobileSidebar';
@@ -28,6 +28,7 @@ function App() {
   const [theme, colorMode] = useMode();
   const [user, setUser] = useState(null);
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const navigate = useNavigate(); // Get the navigate function
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (userData) => {
@@ -52,6 +53,9 @@ function App() {
         ];
 
         setIsAuthorized(allowedEmails.includes(userEmail));
+        if (allowedEmails.includes(userEmail)) {
+          navigate('/market'); // Redirect to /market if user is authorized
+        }
       } else {
         setUser(null);
         setIsAuthorized(false);
@@ -84,12 +88,9 @@ function App() {
                   <Route path="/br" element={<Br />} />
                   <Route path="/screener" element={<Screener />} />
                   <Route path="/performance" element={<Performance />} />
-                  {/* Redirect users to Market if logged in */}
-                  <Route path="/" element={<Navigate to="/market" />} />
                 </>
               ) : (
                 <>
-                  {/* Render Login page if not logged in */}
                   <Route path="/login" element={<Login />} />
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/form" element={<Profile />} />

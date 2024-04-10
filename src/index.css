@@ -281,3 +281,55 @@ body,
   bottom: 0;
   opacity: 0.8; /* Adjust the opacity as per your preference */
 }
+
+
+
+/* styles.css */
+
+/* Loading.css */
+
+/* Styling for the full-screen loading screen */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(15, 9, 61); /* Initially black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0; /* Hidden initially */
+  animation: fade-in 1s ease-in forwards; /* Animation for fade-in effect */
+}
+
+/* Keyframes for fade-in animation */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Styling for the loading animation */
+.loading-animation {
+  /* Your SVG styles here */
+  width: 50px; /* Adjust size as needed */
+  height: 50px; /* Adjust size as needed */
+  border: 4px solid #fff;
+  border-top: 4px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite; /* Animation for rotation */
+}
+
+/* Keyframes for spin animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
